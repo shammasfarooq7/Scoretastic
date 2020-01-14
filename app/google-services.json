@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1061723753980",
+    "firebase_url": "https://scoretastic-fyp.firebaseio.com",
+    "project_id": "scoretastic-fyp",
+    "storage_bucket": "scoretastic-fyp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1061723753980:android:ca0e7864e336d878167679",
+        "android_client_info": {
+          "package_name": "com.example.scoretastic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1061723753980-6rpj7f03g1ulijdgf9t4st4i2n18ted5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1N0ct6qJKApnEB96qbZJ6fIX9louHXzY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1061723753980-6rpj7f03g1ulijdgf9t4st4i2n18ted5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

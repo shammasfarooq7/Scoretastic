@@ -27,7 +27,8 @@ public class Login extends AppCompatActivity {
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent =  new Intent(Login.this, Main.class);
+                startActivity(intent);
             }
         });
 

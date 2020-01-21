@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,7 +27,8 @@ public class Profile extends Fragment implements View.OnClickListener {
 
     Button btSettings ,btchgPassword,btFaqs,btAboutUs;
 
-    ImageView ivprofpic, ivchgpic;
+    ImageButton ivprofpic, ivchgpic;
+     ImageView       ivDemoPic;
     //TextView tvSettings, tvChgPass;
     LinearLayout llbt;
 
@@ -44,9 +46,6 @@ public class Profile extends Fragment implements View.OnClickListener {
         initializeView(view);
 
         // Inflate the layout for this fragment
-
-
-
 
 
         return view;
@@ -92,6 +91,23 @@ public class Profile extends Fragment implements View.OnClickListener {
         });
 
 
+        btFaqs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openFaqs();
+
+            }
+        });
+
+
+        btAboutUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openAboutUs();
+
+            }
+        });
+
 
 
 
@@ -104,30 +120,37 @@ public class Profile extends Fragment implements View.OnClickListener {
         ivprofpic = view.findViewById(R.id.ivprofpic);
         ivchgpic = view.findViewById(R.id.ivchgpic);
 
+        ivDemoPic = view.findViewById(R.id.ivDemoPic);
         //tvChgPass = view.findViewById(R.id.tvChgPass);
         //tvSettings = view.findViewById(R.id.tvSettings);
     }
 
 
 
-     public void openSettings(){
+     private void openSettings(){
 
         Intent intent = new Intent(getActivity(),Settings.class);
+        startActivity(intent);
+    }
 
-         startActivity(intent);
-
-
-
-     }
-
-    public void openchangePassword(){
+    private void openchangePassword(){
 
         Intent intent = new Intent(getActivity(),ChangePassword.class);
         startActivity(intent);
-
-
-
     }
+
+    private void openFaqs(){
+
+        Intent intent = new Intent(getActivity(),Faqs.class);
+        startActivity(intent);
+    }
+
+    private void openAboutUs(){
+
+        Intent intent = new Intent(getActivity(),AboutUs.class);
+        startActivity(intent);
+    }
+
 
 
     @Override

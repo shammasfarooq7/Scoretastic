@@ -13,7 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ChangePassword"></activity>
+        <activity android:name=".JoinEvent"></activity>
+        <activity android:name=".AboutUs" />
+        <activity android:name=".Faqs" />
+        <activity android:name=".ChangePassword" />
         <activity android:name=".Settings" />
 
         <meta-data

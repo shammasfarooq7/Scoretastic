@@ -6,8 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".Main">
 
-    <include
-        layout="@layout/toolbar_layout"/>
+
+
+
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"

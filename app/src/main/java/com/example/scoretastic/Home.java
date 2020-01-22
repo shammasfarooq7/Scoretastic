@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -25,10 +24,13 @@ import com.google.android.gms.maps.model.MarkerOptions;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Home extends Fragment implements OnMapReadyCallback {
+public class Home extends Fragment implements OnMapReadyCallback, homeRecyclerAdapter.ItemClicked{
 
     GoogleMap mMap;
     View j;
+    RecyclerView recyclerView;
+    RecyclerView.Adapter myAdapter;
+    RecyclerView.LayoutManager layoutManager;
 
 
     public Home() {
@@ -45,7 +47,7 @@ public class Home extends Fragment implements OnMapReadyCallback {
         Button btList = v.findViewById(R.id.btList);
         j = v.findViewById(R.id.map);
         final RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
-
+        recyclerView.setHasFixedSize(true);
 
 
         btMap.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +67,11 @@ public class Home extends Fragment implements OnMapReadyCallback {
             }
         });
 
+        //ArrayList<recycler> events = new ArrayList<>();
+        //events.add(new recycler("FT","JT","2PM","TODAY"));
+        //myAdapter = new homeRecyclerAdapter(this,events);
+        //recyclerView.setAdapter(myAdapter);
+
         return v;
 
     }
@@ -83,5 +90,10 @@ public class Home extends Fragment implements OnMapReadyCallback {
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+    }
+
+    @Override
+    public void onItemClicked(int index) {
+
     }
 }

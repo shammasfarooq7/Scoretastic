@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context=".JoinEvent">
 
 
@@ -156,120 +157,155 @@
 
 
 
-
-    <!--
-
-
-     android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:layout_marginTop="200dp"
-        app:layout_constraintTop_toTopOf="parent"
-        >
-
-       <TextView
-        android:id="@+id/tvRb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Batsman"
-        android:layout_marginRight="150dp"
-        android:layout_marginTop="220dp"
-        app:layout_constraintTop_toTopOf="parent"
+    <RadioGroup
+        android:id="@+id/RGroup"
+        android:layout_width="40dp"
+        android:layout_height="130dp"
+        android:layout_marginLeft="130dp"
+        android:layout_marginTop="300dp"
+        android:layout_marginRight="10dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RadioButton
+            android:id="@+id/rb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <RadioButton
+            android:id="@+id/rb2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <RadioButton
+            android:id="@+id/rb3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            />
+
+        <RadioButton
+            android:id="@+id/rb4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </RadioGroup>
 
 
 
 
-       <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="100dp"
+        android:layout_height="181dp"
+        android:layout_marginTop="418dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="118dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        >
+
+
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+    <TextView
+        android:id="@+id/tvRb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:layout_marginRight="150dp"
+        android:text="Attacker"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
 
         android:id="@+id/tvRb1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="bowler"
+        android:layout_marginTop="260dp"
         android:layout_marginRight="150dp"
-        android:layout_marginTop="290dp"
-        app:layout_constraintTop_toTopOf="parent"
+        android:text="Mid"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
 
         />
 
 
-       <TextView
+    <TextView
 
         android:id="@+id/tvRb2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="umpire"
+        android:layout_marginTop="330dp"
         android:layout_marginRight="150dp"
-        android:layout_marginTop="360dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:text="Defender"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
 
         />
 
 
-     <RadioButton
-         android:id="@+id/rb1"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_marginLeft="150dp"
-         android:layout_marginTop="220dp"
-         app:layout_constraintTop_toTopOf="parent"
-         app:layout_constraintBottom_toBottomOf="parent"
-         app:layout_constraintEnd_toEndOf="parent"
-         app:layout_constraintStart_toStartOf="parent"
-         />
+    <TextView
 
-     <RadioButton
-         android:id="@+id/rb2"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_marginLeft="150dp"
-         android:layout_marginTop="290dp"
-         app:layout_constraintTop_toTopOf="parent"
-         app:layout_constraintBottom_toBottomOf="parent"
-         app:layout_constraintEnd_toEndOf="parent"
-         app:layout_constraintStart_toStartOf="parent" />
+        android:id="@+id/tvRb3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="400dp"
+        android:layout_marginRight="150dp"
+        android:text="keeper"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
 
-     <RadioButton
-         android:id="@+id/rb3"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_marginLeft="150dp"
-         android:layout_marginTop="360dp"
-         app:layout_constraintTop_toTopOf="parent"
-         app:layout_constraintRight_toRightOf="parent"
-         app:layout_constraintBottom_toBottomOf="parent"
-         app:layout_constraintEnd_toEndOf="parent"
-         app:layout_constraintStart_toStartOf="parent"
-         />
+        />
 
 
-     -->
+
+
+
+    <!--
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="128dp"
-        android:paddingTop="10dp"
+        android:layout_width="100dp"
+        android:layout_height="180dp"
+        android:layout_marginTop="415dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="198dp"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp">
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        >
 
         <TextView
-            android:id="@+id/tvRb"
+            android:id="@+id/tvRbC"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="220dp"
+            android:layout_marginTop="200dp"
             android:layout_marginRight="150dp"
-            android:text="Attacker"
+            android:text="Batsman"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -278,12 +314,12 @@
 
         <TextView
 
-            android:id="@+id/tvRb1"
+            android:id="@+id/tvRbC1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="290dp"
+            android:layout_marginTop="260dp"
             android:layout_marginRight="150dp"
-            android:text="Mid"
+            android:text="Bowler"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -294,14 +330,12 @@
 
         <TextView
 
-            android:id="@+id/tvRb2"
+            android:id="@+id/tvRbC2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="360dp"
-
-
+            android:layout_marginTop="330dp"
             android:layout_marginRight="150dp"
-            android:text="Defender"
+            android:text="W.keeper"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -311,57 +345,43 @@
             />
 
 
-        <RadioGroup
-            android:id="@+id/RGroup"
-            android:layout_width="40dp"
-            android:layout_height="110dp"
-            android:layout_marginLeft="130dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="300dp"
-            android:orientation="vertical"
-            app:layout_constraintTop_toTopOf="parent"
+        <TextView
+
+            android:id="@+id/tvRbC3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="400dp"
+            android:layout_marginRight="150dp"
+            android:text="umpire"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
 
-            <RadioButton
-                android:id="@+id/rb1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                 />
-
-            <RadioButton
-                android:id="@+id/rb2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                 />
-
-            <RadioButton
-                android:id="@+id/rb3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            />
 
 
 
-                />
 
 
-        </RadioGroup>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
+    -->
 
     <Button
         android:id="@+id/btje"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="JOIN EVENT!!!"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="40dp"
         android:layout_marginLeft="85dp"
         android:layout_marginRight="95dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

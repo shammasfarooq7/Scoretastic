@@ -19,8 +19,10 @@
 
 
     <string name="Join_title">Event Details</string>
+    <string name="Create_title">Create A New Event</string>
 
 
+    <string name="Conf_loc">Confirm Location</string>
     <string name="spinner_title">sports category</string>
 
 </resources>

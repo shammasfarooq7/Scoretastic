@@ -29,44 +29,54 @@ public class Main extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        toolbar1 = findViewById(R.id.toolbar1);
-        home = findViewById(R.id.home);
-        createEvent = findViewById(R.id.create);
-        myEvents = findViewById(R.id.myevents);
-        profile = findViewById(R.id.profile);
-        frameLayout = findViewById(R.id.frameLayout);
-        linearLayout = findViewById(R.id.toolbar);
+        initializeViews();
+
+
+    }
+
+
+    private void initializeViews () {
+
+            toolbar1 = findViewById(R.id.toolbar1);
+            home = findViewById(R.id.home);
+            createEvent = findViewById(R.id.create);
+            myEvents = findViewById(R.id.myevents);
+            profile = findViewById(R.id.profile);
+            frameLayout = findViewById(R.id.frameLayout);
+            linearLayout = findViewById(R.id.toolbar);
+
+
+            home.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, objectHome).commit();
+                }
+            });
+
+            createEvent.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, objectCreate).commit();
+                }
+            });
+
+            myEvents.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, objectEvent).commit();
+                }
+            });
+
+            profile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, objectProfile).commit();
+                }
+            });
+
+            getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, objectHome).commit();
 
 
 
-        home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,objectHome).commit();
-            }
-        });
-
-        createEvent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,objectCreate).commit();
-            }
-        });
-
-        myEvents.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,objectEvent).commit();
-            }
-        });
-
-        profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,objectProfile).commit();
-            }
-        });
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,objectHome).commit();
     }
 }

@@ -30,7 +30,7 @@ public class Profile extends Fragment implements View.OnClickListener {
     ImageButton ivprofpic, ivchgpic;
      ImageView       ivDemoPic;
     //TextView tvSettings, tvChgPass;
-    LinearLayout llbt;
+    //LinearLayout llbt;
 
 
     public Profile() {
@@ -65,13 +65,6 @@ public class Profile extends Fragment implements View.OnClickListener {
         btAboutUs = view.findViewById(R.id.btAboutUs);
 
 
-        btSettings = (Button) view.findViewById(R.id.btSettings);
-        btSettings.setOnClickListener(this);
-
-
-
-        btchgPassword = (Button) view.findViewById(R.id.btchgPassword);
-        btSettings.setOnClickListener(this);
 
 
         btSettings.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +74,10 @@ public class Profile extends Fragment implements View.OnClickListener {
 
             }
         });
+
+
+
+
 
         btchgPassword.setOnClickListener(new View.OnClickListener() {
             @Override

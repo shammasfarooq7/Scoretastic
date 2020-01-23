@@ -26,16 +26,13 @@ import android.widget.AdapterView.OnItemSelectedListener;
 
 public class JoinEvent extends AppCompatActivity implements OnItemSelectedListener{
 
-     TextView tveventdet,tvRb,tvRb1,tvRb2,tvcategory,tvT1,tvT2,tvT3;
+     TextView tveventdet,tvRb,tvRb1,tvRb2,tvRb3,tvcategory,tvT1,tvT2,tvT3,tvRbC,tvRbC1,tvRbC2,tvRbC3;
      EditText et1,et2,et3;//et4;
      Button btje;
-     RadioButton rb1,rb2,rb3;
+     RadioButton rb1,rb2,rb3,rb4;
 
      RadioGroup RGroup;
      Spinner spinner;
-
-
-
 
 
     @Override
@@ -46,15 +43,7 @@ public class JoinEvent extends AppCompatActivity implements OnItemSelectedListen
 
         intializeView();
 
-
-
-
     }
-
-
-
-
-
 
     public void intializeView(){
 
@@ -63,6 +52,20 @@ public class JoinEvent extends AppCompatActivity implements OnItemSelectedListen
         tvRb = findViewById(R.id.tvRb);
         tvRb1 = findViewById(R.id.tvRb1);
         tvRb2 = findViewById(R.id.tvRb2);
+        tvRb3 =findViewById(R.id.tvRb3);
+
+
+        /**
+
+        tvRbC = findViewById(R.id.tvRbC);
+        tvRbC1 = findViewById(R.id.tvRbC1);
+        tvRbC2 = findViewById(R.id.tvRbC2);
+        tvRbC3 =findViewById(R.id.tvRbC3);
+
+         */
+
+
+
         tvcategory= findViewById(R.id.tvcategory);
         tvT1 = findViewById(R.id.tvT1);
         tvT2 = findViewById(R.id.tvT2);
@@ -80,6 +83,7 @@ public class JoinEvent extends AppCompatActivity implements OnItemSelectedListen
         rb1 =findViewById(R.id.rb1);
         rb2 =findViewById(R.id.rb2);
         rb3 =findViewById(R.id.rb3);
+        rb4 =findViewById(R.id.rb4);
 
 
 
@@ -89,14 +93,17 @@ public class JoinEvent extends AppCompatActivity implements OnItemSelectedListen
         // Spinner click listener
         spinner.setOnItemSelectedListener(this);
 
+
+
         // Spinner Drop down elements
         List<String> categories = new ArrayList<String>();
         categories.add("Football");
         categories.add("Cricket");
-        categories.add("Hockey");
         categories.add("Badminton");
         categories.add("Squash");
-        categories.add("Basket Ball");
+        categories.add("tennis");
+        categories.add("table tennis");
+
 
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
@@ -106,6 +113,7 @@ public class JoinEvent extends AppCompatActivity implements OnItemSelectedListen
 
         // attaching data adapter to spinner
         spinner.setAdapter(dataAdapter);
+
 
 
 

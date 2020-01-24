@@ -4,5 +4,25 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_home_map">Map</string>
+
+
+    <string name="About_title">ABOUT US</string>
+    <string name="About_description1">    Sportivo is a mobile application that helps the individuals to partipate or create the sports
+  events happening near them!!</string>
+    <string name="About_description2">    It’s not easy to find people with similar interest near you. People struggle to find sportsmen or teams to play with and end up staying home. Physical activity is very important, and clubs and gyms are very expensive. This app will help people engage in healthy activities and explore their inner talents and also encourage
+        others to pick a sport and compete in it with elites.</string>
+
+
+    <string name="Faqs_title">FAQS</string>
+    <string name="Faqs_Qn_1">Q: Why is authentication being required?</string>
+    <string name="Faqs_An_1">A:    Authentication supports our ongoing investment in sports programming for all of our platforms and is consistent with industry trends. Digital platforms require significant investment, and authentication allows us to capture the value of that investment.</string>
+
+
+    <string name="Join_title">Join Event </string>
+    <string name="Create_title">Create A New Event</string>
+
+
+    <string name="Conf_loc">Confirm Location</string>
+    <string name="spinner_title">sports category</string>
+
 </resources>

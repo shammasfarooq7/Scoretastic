@@ -20,6 +20,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -68,7 +70,7 @@ public class Home extends Fragment implements OnMapReadyCallback, homeRecyclerAd
         });
 
         //ArrayList<recycler> events = new ArrayList<>();
-        //events.add(new recycler("FT","JT","2PM","TODAY"));
+        //events.add(new recycler("FT","JT","",""));
         //myAdapter = new homeRecyclerAdapter(this,events);
         //recyclerView.setAdapter(myAdapter);
 

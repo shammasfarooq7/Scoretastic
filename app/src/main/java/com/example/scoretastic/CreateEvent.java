@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
@@ -86,11 +87,33 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
 
 
         initializeViews(view);
+        tvloc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent =  new Intent(getActivity(),CreateEventMap.class);
+                startActivityForResult(intent,1);
+            }
+        });
 
         return view;
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode==1){
+            if (resultCode == Activity.RESULT_OK){
+                String result = data.getStringExtra("result");
+                tvloc.setText(result);
+            }
+            else if(resultCode == Activity.RESULT_CANCELED){
+                tvloc.setText("Get Location");
+            }
+
+        }
+    }
 
     private void initializeViews(View view) {
 

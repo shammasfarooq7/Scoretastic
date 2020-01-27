@@ -24,5 +24,6 @@
 
     <string name="Conf_loc">Confirm Location</string>
     <string name="spinner_title">sports category</string>
+    <string name="title_activity_create_event_map">Map</string>
 
 </resources>

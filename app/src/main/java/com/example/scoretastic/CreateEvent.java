@@ -188,6 +188,9 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
         cl3 = view.findViewById(R.id.cl3);
 
 
+
+
+
         spinner = view.findViewById(R.id.spinner);
         spinner.setOnItemSelectedListener(this);
 

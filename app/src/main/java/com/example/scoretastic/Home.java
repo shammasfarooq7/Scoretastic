@@ -1,24 +1,39 @@
 package com.example.scoretastic;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Home extends Fragment {
+public class Home extends Fragment implements OnMapReadyCallback, homeRecyclerAdapter.ItemClicked{
 
+    GoogleMap mMap;
+    View j;
+    RecyclerView recyclerView;
+    RecyclerView.Adapter myAdapter;
+    RecyclerView.LayoutManager layoutManager;
 
-    Button btToje;
 
     public Home() {
         // Required empty public constructor
@@ -28,53 +43,59 @@ public class Home extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        View view =inflater.inflate(R.layout.fragment_home, container, false);
-
-
-        initializeViews(view);
-        setListner();
-
         // Inflate the layout for this fragment
-        return view;
+        final View v =  inflater.inflate(R.layout.fragment_home, container, false);
+        Button btMap = v.findViewById(R.id.btMap);
+        Button btList = v.findViewById(R.id.btList);
+        j = v.findViewById(R.id.map);
+        final RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
 
 
-
-
-    }
-
-    private void setListner() {
-
-        btToje.setOnClickListener(new View.OnClickListener() {
+        btMap.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                openJoinEvent();
+            public void onClick(View view) {
+
+                recyclerView.setVisibility(View.GONE);
+                j.setVisibility(View.VISIBLE);
             }
         });
 
+        btList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recyclerView.setVisibility(View.VISIBLE);
+                j.setVisibility(View.GONE);
+            }
+        });
+
+        //ArrayList<recycler> events = new ArrayList<>();
+        //events.add(new recycler("FT","JT","",""));
+        //myAdapter = new homeRecyclerAdapter(this,events);
+        //recyclerView.setAdapter(myAdapter);
+
+        return v;
+
     }
 
-    private void openJoinEvent() {
-
-
-        Intent intent = new Intent(getActivity(),JoinEvent.class);
-        startActivity(intent);
-
-
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        SupportMapFragment mapFragment = (SupportMapFragment)getChildFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
     }
 
 
-    public void initializeViews(View view)
-        {
-            btToje=  view.findViewById(R.id.btToje);
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap =googleMap;
+        LatLng sydney = new LatLng(-34, 151);
+        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+    }
 
+    @Override
+    public void onItemClicked(int index) {
 
-
-
-
-
-
-
-        }
-
+    }
 }

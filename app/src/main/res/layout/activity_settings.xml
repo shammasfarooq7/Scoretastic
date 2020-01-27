@@ -9,8 +9,6 @@
     tools:context=".Settings">
 
 
-    <include
-        layout="@layout/toolbar_layout"/>
 
 
     <TextView
@@ -18,7 +16,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="80dp"
-        android:paddingLeft="30dp"
         android:layout_marginTop="120dp"
         android:textSize="35dp"
         android:text="Set Radius(in km)"
@@ -33,13 +30,10 @@
         android:layout_height="50dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="290dp"
+
         app:layout_constraintLeft_toLeftOf="parent"
+
         app:layout_constraintTop_toTopOf="parent" />
-
-
-
-
-
 
 
 </RelativeLayout>

@@ -16,13 +16,13 @@
     <ImageButton
 
         android:id="@+id/ibBack"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="left"
         android:background="#FFFFFF"
         android:onClick="onBackPressed"
-        android:src="@drawable/ic_arrow_left"
-    />
+
+        android:src="@android:drawable/arrow_down_float" />
 
 
 </androidx.appcompat.widget.Toolbar>

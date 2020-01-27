@@ -37,7 +37,7 @@ public class Main extends AppCompatActivity {
 
     private void initializeViews () {
 
-            toolbar1 = findViewById(R.id.toolbar1);
+            //toolbar1 = findViewById(R.id.toolbar1);
             home = findViewById(R.id.home);
             createEvent = findViewById(R.id.create);
             myEvents = findViewById(R.id.myevents);

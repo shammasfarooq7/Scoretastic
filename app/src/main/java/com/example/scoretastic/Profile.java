@@ -117,7 +117,7 @@ public class Profile extends Fragment implements View.OnClickListener {
         ivprofpic = view.findViewById(R.id.ivprofpic);
         ivchgpic = view.findViewById(R.id.ivchgpic);
 
-        ivDemoPic = view.findViewById(R.id.ivDemoPic);
+        //ivDemoPic = view.findViewById(R.id.ivDemoPic);
         //tvChgPass = view.findViewById(R.id.tvChgPass);
         //tvSettings = view.findViewById(R.id.tvSettings);
     }

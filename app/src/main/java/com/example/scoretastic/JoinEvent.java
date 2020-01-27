@@ -99,7 +99,7 @@ public class JoinEvent extends AppCompatActivity {  //implements OnItemSelectedL
         // spinner = findViewById(R.id.spinner);
 
         RGroup =  findViewById(R.id.RGroup);
-        RGroupC =  findViewById(R.id.RGroupC);
+        RGroupC = findViewById(R.id.RGroupC);
         // Spinner click listener
         //spinner.setOnItemSelectedListener(this);
 

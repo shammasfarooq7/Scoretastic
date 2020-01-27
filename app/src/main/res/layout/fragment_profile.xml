@@ -16,7 +16,6 @@
         android:layout_height="200dp"
         android:layout_marginTop="19dp"
         android:layout_marginLeft="90dp"
-        android:background="@drawable/round_online"
         android:src="@drawable/ic_sentiment"/>
 
 
@@ -47,35 +46,35 @@
         android:id="@+id/llbt"
 
         >
-    <Button
-        android:id="@+id/btSettings"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Settings"
-        android:background="@drawable/shapes"/>
+        <Button
+            android:id="@+id/btSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Settings"
+            android:background="@drawable/shapes"/>
 
-    <Button
-        android:id="@+id/btchgPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:paddingRight="20dp"
-        android:paddingLeft="20dp"
+        <Button
+            android:id="@+id/btchgPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
 
-        android:layout_weight="1"
-        android:text="Change Password"
-        android:background="@drawable/shapes"/>
+            android:layout_weight="1"
+            android:text="Change Password"
+            android:background="@drawable/shapes"/>
 
-    <Button
-        android:id="@+id/btFaqs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="6"
-        android:text="FAQS"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/shapes"
-        />
+        <Button
+            android:id="@+id/btFaqs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:text="FAQS"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/shapes"
+            />
 
         <Button
             android:id="@+id/btAboutUs"
@@ -89,13 +88,5 @@
 
 
     </LinearLayout>
-
-
-
-
-
-
-
-
 
 </RelativeLayout>

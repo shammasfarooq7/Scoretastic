@@ -22,54 +22,52 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import android.widget.AdapterView.OnItemSelectedListener;
 
+import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
-
-
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.DatePicker;
-
 import android.widget.TimePicker;
-
 import java.util.Calendar;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class CreateEvent extends Fragment implements OnItemSelectedListener,DatePickerDialog.OnDateSetListener {
 
 
-    TextView tvCrtTitle, tvT1, tvT2, tvT3, tvT4,tvT5, tvcategory, tvRb, tvRb1, tvRb2, tvRb3, tvRbC, tvRbC1, tvRbC2, tvRbC3, tvDate, tvTime, tvloc;
-    private TextView mDisplayDate, mDisplayTime;
-    EditText et4,eT5, etB, etB1, etB2, etB3, etBC, etBC1, etBC2, etBC3;
+    TextView tvCrtTitle,tvT1,tvT2,tvT3,tvT4,tvcategory,tvRb,tvRb1,tvRb2,tvRb3,tvRbC,tvRbC1,tvRbC2,tvRbC3,tvDate,tvTime,tvloc;
+    private TextView mDisplayDate,mDisplayTime;
+    EditText et4,etB,etB1,etB2,etB3,etBC,etBC1,etBC2,etBC3;
     Spinner spinner;
     Button btce;
-    ImageButton ibDate;
-    ConstraintLayout cl1, cl2, cl3;
+    ConstraintLayout cl1,cl2,cl3;
     Activity mActivity;
     int year;
-    int month ;
+    int month;
     int day;
     private static final String TAG = "Create Event";
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
-
-
-
-
+    String resultLocation;
+    double resultLng;
+    double resultLat;
+    String description;
+    Date date;
+    Time time;
+    String Sports;
+    int totalPlayers;
+    int batsman;
+    int bowlers;
+    int allRounder;
+    int wicketKeeper;
+    int keeper;
+    int defender;
+    int attacker;
+    int midfielder;
+    int timeHour;
+    int timeMinute;
 
 
     public CreateEvent() {
@@ -80,23 +78,28 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
         View view = inflater.inflate(R.layout.fragment_create_event, container, false);
-        // Inflate the layout for this fragment
-
-
         initializeViews(view);
         tvloc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent =  new Intent(getActivity(),CreateEventMap.class);
                 startActivityForResult(intent,1);
+                description = et4.getText().toString();
+                date.setDate(day);
+                date.setMonth(month);
+                date.setYear(year);
+                time.setHours(timeHour);
+                time.setMinutes(timeMinute);
+                btce.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dataSender();
+                    }
+                });
             }
         });
-
         return view;
-
     }
 
     @Override
@@ -105,29 +108,22 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
 
         if(requestCode==1){
             if (resultCode == Activity.RESULT_OK){
-                String result = data.getStringExtra("result");
-                tvloc.setText(result);
+                resultLocation = data.getStringExtra("resultLocation");
+                resultLat = data.getDoubleExtra("resultLat",0);
+                resultLng = data.getDoubleExtra("resultLng",0);
+                tvloc.setText(resultLocation);
             }
             else if(resultCode == Activity.RESULT_CANCELED){
                 tvloc.setText("Get Location");
             }
-
         }
     }
 
     private void initializeViews(View view) {
 
-//        final View f = view.findViewById(R.id.cl2);
-
-
         mActivity = getActivity();
-
-
         datePicker(view);
-
         timePicker(view);
-
-
         btce = view.findViewById(R.id.btce);
         btce.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,65 +131,37 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
                 validationScene();
             }
         });
-
-
         tvCrtTitle = view.findViewById(R.id.tvCrtTitle);
-
         tvloc = view.findViewById(R.id.tvloc);
-
         tvT1 = view.findViewById(R.id.tvT1);
         tvT2 = view.findViewById(R.id.tvT2);
         tvT3 = view.findViewById(R.id.tvT3);
         tvT4 = view.findViewById(R.id.tvT4);
-        tvT5 = view.findViewById(R.id.tvT5);
-
-
         tvcategory = view.findViewById(R.id.tvcategory);
-
         tvRb = view.findViewById(R.id.tvRb);
         tvRb1 = view.findViewById(R.id.tvRb1);
         tvRb2 = view.findViewById(R.id.tvRb2);
         tvRb3 = view.findViewById(R.id.tvRb3);
-
-
         tvRbC = view.findViewById(R.id.tvRbC);
         tvRbC1 = view.findViewById(R.id.tvRbC1);
         tvRbC2 = view.findViewById(R.id.tvRbC2);
         tvRbC3 = view.findViewById(R.id.tvRbC3);
-
-
         etB = view.findViewById(R.id.etB);
         etB1 = view.findViewById(R.id.etB1);
         etB2 = view.findViewById(R.id.etB2);
         etB3 = view.findViewById(R.id.etB3);
-
-
         etBC = view.findViewById(R.id.etB);
         etBC1 = view.findViewById(R.id.etBC1);
         etBC2 = view.findViewById(R.id.etBC2);
         etBC3 = view.findViewById(R.id.etBC3);
-
-
         tvDate = view.findViewById(R.id.tvDate);
-
         tvTime = view.findViewById(R.id.tvTime);
-
-
         et4 = view.findViewById(R.id.et4);
-        eT5 = view.findViewById(R.id.et5);
-
-
         cl1 = view.findViewById(R.id.cl1);
         cl2 = view.findViewById(R.id.cl2);
         cl3 = view.findViewById(R.id.cl3);
-
-
-
-
-
         spinner = view.findViewById(R.id.spinner);
         spinner.setOnItemSelectedListener(this);
-
         List<String> categories = new ArrayList<String>();
         categories.add("Please Select");
         categories.add("Football");
@@ -206,31 +174,17 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, categories);
 
-
         // Drop down layout style - list view with radio button
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // attaching data adapter to spinner
         spinner.setAdapter(dataAdapter);
 
-
-        tvloc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openCreateEventMap();
-
-            }
-        });
-
-
-
     }
 
     private void datePicker(View view) {
 
         mDisplayDate = view.findViewById(R.id.tvDate);
-
-
 
         Calendar cal = Calendar.getInstance();
          int year = cal.get(Calendar.YEAR);
@@ -244,12 +198,10 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
                 year,month,day);
 
         dialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
-
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         mDisplayDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 dialog.show();
             }
         });
@@ -257,112 +209,100 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
         mDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-
                 month = month + 1;
-
                 Log.d(TAG, "onDateSet: mm/dd/yyy: " + month + "/" + day + "/" + year);
-
-
                 String date = month + "/" + day + "/" + year;
                 mDisplayDate.setText(date);
-
-
-
             }
         };
-
-
-    }
-
-    private void openCreateEventMap() {
-
-        Intent intent = new Intent(getActivity(), CreateEventMap.class);
-        startActivity(intent);
     }
 
     private void timePicker(View view) {
-
         mDisplayTime = view.findViewById(R.id.tvTime);
-
 
         mDisplayTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Calendar cal = Calendar.getInstance();
-                int hour = cal.get(Calendar.HOUR);
-                int minute = cal.get(Calendar.MINUTE);
+                timeHour = cal.get(Calendar.HOUR);
+                timeMinute = cal.get(Calendar.MINUTE);
 
-
-                TimePickerDialog dialog = new TimePickerDialog(getContext(), mTimeSetListener, hour, minute, false);
+                TimePickerDialog dialog = new TimePickerDialog(getContext(), mTimeSetListener, timeHour, timeMinute, false);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
                 dialog.show();
             }
         });
-
 
         mTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int hour, int minute) {
 
                 Log.d(TAG, "onTimeSet: hr/min: " + hour + "/" + minute);
-
                 String time = hour + ":" + minute;
                 mDisplayTime.setText(time);
             }
         };
 
-
     }
-
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-
         String item = parent.getItemAtPosition(position).toString();
 
-
         if (item.equalsIgnoreCase("Please Select")) {
-
             cl1.setVisibility(View.GONE);
             cl2.setVisibility(View.GONE);
             cl3.setVisibility(View.GONE);
-
 
         } else if (item.equalsIgnoreCase("Football")) {
 
             cl1.setVisibility(View.VISIBLE);
             cl2.setVisibility(View.GONE);
             cl3.setVisibility(View.GONE);
-
+            attacker = Integer.valueOf(etB.getText().toString().trim());
+            defender = Integer.valueOf(etB1.getText().toString().trim());
+            midfielder = Integer.valueOf(etB2.getText().toString().trim());
+            keeper = Integer.valueOf(etB3.getText().toString().trim());
+            totalPlayers = attacker + defender + midfielder + keeper;
+            Sports = "Football";
 
         } else if (item.equalsIgnoreCase("Cricket")) {
 
             cl1.setVisibility(View.GONE);
             cl2.setVisibility(View.VISIBLE);
             cl3.setVisibility(View.GONE);
+            batsman = Integer.valueOf(etBC.getText().toString().trim());
+            bowlers = Integer.valueOf(etBC1.getText().toString().trim());
+            allRounder = Integer.valueOf(etBC2.getText().toString().trim());
+            wicketKeeper = Integer.valueOf(etBC3.getText().toString().trim());
+            totalPlayers = batsman+bowlers+allRounder+wicketKeeper;
+            Sports = "Cricket";
 
         } else if (item.equalsIgnoreCase("Tennis")) {
 
             cl1.setVisibility(View.GONE);
             cl2.setVisibility(View.GONE);
             cl3.setVisibility(View.VISIBLE);
+            totalPlayers = 1;
+            Sports = "Tennis";
 
         } else if (item.equalsIgnoreCase("Badminton")) {
 
             cl1.setVisibility(View.GONE);
             cl2.setVisibility(View.GONE);
             cl3.setVisibility(View.VISIBLE);
+            totalPlayers = 1;
+            Sports = "Badminton";
 
         } else if (item.equalsIgnoreCase("Squash")) {
 
             cl1.setVisibility(View.GONE);
             cl2.setVisibility(View.GONE);
             cl3.setVisibility(View.VISIBLE);
-
+            totalPlayers = 1;
+            Sports = "Squash";
         }
-
-
     }
 
     @Override
@@ -370,7 +310,6 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
     }
 
     public void validationScene() {
-
 
         if (tvloc.getText().toString().isEmpty()) {
             tvloc.setError("Please enter the location!");
@@ -388,29 +327,33 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
             etB2.setError("plz enter");
         } else if (etB3.getText().toString().isEmpty()) {
             etB3.setError("plz enter");
-        } else {
-
-            //intent intent = new Intent(this,Main2Activity.class);
-            //startActivity(intent);
         }
 
-
     }
-
-
     @Override
     public void onDateSet(DatePicker view, int Year, int Month, int Day) {
-
-
         month = month + 1;
-
         Log.d(TAG, "onDateSet: mm/dd/yyy: " + month + "/" + day + "/" + year);
-
-
         String date = month + "/" + day + "/" + year;
         mDisplayDate.setText(date);
     }
+    private void dataSender(){
+        if(Sports.equals("Football")){
 
+        }
+        else if(Sports.equals("Cricket")){
+
+        }
+        else if(Sports.equals("Tennis")){
+
+        }
+        else if(Sports.equals("Badminton")){
+
+        }
+        else if(Sports.equals("Squash")){
+
+        }
+    }
 
 }
 

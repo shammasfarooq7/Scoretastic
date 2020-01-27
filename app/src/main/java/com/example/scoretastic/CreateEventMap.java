@@ -42,7 +42,8 @@ public class CreateEventMap extends AppCompatActivity implements OnMapReadyCallb
     Button back;
     List<Address> addresses = null;
     String result;
-    Intent intent = getIntent();
+    double longitude1;
+    double latitude1;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +57,9 @@ public class CreateEventMap extends AppCompatActivity implements OnMapReadyCallb
             public void onClick(View view) {
                 Intent resultIntent = new Intent();
                 result = addresses.get(0).getAddressLine(0);
-                resultIntent.putExtra("result",result);
+                resultIntent.putExtra("resultLocation",result);
+                resultIntent.putExtra("resultLng",longitude1);
+                resultIntent.putExtra("resultLat",latitude1);
                 setResult(RESULT_OK,resultIntent);
                 finish();
             }
@@ -82,6 +85,8 @@ public class CreateEventMap extends AppCompatActivity implements OnMapReadyCallb
                 public void onCameraIdle() {
                     double lat = mMap.getCameraPosition().target.latitude;
                     double lng = mMap.getCameraPosition().target.longitude;
+                    longitude1 = lng;
+                    latitude1 = lat;
                     pointerLocation(lat,lng);
                 }
             });

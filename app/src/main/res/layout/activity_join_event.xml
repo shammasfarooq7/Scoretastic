@@ -70,6 +70,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
+
+
+
+
+
     <EditText
         android:id="@+id/et1"
         android:layout_width="wrap_content"
@@ -129,7 +134,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Event type"
-        android:layout_marginTop="290dp"
+        android:layout_marginTop="310dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="250dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -146,7 +151,7 @@
         android:ems="10"
         android:hint="football / cricket"
         android:inputType="number"
-        android:layout_marginTop="270dp"
+        android:layout_marginTop="300dp"
         android:layout_marginLeft="270dp"
         android:layout_marginRight="40dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -156,8 +161,23 @@
         app:layout_constraintRight_toRightOf="parent"
         />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
 
+        android:text="Player Position:"
+        android:textStyle="bold"
+        android:id="@+id/tvplayerpos"
+        android:layout_marginTop="360dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="270dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
 
+        />
 
     <!--
     <TextView
@@ -200,10 +220,11 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl1join"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="181dp"
-        android:layout_marginTop="418dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginTop="370dp"
+        android:layout_marginLeft="60dp"
         android:layout_marginRight="20dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -217,7 +238,7 @@
             android:layout_width="40dp"
             android:layout_height="130dp"
             android:layout_marginLeft="130dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -271,16 +292,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_marginRight="160dp"
+            android:layout_marginRight="180dp"
             android:layout_marginBottom="30dp"
             android:text="Defender"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.28"
             app:layout_constraintStart_toStartOf="parent"
-
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.481" />
+             />
 
         <TextView
 
@@ -317,18 +337,7 @@
 
 
 
-
-
-
-
-
-
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
 
 
 
@@ -336,19 +345,19 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl2join"
-        android:visibility="gone"
-        android:layout_width="100dp"
-        android:layout_height="180dp"
-        android:layout_marginTop="415dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="198dp"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="181dp"
+        android:layout_marginTop="370dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="20dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         >
 
         <TextView
-            android:id="@+id/tvRbC"
+            android:id="@+id/tvC"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="160dp"
@@ -364,10 +373,10 @@
 
         <TextView
 
-            android:id="@+id/tvRbC1"
+            android:id="@+id/tvC1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="160dp"
             android:layout_marginBottom="50dp"
             android:text="Bowler"
@@ -381,10 +390,10 @@
 
         <TextView
 
-            android:id="@+id/tvRbC2"
+            android:id="@+id/tvC2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="50dp"
             android:layout_marginRight="160dp"
             android:layout_marginBottom="10dp"
             android:text="AllRounder"
@@ -399,7 +408,7 @@
 
         <TextView
 
-            android:id="@+id/tvRbC3"
+            android:id="@+id/tvC3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="110dp"
@@ -414,11 +423,11 @@
 
 
         <RadioGroup
-            android:id="@+id/RGroup"
+            android:id="@+id/RGroupC"
             android:layout_width="40dp"
             android:layout_height="130dp"
             android:layout_marginLeft="130dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -426,27 +435,29 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+
+
             <RadioButton
-                android:id="@+id/rb1"
+                android:id="@+id/rbC1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <RadioButton
-                android:id="@+id/rb2"
+                android:id="@+id/rbC2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <RadioButton
-                android:id="@+id/rb3"
+                android:id="@+id/rbC3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
                 />
 
             <RadioButton
-                android:id="@+id/rb4"
+                android:id="@+id/rbC4"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
 
 
         </RadioGroup>
@@ -459,6 +470,22 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:id="@+id/cl3join"
+        android:visibility="gone"
+        android:layout_width="100dp"
+        android:layout_height="180dp"
+        android:layout_marginTop="415dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="198dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        >
+
+     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <Button

@@ -47,27 +47,12 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
     int year;
     int month;
     int day;
+    Date date;
+    Time time;
     private static final String TAG = "Create Event";
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
-    String resultLocation;
-    double resultLng;
-    double resultLat;
-    String description;
-    Date date;
-    Time time;
-    String Sports;
-    int totalPlayers;
-    int batsman;
-    int bowlers;
-    int allRounder;
-    int wicketKeeper;
-    int keeper;
-    int defender;
-    int attacker;
-    int midfielder;
-    int timeHour;
-    int timeMinute;
+    CreateEventData object = new CreateEventData();
 
 
     public CreateEvent() {
@@ -85,12 +70,14 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
             public void onClick(View view) {
                 Intent intent =  new Intent(getActivity(),CreateEventMap.class);
                 startActivityForResult(intent,1);
-                description = et4.getText().toString();
+                object.setDescription(et4.getText().toString());
                 date.setDate(day);
                 date.setMonth(month);
                 date.setYear(year);
-                time.setHours(timeHour);
-                time.setMinutes(timeMinute);
+                object.setDate(date);
+                time.setHours(object.getTimeHour());
+                time.setMinutes(object.getTimeMinute());
+                object.setTime(time);
                 btce.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -108,10 +95,10 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
 
         if(requestCode==1){
             if (resultCode == Activity.RESULT_OK){
-                resultLocation = data.getStringExtra("resultLocation");
-                resultLat = data.getDoubleExtra("resultLat",0);
-                resultLng = data.getDoubleExtra("resultLng",0);
-                tvloc.setText(resultLocation);
+                object.setResultLocation(data.getStringExtra("resultLocation"));
+                object.setResultLat(data.getDoubleExtra("resultLat",0));
+                object.setResultLng(data.getDoubleExtra("resultLng",0));
+                tvloc.setText(object.getResultLocation());
             }
             else if(resultCode == Activity.RESULT_CANCELED){
                 tvloc.setText("Get Location");
@@ -224,10 +211,10 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
             @Override
             public void onClick(View view) {
                 Calendar cal = Calendar.getInstance();
-                timeHour = cal.get(Calendar.HOUR);
-                timeMinute = cal.get(Calendar.MINUTE);
+                object.setTimeHour(cal.get(Calendar.HOUR));
+                object.setTimeMinute(cal.get(Calendar.MINUTE));
 
-                TimePickerDialog dialog = new TimePickerDialog(getContext(), mTimeSetListener, timeHour, timeMinute, false);
+                TimePickerDialog dialog = new TimePickerDialog(getContext(), mTimeSetListener, object.getTimeHour(), object.getTimeMinute(), false);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
                 dialog.show();
             }
@@ -260,48 +247,47 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
             cl1.setVisibility(View.VISIBLE);
             cl2.setVisibility(View.GONE);
             cl3.setVisibility(View.GONE);
-            attacker = Integer.valueOf(etB.getText().toString().trim());
-            defender = Integer.valueOf(etB1.getText().toString().trim());
-            midfielder = Integer.valueOf(etB2.getText().toString().trim());
-            keeper = Integer.valueOf(etB3.getText().toString().trim());
-            totalPlayers = attacker + defender + midfielder + keeper;
-            Sports = "Football";
+            object.setAttacker(Integer.valueOf(etB.getText().toString().trim()));
+            object.setDefender(Integer.valueOf(etB1.getText().toString().trim()));
+            object.setMidfielder(Integer.valueOf(etB2.getText().toString().trim()));
+            object.setKeeper(Integer.valueOf(etB3.getText().toString().trim()));
+            object.setTotalPlayers(object.getAttacker() + object.getDefender() + object.getMidfielder() + object.getKeeper());
+            object.setSports("Football");
 
         } else if (item.equalsIgnoreCase("Cricket")) {
 
             cl1.setVisibility(View.GONE);
             cl2.setVisibility(View.VISIBLE);
             cl3.setVisibility(View.GONE);
-            batsman = Integer.valueOf(etBC.getText().toString().trim());
-            bowlers = Integer.valueOf(etBC1.getText().toString().trim());
-            allRounder = Integer.valueOf(etBC2.getText().toString().trim());
-            wicketKeeper = Integer.valueOf(etBC3.getText().toString().trim());
-            totalPlayers = batsman+bowlers+allRounder+wicketKeeper;
-            Sports = "Cricket";
+            object.setBatsman(Integer.valueOf(etBC.getText().toString().trim()));
+            object.setBowlers(Integer.valueOf(etBC1.getText().toString().trim()));
+            object.setAllRounder(Integer.valueOf(etBC2.getText().toString().trim()));
+            object.setWicketKeeper(Integer.valueOf(etBC3.getText().toString().trim()));
+            object.setTotalPlayers(object.getBatsman() + object.getBowlers() + object.getAllRounder() + object.getWicketKeeper());
+            object.setSports("Cricket");
 
         } else if (item.equalsIgnoreCase("Tennis")) {
 
             cl1.setVisibility(View.GONE);
             cl2.setVisibility(View.GONE);
             cl3.setVisibility(View.VISIBLE);
-            totalPlayers = 1;
-            Sports = "Tennis";
+            object.setSports("Tennis");
 
         } else if (item.equalsIgnoreCase("Badminton")) {
 
             cl1.setVisibility(View.GONE);
             cl2.setVisibility(View.GONE);
             cl3.setVisibility(View.VISIBLE);
-            totalPlayers = 1;
-            Sports = "Badminton";
+            object.setTotalPlayers(1);
+            object.setSports("Badminton");
 
         } else if (item.equalsIgnoreCase("Squash")) {
 
             cl1.setVisibility(View.GONE);
             cl2.setVisibility(View.GONE);
             cl3.setVisibility(View.VISIBLE);
-            totalPlayers = 1;
-            Sports = "Squash";
+            object.setTotalPlayers(1);
+            object.setSports("Squash");
         }
     }
 
@@ -337,20 +323,22 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
         String date = month + "/" + day + "/" + year;
         mDisplayDate.setText(date);
     }
+
+    //THIS IS THE METHOD WHERE YOU HAVE TO SEND DATA TO FIREBASE. CALL THIS METHOD IN ONCREATEVIEW.
     private void dataSender(){
-        if(Sports.equals("Football")){
+        if(object.getSports().equals("Football")){
 
         }
-        else if(Sports.equals("Cricket")){
+        else if(object.getSports().equals("Cricket")){
 
         }
-        else if(Sports.equals("Tennis")){
+        else if(object.getSports().equals("Tennis")){
 
         }
-        else if(Sports.equals("Badminton")){
+        else if(object.getSports().equals("Badminton")){
 
         }
-        else if(Sports.equals("Squash")){
+        else if(object.getSports().equals("Squash")){
 
         }
     }

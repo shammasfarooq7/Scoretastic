@@ -14,12 +14,19 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class SignUp extends AppCompatActivity {
 
 
+
+
+
+    long maxId = 0;
     EditText etName;
     EditText etEmail;
     EditText etPassword;
@@ -40,6 +47,24 @@ public class SignUp extends AppCompatActivity {
         btSignUp = findViewById(R.id.signup);
         fAuth = FirebaseAuth.getInstance();
 
+
+        myReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists())
+                    maxId=(dataSnapshot.getChildrenCount());
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
         btSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,6 +75,10 @@ public class SignUp extends AppCompatActivity {
                 user.setEmail(email);
                 user.setPassword(password);
 
+                myReference.child(String.valueOf(maxId+1)).setValue(user);
+
+                Toast.makeText(SignUp.this, "SIGNED UP!", Toast.LENGTH_LONG).show();
+
                 if(!email.equals("")&&!password.equals("")&&!name.equals("")){
                     if(password.length() < 7){
                         Toast.makeText(getApplicationContext(),"Password must be equal or greater than 8 letters",Toast.LENGTH_SHORT).show();
@@ -59,7 +88,8 @@ public class SignUp extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if(task.isSuccessful()){
-                                    myReference.child("UserData").setValue(user);
+                                  myReference.child(String.valueOf(maxId+1)).setValue(user);
+                                   // myRef.child(String.valueOf(maxId+1)).setValue(user);
                                     Toast.makeText(getApplicationContext(),"User Created",Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(getApplicationContext(),Main.class));
 

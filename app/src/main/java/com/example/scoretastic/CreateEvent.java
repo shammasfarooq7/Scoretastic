@@ -27,11 +27,15 @@ import android.widget.TextView;
 
 import android.widget.AdapterView.OnItemSelectedListener;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import android.widget.TimePicker;
+import android.widget.Toast;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.Calendar;
 
 public class CreateEvent extends Fragment implements OnItemSelectedListener,DatePickerDialog.OnDateSetListener {
@@ -48,11 +52,12 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
     int month;
     int day;
     Date date;
-    Time time;
     private static final String TAG = "Create Event";
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
     CreateEventData object = new CreateEventData();
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myReference = database.getReference("CreateEvent");
 
 
     public CreateEvent() {
@@ -71,13 +76,7 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
                 Intent intent =  new Intent(getActivity(),CreateEventMap.class);
                 startActivityForResult(intent,1);
                 object.setDescription(et4.getText().toString());
-                date.setDate(day);
-                date.setMonth(month);
-                date.setYear(year);
                 object.setDate(date);
-                time.setHours(object.getTimeHour());
-                time.setMinutes(object.getTimeMinute());
-                object.setTime(time);
                 btce.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -177,6 +176,11 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
          int year = cal.get(Calendar.YEAR);
          int month = cal.get(Calendar.MONTH);
          int day = cal.get(Calendar.DAY_OF_MONTH);
+         Calendar cal1 = Calendar.getInstance();
+         cal1.set(Calendar.MONTH,month);
+         cal1.set(Calendar.YEAR,year);
+         cal1.set(Calendar.DATE,day);
+         date =  cal1.getTime();
 
         final DatePickerDialog dialog = new DatePickerDialog(
                 getContext(),
@@ -247,30 +251,63 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
             cl1.setVisibility(View.VISIBLE);
             cl2.setVisibility(View.GONE);
             cl3.setVisibility(View.GONE);
-            object.setAttacker(Integer.valueOf(etB.getText().toString().trim()));
-            object.setDefender(Integer.valueOf(etB1.getText().toString().trim()));
-            object.setMidfielder(Integer.valueOf(etB2.getText().toString().trim()));
-            object.setKeeper(Integer.valueOf(etB3.getText().toString().trim()));
-            object.setTotalPlayers(object.getAttacker() + object.getDefender() + object.getMidfielder() + object.getKeeper());
-            object.setSports("Football");
+            if(!etB.getText().toString().trim().equals("")){
+                object.setAttacker(Integer.valueOf(etB.getText().toString().trim()));
+            }
+            if(!etB1.getText().toString().trim().equals("")){
+                object.setDefender(Integer.valueOf(etB1.getText().toString().trim()));
+            }
+            if(!etB2.getText().toString().trim().equals("")){
+                object.setMidfielder(Integer.valueOf(etB2.getText().toString().trim()));
+            }
+            if(!etB3.getText().toString().trim().equals("")){
+                object.setKeeper(Integer.valueOf(etB3.getText().toString().trim()));
+            }
+            if(!etB.getText().toString().trim().equals("") &&
+                    !etB1.getText().toString().trim().equals("") &&
+                    !etB2.getText().toString().trim().equals("") &&
+                    !etB3.getText().toString().trim().equals("")) {
+                object.setTotalPlayers(object.getAttacker() + object.getDefender() + object.getMidfielder() + object.getKeeper());
+                object.setSports("Football");
+            }
+
 
         } else if (item.equalsIgnoreCase("Cricket")) {
 
             cl1.setVisibility(View.GONE);
             cl2.setVisibility(View.VISIBLE);
             cl3.setVisibility(View.GONE);
-            object.setBatsman(Integer.valueOf(etBC.getText().toString().trim()));
-            object.setBowlers(Integer.valueOf(etBC1.getText().toString().trim()));
-            object.setAllRounder(Integer.valueOf(etBC2.getText().toString().trim()));
-            object.setWicketKeeper(Integer.valueOf(etBC3.getText().toString().trim()));
-            object.setTotalPlayers(object.getBatsman() + object.getBowlers() + object.getAllRounder() + object.getWicketKeeper());
-            object.setSports("Cricket");
+            if(!etBC.getText().toString().trim().equals("")){
+                object.setBatsman(Integer.valueOf(etBC.getText().toString().trim()));
+            }
+
+            if(!etBC1.getText().toString().trim().equals("")){
+                object.setBowlers(Integer.valueOf(etBC1.getText().toString().trim()));
+            }
+
+            if(!etBC2.getText().toString().trim().equals("")){
+                object.setAllRounder(Integer.valueOf(etBC2.getText().toString().trim()));
+            }
+
+            if(!etBC3.getText().toString().trim().equals("")){
+                object.setWicketKeeper(Integer.valueOf(etBC3.getText().toString().trim()));
+            }
+
+            if(!etBC.getText().toString().trim().equals("") &&
+                    !etBC1.getText().toString().trim().equals("") &&
+                    !etBC2.getText().toString().trim().equals("") &&
+                    !etBC3.getText().toString().trim().equals("")){
+                object.setTotalPlayers(object.getBatsman() + object.getBowlers() + object.getAllRounder() + object.getWicketKeeper());
+                object.setSports("Cricket");
+            }
+
 
         } else if (item.equalsIgnoreCase("Tennis")) {
 
             cl1.setVisibility(View.GONE);
             cl2.setVisibility(View.GONE);
             cl3.setVisibility(View.VISIBLE);
+            object.setTotalPlayers(1);
             object.setSports("Tennis");
 
         } else if (item.equalsIgnoreCase("Badminton")) {
@@ -303,16 +340,16 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
             tvDate.setError("Please enter the date");
         } else if (tvTime.getText().toString().isEmpty()) {
             tvTime.setError("Please enter the time!!!");
-        } else if (et4.getText().toString().isEmpty()) {            // to strict legth of char(.length() < 6)
+        } else if (et4.getText().toString().isEmpty()) {
             et4.setError("enter the description");
         } else if (etB.getText().toString().isEmpty()) {
-            etB.setError("plz enter");
+            etB.setError("Please enter");
         } else if (etB1.getText().toString().isEmpty()) {
-            etB1.setError("plz enter");
+            etB1.setError("Please enter");
         } else if (etB2.getText().toString().isEmpty()) {
-            etB2.setError("plz enter");
+            etB2.setError("Please enter");
         } else if (etB3.getText().toString().isEmpty()) {
-            etB3.setError("plz enter");
+            etB3.setError("Please enter");
         }
 
     }
@@ -327,21 +364,24 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
     //THIS IS THE METHOD WHERE YOU HAVE TO SEND DATA TO FIREBASE. CALL THIS METHOD IN ONCREATEVIEW.
     private void dataSender(){
         if(object.getSports().equals("Football")){
-
+            myReference.child("CreateEvent").setValue(object);
+            Toast.makeText(getContext(),"Data Saved"+object,Toast.LENGTH_SHORT).show();
         }
         else if(object.getSports().equals("Cricket")){
-
+            myReference.child("CreateEvent").setValue(object);
+            Toast.makeText(getContext(),"Data Saved"+object,Toast.LENGTH_SHORT).show();
         }
         else if(object.getSports().equals("Tennis")){
-
+            myReference.child("CreateEvent").setValue(object);
+            Toast.makeText(getContext(),"Data Saved"+object,Toast.LENGTH_SHORT).show();
         }
         else if(object.getSports().equals("Badminton")){
-
+            myReference.child("CreateEvent").setValue(object);
+            Toast.makeText(getContext(),"Data Saved"+object,Toast.LENGTH_SHORT).show();
         }
         else if(object.getSports().equals("Squash")){
-
+            myReference.child("CreateEvent").setValue(object);
+            Toast.makeText(getContext(),"Data Saved"+object,Toast.LENGTH_SHORT).show();
         }
     }
-
 }
-

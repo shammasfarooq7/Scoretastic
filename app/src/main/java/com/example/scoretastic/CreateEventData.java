@@ -1,6 +1,6 @@
 package com.example.scoretastic;
 
-import java.sql.Date;
+import java.util.Date;
 import java.sql.Time;
 
 public class CreateEventData {

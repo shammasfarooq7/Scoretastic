@@ -86,9 +86,9 @@ public class Home extends Fragment implements OnMapReadyCallback, homeRecyclerAd
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap =googleMap;
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng lahore = new LatLng(31.5204, 74.3587);
+        mMap.addMarker(new MarkerOptions().position(lahore).title("Marker in Lahore"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(lahore));
     }
 
     @Override

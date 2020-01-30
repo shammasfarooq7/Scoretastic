@@ -77,7 +77,7 @@ public class SignUp extends AppCompatActivity {
 
                 myReference.child(String.valueOf(maxId+1)).setValue(user);
 
-                Toast.makeText(SignUp.this, "SIGNED UP!", Toast.LENGTH_LONG).show();
+                Toast.makeText(SignUp.this, "SIGNED00 UP!", Toast.LENGTH_LONG).show();
 
                 if(!email.equals("")&&!password.equals("")&&!name.equals("")){
                     if(password.length() < 7){

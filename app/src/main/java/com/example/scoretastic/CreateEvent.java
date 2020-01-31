@@ -1,6 +1,4 @@
 package com.example.scoretastic;
-
-
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -8,13 +6,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-
-import android.renderscript.Sampler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,22 +21,17 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import android.widget.AdapterView.OnItemSelectedListener;
-
-import java.sql.Ref;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.Calendar;
 
 public class CreateEvent extends Fragment implements OnItemSelectedListener,DatePickerDialog.OnDateSetListener {
@@ -138,8 +128,6 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
         datePicker(view);
         timePicker(view);
         btce = view.findViewById(R.id.btce);
-        btsd = view.findViewById(R.id.btsd);
-
         tvCrtTitle = view.findViewById(R.id.tvCrtTitle);
         tvloc = view.findViewById(R.id.tvloc);
         tvT1 = view.findViewById(R.id.tvT1);
@@ -454,18 +442,4 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
         Toast.makeText(getContext(),"Data Saved",Toast.LENGTH_SHORT).show();
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

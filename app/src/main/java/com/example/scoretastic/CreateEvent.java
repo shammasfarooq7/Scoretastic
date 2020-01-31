@@ -9,10 +9,12 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import android.renderscript.Sampler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,14 +29,18 @@ import android.widget.TextView;
 
 import android.widget.AdapterView.OnItemSelectedListener;
 
+import java.sql.Ref;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 
@@ -45,9 +51,10 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
     private TextView mDisplayDate,mDisplayTime;
     EditText et4,etB,etB1,etB2,etB3,etBC,etBC1,etBC2,etBC3;
     Spinner spinner;
-    Button btce;
+    private Button btce ,btsd;
     ConstraintLayout cl1,cl2,cl3;
     Activity mActivity;
+    long maxId = 0;
     int year;
     int month;
     int day;
@@ -77,9 +84,12 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
             public void onClick(View view) {
                 Intent intent =  new Intent(getActivity(),CreateEventMap.class);
                 startActivityForResult(intent,1);
+
+
                 btce.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
                         createEventData.setDescription(et4.getText().toString());
                         createEventData.setDate(date);
                         if(createEventData.getSports().equals("Football")){
@@ -91,12 +101,19 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
                         else{
                             dataSender();
                         }
+
                     }
+
                 });
+
             }
         });
         return view;
     }
+
+
+
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -121,6 +138,7 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
         datePicker(view);
         timePicker(view);
         btce = view.findViewById(R.id.btce);
+        btsd = view.findViewById(R.id.btsd);
 
         tvCrtTitle = view.findViewById(R.id.tvCrtTitle);
         tvloc = view.findViewById(R.id.tvloc);
@@ -175,6 +193,36 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
             @Override
             public void onClick(View v) {
                 validationScene();
+
+
+            }
+        });
+
+
+
+        btsd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(getContext(),"Data Saved",Toast.LENGTH_SHORT).show();
+
+                //toastMessage("the stored data in firebase is: " + value);
+
+//                Intent intent = new Intent(getActivity(), ViewDatabase.class);
+//                startActivity(intent);
+            }
+        });
+
+        myReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists())
+                    maxId=(dataSnapshot.getChildrenCount());
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
 
@@ -324,6 +372,7 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
             etB3.setError("Please enter");
         }
 
+
     }
     @Override
     public void onDateSet(DatePicker view, int Year, int Month, int Day) {
@@ -335,7 +384,10 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
 
     //THIS IS THE METHOD WHERE YOU HAVE TO SEND DATA TO FIREBASE. CALL THIS METHOD IN ONCREATEVIEW.
     private void dataSender(){
-        myReference.child("CreateEvent").setValue(createEventData);
+
+
+        myReference.child(String.valueOf(maxId+1)).setValue(createEventData);
+        //myReference.child("CreateEvent").setValue(createEventData);
         Toast.makeText(getContext(),"Data Saved",Toast.LENGTH_SHORT).show();
     }
 
@@ -362,7 +414,10 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
             createEventFootball.setKeeper(Integer.valueOf(etB3.getText().toString().trim()));
         }
         createEventFootball.setTotalPlayers(createEventFootball.getAttacker() + createEventFootball.getDefender() + createEventFootball.getMidfielder() + createEventFootball.getKeeper());
-        myReference.child("CreateEvent").setValue(createEventFootball);
+
+        // myReference.child("CreateEvent").setValue(createEventFootball);
+
+         myReference.child(String.valueOf(maxId+1)).setValue(createEventFootball);
         Toast.makeText(getContext(),"Data Saved",Toast.LENGTH_SHORT).show();
     }
 
@@ -392,7 +447,25 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
             createEventCricket.setWicketKeeper(Integer.valueOf(etBC3.getText().toString().trim()));
         }
         createEventCricket.setTotalPlayers(createEventCricket.getBatsman() + createEventCricket.getBowlers() + createEventCricket.getAllRounder() + createEventCricket.getWicketKeeper());
-        myReference.child("CreateEvent").setValue(createEventCricket);
+
+        //myReference.child("CreateEvent").setValue(createEventCricket);
+
+        myReference.child(String.valueOf(maxId+1)).setValue(createEventCricket);
         Toast.makeText(getContext(),"Data Saved",Toast.LENGTH_SHORT).show();
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

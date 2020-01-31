@@ -57,6 +57,7 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
     private final int LocationPermissionRequestCode = 1234;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private final float defaultZoom = 15f;
+    Double lat, lng;
 
 
     public Home() {
@@ -125,6 +126,10 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
             object.setDate(day + "/" + month + "/" + year);
             object.setTime(timeHour + ":" + timeMinute);
             arrayList.add(object);
+            lat = (Double) ds.child("resultLat").getValue();
+            lng = (Double) ds.child("resultLng").getValue();
+            LatLng location = new LatLng(lat,lng);
+            mMap.addMarker(new MarkerOptions().position(location));
 
         }
 

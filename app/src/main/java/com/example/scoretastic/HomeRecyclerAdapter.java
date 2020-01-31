@@ -1,27 +1,27 @@
 package com.example.scoretastic;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class homeRecyclerAdapter extends RecyclerView.Adapter<homeRecyclerAdapter.ViewHolder> {
+public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapter.ViewHolder> {
 
-    private ArrayList<recycler> event;
+    private ArrayList<Recycler> event;
     ItemClicked activity;
+    LinearLayoutManager mLinearLayoutManager;
 
-    public interface  ItemClicked{
+    public interface ItemClicked {
         void onItemClicked(int index);
     }
 
-    public homeRecyclerAdapter(Context context, ArrayList<recycler> list){
+    public HomeRecyclerAdapter(Home context, ArrayList<Recycler> list) {
         event = list;
         activity = (ItemClicked) context;
     }
@@ -30,8 +30,8 @@ public class homeRecyclerAdapter extends RecyclerView.Adapter<homeRecyclerAdapte
 
         TextView tvSports;
         TextView tvLocation;
-        EditText etTime;
-        EditText etDate;
+        TextView etTime;
+        TextView etDate;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -52,19 +52,20 @@ public class homeRecyclerAdapter extends RecyclerView.Adapter<homeRecyclerAdapte
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public HomeRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view, parent,false);
-        return new ViewHolder(v);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view, parent, false);
+        mLinearLayoutManager = new LinearLayoutManager(parent.getContext(), LinearLayoutManager.VERTICAL, false);
+        return new HomeRecyclerAdapter.ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull HomeRecyclerAdapter.ViewHolder holder, int position) {
         holder.itemView.setTag(event.get(position));
-        holder.tvSports.setText(event.get(position).sports);
-        holder.tvLocation.setText(event.get(position).location);
-        holder.etDate.setText((CharSequence) event.get(position).date);
-        holder.etTime.setText((CharSequence) event.get(position).time);
+        holder.tvSports.setText(event.get(position).getSports());
+        holder.tvLocation.setText(event.get(position).getLocation());
+        holder.etDate.setText(event.get(position).date);
+        holder.etTime.setText(event.get(position).time);
 
     }
 

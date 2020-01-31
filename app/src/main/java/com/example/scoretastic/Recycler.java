@@ -1,19 +1,18 @@
 package com.example.scoretastic;
-
-import java.sql.Date;
-import java.sql.Time;
-
-public class recycler {
+public class Recycler {
     String sports;
     String location;
-    Time time;
-    Date date;
+    String time;
+    String date;
 
-    public recycler(String sports, String location, Time time, Date date) {
+    public Recycler(String sports, String location, String time, String date) {
         this.sports = sports;
         this.location = location;
         this.time = time;
         this.date = date;
+    }
+
+    public Recycler() {
     }
 
     public String getSports() {
@@ -32,19 +31,19 @@ public class recycler {
         this.location = location;
     }
 
-    public Time getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Time time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }

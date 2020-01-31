@@ -12,18 +12,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class myEventRecyclerAdapter extends RecyclerView.Adapter<myEventRecyclerAdapter.ViewHolder> {
+public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdapter.ViewHolder> {
 
-    private ArrayList<recycler> event;
-    homeRecyclerAdapter.ItemClicked activity;
+    private ArrayList<Recycler> event;
+    HomeRecyclerAdapter.ItemClicked activity;
 
     public interface  ItemClicked{
         void onItemClicked(int index);
     }
 
-    public myEventRecyclerAdapter(Context context, ArrayList<recycler> list){
+    public EventRecyclerAdapter(Context context, ArrayList<Recycler> list){
         event = list;
-        activity = (homeRecyclerAdapter.ItemClicked) context;
+        activity = (HomeRecyclerAdapter.ItemClicked) context;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -52,7 +52,7 @@ public class myEventRecyclerAdapter extends RecyclerView.Adapter<myEventRecycler
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view, parent,false);
-        return new myEventRecyclerAdapter.ViewHolder(v);
+        return new EventRecyclerAdapter.ViewHolder(v);
     }
 
     @Override

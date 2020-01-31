@@ -15,7 +15,7 @@ import android.widget.Button;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MyEvents extends Fragment implements myEventRecyclerAdapter.ItemClicked{
+public class MyEvents extends Fragment implements EventRecyclerAdapter.ItemClicked{
 
     public MyEvents() {
         // Required empty public constructor

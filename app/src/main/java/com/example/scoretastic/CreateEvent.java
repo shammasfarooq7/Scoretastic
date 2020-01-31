@@ -51,7 +51,7 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
     private TextView mDisplayDate,mDisplayTime;
     EditText et4,etB,etB1,etB2,etB3,etBC,etBC1,etBC2,etBC3;
     Spinner spinner;
-    private Button btce ,btsd;
+    private Button btce ;
     ConstraintLayout cl1,cl2,cl3;
     Activity mActivity;
     long maxId = 0;
@@ -138,7 +138,7 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
         datePicker(view);
         timePicker(view);
         btce = view.findViewById(R.id.btce);
-        btsd = view.findViewById(R.id.btsd);
+
 
         tvCrtTitle = view.findViewById(R.id.tvCrtTitle);
         tvloc = view.findViewById(R.id.tvloc);
@@ -200,17 +200,6 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
 
 
 
-        btsd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Toast.makeText(getContext(),"Data Saved",Toast.LENGTH_SHORT).show();
-
-                //toastMessage("the stored data in firebase is: " + value);
-
-//                Intent intent = new Intent(getActivity(), ViewDatabase.class);
-//                startActivity(intent);
-            }
-        });
 
         myReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -454,17 +443,6 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
         Toast.makeText(getContext(),"Data Saved",Toast.LENGTH_SHORT).show();
 
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 

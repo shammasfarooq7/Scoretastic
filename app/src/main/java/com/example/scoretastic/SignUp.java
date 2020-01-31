@@ -27,6 +27,7 @@ public class SignUp extends AppCompatActivity {
 
 
     long maxId = 0;
+    long userId = 1 ;
     EditText etName;
     EditText etEmail;
     EditText etPassword;
@@ -42,6 +43,7 @@ public class SignUp extends AppCompatActivity {
         setContentView(R.layout.signup);
 
         etName = findViewById(R.id.etName);
+        userId=1;
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         btSignUp = findViewById(R.id.signup);
@@ -71,6 +73,7 @@ public class SignUp extends AppCompatActivity {
                 String email = etEmail.getText().toString().trim();
                 String password = etPassword.getText().toString().trim();
                 String name = etName.getText().toString().trim();
+
                 user.setName(name);
                 user.setEmail(email);
                 user.setPassword(password);
@@ -90,6 +93,7 @@ public class SignUp extends AppCompatActivity {
                                 if(task.isSuccessful()){
                                   myReference.child(String.valueOf(maxId+1)).setValue(user);
 
+                                  userId = maxId;
                                     Toast.makeText(getApplicationContext(),"User Created",Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(getApplicationContext(),Main.class));
 

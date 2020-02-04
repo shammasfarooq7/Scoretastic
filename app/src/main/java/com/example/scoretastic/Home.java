@@ -1,10 +1,15 @@
 package com.example.scoretastic;
 
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,13 +18,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,7 +40,7 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAdapter.ItemClicked{
+public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAdapter.ItemClicked {
 
     GoogleMap mMap;
     View j;
@@ -41,6 +51,13 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
     private DatabaseReference databaseReference;
     Recycler object = new Recycler();
     ArrayList<Recycler> arrayList = new ArrayList<>();
+    String ACCESS_FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
+    String ACCESS_COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
+    Boolean mLocationPermissionGranted = false;
+    private final int LocationPermissionRequestCode = 1234;
+    private FusedLocationProviderClient mFusedLocationProviderClient;
+    private final float defaultZoom = 15f;
+    Double lat, lng;
 
 
     public Home() {
@@ -52,14 +69,15 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View v =  inflater.inflate(R.layout.fragment_home, container, false);
+        final View v = inflater.inflate(R.layout.fragment_home, container, false);
         databaseReference = firebaseDatabase.getInstance().getReference("CreateEvent");
         Button btMap = v.findViewById(R.id.btMap);
         Button btList = v.findViewById(R.id.btList);
         j = v.findViewById(R.id.map);
+        getLocationPermission();
         recyclerView = v.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
-        myAdapter = new HomeRecyclerAdapter(this,arrayList);
+        myAdapter = new HomeRecyclerAdapter(this, arrayList);
         recyclerView.setAdapter(myAdapter);
 
         btMap.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +115,7 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
     }
 
     private void showData(DataSnapshot dataSnapshot) {
-        for(DataSnapshot ds : dataSnapshot.getChildren()){
+        for (DataSnapshot ds : dataSnapshot.getChildren()) {
             String day = ds.child("date").child("date").getValue().toString();
             String month = ds.child("date").child("month").getValue().toString();
             String year = ds.child("date").child("year").getValue().toString();
@@ -105,9 +123,13 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
             String timeMinute = ds.child("timeMinute").getValue().toString();
             object.setLocation(ds.child("resultLocation").getValue().toString());
             object.setSports(ds.child("sports").getValue().toString());
-            object.setDate(day +"/"+ month+"/"+ year);
-            object.setTime(timeHour +":"+ timeMinute);
+            object.setDate(day + "/" + month + "/" + year);
+            object.setTime(timeHour + ":" + timeMinute);
             arrayList.add(object);
+            lat = (Double) ds.child("resultLat").getValue();
+            lng = (Double) ds.child("resultLng").getValue();
+            LatLng location = new LatLng(lat,lng);
+            mMap.addMarker(new MarkerOptions().position(location));
 
         }
 
@@ -116,21 +138,88 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        SupportMapFragment mapFragment = (SupportMapFragment)getChildFragmentManager().findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap =googleMap;
-        LatLng lahore = new LatLng(31.5204, 74.3587);
-        mMap.addMarker(new MarkerOptions().position(lahore).title("Marker in Lahore"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(lahore));
+        Toast.makeText(getContext(),"Map is ready",Toast.LENGTH_SHORT).show();
+        mMap = googleMap;
+        if(mLocationPermissionGranted){
+            getDeviceLocation();
+            mMap.setMyLocationEnabled(true);
+        }
+    }
+    private void getDeviceLocation(){
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
+        try{
+            if(mLocationPermissionGranted){
+                Task location = mFusedLocationProviderClient.getLastLocation();
+                location.addOnCompleteListener(new OnCompleteListener() {
+                    @Override
+                    public void onComplete(@NonNull Task task) {
+                        if(task.isSuccessful()){
+                            Location currentLocation =(Location) task.getResult();
+                            Toast.makeText(getContext(),"Location found", Toast.LENGTH_SHORT).show();
+                            moveCamera(new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude()),defaultZoom);
+                        }
+                        else{
+                            Toast.makeText(getContext(),"Location not found", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        }
+        catch(SecurityException e){
+
+        }
+
+    }
+    private void moveCamera(LatLng latLng, Float zoom){
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
+
     }
 
-    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        mLocationPermissionGranted = false;
+
+        switch (requestCode) {
+            case LocationPermissionRequestCode: {
+                if (grantResults.length > 0) {
+                    for (int i = 0; i < grantResults.length; i++) {
+                        if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                            mLocationPermissionGranted = false;
+                            return;
+                        }
+                    }
+                    mLocationPermissionGranted = true;
+                }
+            }
+        }
+    }
+    private void getLocationPermission(){
+        String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION};
+
+        if(ContextCompat.checkSelfPermission(
+                getContext(),ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            if(ContextCompat.checkSelfPermission(
+                    getContext(),ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                mLocationPermissionGranted = true;
+            }
+            else {
+                ActivityCompat.requestPermissions(getActivity(),permissions,LocationPermissionRequestCode);
+            }
+        }
+        else {
+            ActivityCompat.requestPermissions(getActivity(),permissions,LocationPermissionRequestCode);
+        }
+
+    }
+
     public void onItemClicked(int index) {
 
     }
+
 }

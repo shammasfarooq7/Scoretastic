@@ -78,8 +78,6 @@ public class SignUp extends AppCompatActivity {
                 user.setEmail(email);
                 user.setPassword(password);
 
-                myReference.child(String.valueOf(maxId+1)).setValue(user);
-
                 Toast.makeText(SignUp.this, "SIGNED UP!", Toast.LENGTH_LONG).show();
 
                 if(!email.equals("")&&!password.equals("")&&!name.equals("")){

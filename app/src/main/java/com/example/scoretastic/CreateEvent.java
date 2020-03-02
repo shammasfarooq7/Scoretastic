@@ -14,7 +14,6 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
-import android.renderscript.Sampler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +28,6 @@ import android.widget.TextView;
 
 import android.widget.AdapterView.OnItemSelectedListener;
 
-import java.sql.Ref;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -161,8 +159,8 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
         etBC1 = view.findViewById(R.id.etBC1);
         etBC2 = view.findViewById(R.id.etBC2);
         etBC3 = view.findViewById(R.id.etBC3);
-        tvDate = view.findViewById(R.id.tvDate);
-        tvTime = view.findViewById(R.id.tvTime);
+        tvDate = view.findViewById(R.id.tvMarkerDate);
+        tvTime = view.findViewById(R.id.tvMarkerTime);
         et4 = view.findViewById(R.id.et4);
         cl1 = view.findViewById(R.id.cl1);
         cl2 = view.findViewById(R.id.cl2);
@@ -214,7 +212,7 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
 
     private void datePicker(View view) {
 
-        mDisplayDate = view.findViewById(R.id.tvDate);
+        mDisplayDate = view.findViewById(R.id.tvMarkerDate);
 
         Calendar cal = Calendar.getInstance();
          int year = cal.get(Calendar.YEAR);
@@ -253,7 +251,7 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
     }
 
     private void timePicker(View view) {
-        mDisplayTime = view.findViewById(R.id.tvTime);
+        mDisplayTime = view.findViewById(R.id.tvMarkerTime);
 
         mDisplayTime.setOnClickListener(new View.OnClickListener() {
             @Override

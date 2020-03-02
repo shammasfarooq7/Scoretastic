@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -18,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -44,7 +46,10 @@ import java.util.ArrayList;
 public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAdapter.ItemClicked {
 
     GoogleMap mMap;
-    View j;
+    View j,k;
+    CardView cardView;
+    TextView tvMarkerLocation,tvMarkerSports,tvMarkerTime,tvMarkerDate;
+    Button btMarkerJoin;
     RecyclerView recyclerView;
     HomeRecyclerAdapter myAdapter;
     RecyclerView.LayoutManager layoutManager;
@@ -61,7 +66,6 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
     Double lat, lng;
     ArrayList<LatLng> arrayListLoc = new ArrayList<LatLng>();
 
-
     public Home() {
         // Required empty public constructor
     }
@@ -71,23 +75,32 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         arrayList = new ArrayList<>();
         final View v = inflater.inflate(R.layout.fragment_home, container, false);
         databaseReference = firebaseDatabase.getInstance().getReference("CreateEvent");
         Button btMap = v.findViewById(R.id.btMap);
         Button btList = v.findViewById(R.id.btList);
         j = v.findViewById(R.id.map);
+        k = v.findViewById(R.id.mapMarker);
+        tvMarkerDate = k.findViewById(R.id.tvMarkerDate);
+        tvMarkerLocation = k.findViewById(R.id.tvMarkerLocation);
+        tvMarkerSports = k.findViewById(R.id.tvMarkerSports);
+        tvMarkerTime = k.findViewById(R.id.tvMarkerTime);
+        btMarkerJoin = k.findViewById(R.id.btMarkerJoin);
         getLocationPermission();
         recyclerView = v.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         myAdapter = new HomeRecyclerAdapter(this, arrayList);
         recyclerView.setAdapter(myAdapter);
+        k.setVisibility(View.GONE);
 
         btMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 recyclerView.setVisibility(View.GONE);
+                k.setVisibility(View.GONE);
                 j.setVisibility(View.VISIBLE);
             }
         });
@@ -97,6 +110,7 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
             public void onClick(View view) {
                 recyclerView.setVisibility(View.VISIBLE);
                 j.setVisibility(View.INVISIBLE);
+                k.setVisibility(View.GONE);
                 layoutManager = new LinearLayoutManager(getContext());
                 recyclerView.setLayoutManager(layoutManager);
             }
@@ -155,6 +169,22 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
             for(int i = 0; i<arrayListLoc.size();i++){
                 mMap.addMarker(new MarkerOptions().position(arrayListLoc.get(i)));
             }
+            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(Marker marker) {
+                    k.setVisibility(View.VISIBLE);
+                    for(int i = 0; i<arrayListLoc.size(); i++) {
+                        if(marker.getPosition().latitude == arrayListLoc.get(i).latitude){
+                            tvMarkerSports.setText(arrayList.get(i).sports);
+                            tvMarkerDate.setText(arrayList.get(i).date);
+                            tvMarkerLocation.setText(arrayList.get(i).location);
+                            tvMarkerTime.setText(arrayList.get(i).time);
+                        }
+                    }
+                    return false;
+                }
+            });
+
         }
     }
     private void getDeviceLocation(){

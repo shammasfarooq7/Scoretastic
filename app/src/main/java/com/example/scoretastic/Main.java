@@ -13,9 +13,6 @@ import android.widget.LinearLayout;
 
 public class Main extends AppCompatActivity {
 
-
-    private Toolbar toolbar1;
-
     Button home,createEvent,myEvents,profile;
     FrameLayout frameLayout;
     LinearLayout linearLayout;

@@ -35,10 +35,10 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvSports = itemView.findViewById(R.id.tvSports);
-            tvLocation = itemView.findViewById(R.id.tvLocation);
-            etTime = itemView.findViewById(R.id.etTime);
-            etDate = itemView.findViewById(R.id.etDate);
+            tvSports = itemView.findViewById(R.id.tvMarkerSports);
+            tvLocation = itemView.findViewById(R.id.tvMarkerLocation);
+            etTime = itemView.findViewById(R.id.tvMarkerTime);
+            etDate = itemView.findViewById(R.id.tvMarkerDate);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

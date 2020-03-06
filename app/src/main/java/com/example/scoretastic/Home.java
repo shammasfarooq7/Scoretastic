@@ -27,6 +27,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -50,7 +51,7 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     Recycler object = new Recycler();
-    ArrayList<Recycler> arrayList = new ArrayList<>();
+    ArrayList<Recycler> arrayList;
     String ACCESS_FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     String ACCESS_COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     Boolean mLocationPermissionGranted = false;
@@ -58,6 +59,7 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private final float defaultZoom = 15f;
     Double lat, lng;
+    ArrayList<LatLng> arrayListLoc = new ArrayList<LatLng>();
 
 
     public Home() {
@@ -69,6 +71,7 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        arrayList = new ArrayList<>();
         final View v = inflater.inflate(R.layout.fragment_home, container, false);
         databaseReference = firebaseDatabase.getInstance().getReference("CreateEvent");
         Button btMap = v.findViewById(R.id.btMap);
@@ -93,7 +96,7 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
             @Override
             public void onClick(View view) {
                 recyclerView.setVisibility(View.VISIBLE);
-                j.setVisibility(View.GONE);
+                j.setVisibility(View.INVISIBLE);
                 layoutManager = new LinearLayoutManager(getContext());
                 recyclerView.setLayoutManager(layoutManager);
             }
@@ -121,6 +124,7 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
             String year = ds.child("date").child("year").getValue().toString();
             String timeHour = ds.child("timeHour").getValue().toString();
             String timeMinute = ds.child("timeMinute").getValue().toString();
+            object = new Recycler();
             object.setLocation(ds.child("resultLocation").getValue().toString());
             object.setSports(ds.child("sports").getValue().toString());
             object.setDate(day + "/" + month + "/" + year);
@@ -128,9 +132,7 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
             arrayList.add(object);
             lat = (Double) ds.child("resultLat").getValue();
             lng = (Double) ds.child("resultLng").getValue();
-            LatLng location = new LatLng(lat,lng);
-            mMap.addMarker(new MarkerOptions().position(location));
-
+            arrayListLoc.add(new LatLng(lat,lng));
         }
 
     }
@@ -150,6 +152,10 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
         if(mLocationPermissionGranted){
             getDeviceLocation();
             mMap.setMyLocationEnabled(true);
+            for(int i = 0; i<arrayListLoc.size();i++){
+                mMap.addMarker(new MarkerOptions().position(arrayListLoc.get(i)));
+
+            }
         }
     }
     private void getDeviceLocation(){

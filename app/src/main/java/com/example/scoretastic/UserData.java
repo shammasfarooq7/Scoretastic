@@ -2,31 +2,41 @@ package com.example.scoretastic;
 
 import android.widget.ImageView;
 
-public class userData {
+public class UserData {
     String name;
     String email;
     String password;
     ImageView profilePic;
     int Radius;
-    int userId;
+    long id;
+    String userId;
 
-    public userData(String name, String email, String password, ImageView profilePic, int radius, int userId) {
+    public UserData(String name, String email, String password, String userId,long id,ImageView profilePic, int radius ) {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.userId = userId;
+        this.id=id;
         this.profilePic = profilePic;
         Radius = radius;
-        this.userId = userId;
     }
 
-    public userData() {
+    public UserData() {
     }
 
-    public int getUserId() {
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

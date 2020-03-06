@@ -51,7 +51,7 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
     private TextView mDisplayDate,mDisplayTime;
     EditText et4,etB,etB1,etB2,etB3,etBC,etBC1,etBC2,etBC3;
     Spinner spinner;
-    private Button btce ,btsd;
+    private Button btce;
     ConstraintLayout cl1,cl2,cl3;
     Activity mActivity;
     long maxId = 0;
@@ -196,20 +196,6 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
             }
         });
 
-
-
-        btsd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Toast.makeText(getContext(),"Data Saved",Toast.LENGTH_SHORT).show();
-
-                //toastMessage("the stored data in firebase is: " + value);
-
-//                Intent intent = new Intent(getActivity(), ViewDatabase.class);
-//                startActivity(intent);
-            }
-        });
-
         myReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -275,7 +261,6 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
                 Calendar cal = Calendar.getInstance();
                 createEventData.setTimeHour(cal.get(Calendar.HOUR));
                 createEventData.setTimeMinute(cal.get(Calendar.MINUTE));
-
                 TimePickerDialog dialog = new TimePickerDialog(getContext(), mTimeSetListener, createEventData.getTimeHour(), createEventData.getTimeMinute(), false);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
                 dialog.show();
@@ -385,7 +370,7 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
 
 
         myReference.child(String.valueOf(maxId+1)).setValue(createEventData);
-        //myReference.child("CreateEvent").setValue(createEventData);
+        //myReference.setValue(createEventData);
         Toast.makeText(getContext(),"Data Saved",Toast.LENGTH_SHORT).show();
     }
 
@@ -413,9 +398,9 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
         }
         createEventFootball.setTotalPlayers(createEventFootball.getAttacker() + createEventFootball.getDefender() + createEventFootball.getMidfielder() + createEventFootball.getKeeper());
 
-        // myReference.child("CreateEvent").setValue(createEventFootball);
+        //myReference.setValue(createEventFootball);
 
-         myReference.child(String.valueOf(maxId+1)).setValue(createEventFootball);
+        myReference.child(String.valueOf(maxId+1)).setValue(createEventFootball);
         Toast.makeText(getContext(),"Data Saved",Toast.LENGTH_SHORT).show();
     }
 
@@ -446,7 +431,7 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
         }
         createEventCricket.setTotalPlayers(createEventCricket.getBatsman() + createEventCricket.getBowlers() + createEventCricket.getAllRounder() + createEventCricket.getWicketKeeper());
 
-        //myReference.child("CreateEvent").setValue(createEventCricket);
+        //myReference.setValue(createEventCricket);
 
         myReference.child(String.valueOf(maxId+1)).setValue(createEventCricket);
         Toast.makeText(getContext(),"Data Saved",Toast.LENGTH_SHORT).show();

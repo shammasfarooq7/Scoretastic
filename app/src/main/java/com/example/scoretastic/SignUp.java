@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,18 +25,19 @@ public class SignUp extends AppCompatActivity {
 
 
 
-
-
     long maxId = 0;
-    long userId = 1 ;
+    long id =0;
+    long userId = 0 ;
     EditText etName;
     EditText etEmail;
+    //String uid;
     EditText etPassword;
     Button btSignUp;
     FirebaseAuth fAuth;
+    FirebaseUser user;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myReference = database.getReference("UserData");
-    userData user = new userData();
+    UserData userData = new UserData();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +46,15 @@ public class SignUp extends AppCompatActivity {
 
         etName = findViewById(R.id.etName);
         userId=1;
+        id = 0;
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         btSignUp = findViewById(R.id.signup);
         fAuth = FirebaseAuth.getInstance();
+        user = fAuth.getCurrentUser();
+
+
+
 
 
         myReference.addValueEventListener(new ValueEventListener() {
@@ -70,18 +77,21 @@ public class SignUp extends AppCompatActivity {
         btSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = etEmail.getText().toString().trim();
-                String password = etPassword.getText().toString().trim();
-                String name = etName.getText().toString().trim();
+                final String email = etEmail.getText().toString().trim();
+                final String password = etPassword.getText().toString().trim();
+                final String name = etName.getText().toString().trim();
 
-                user.setName(name);
-                user.setEmail(email);
-                user.setPassword(password);
 
-                myReference.child(String.valueOf(maxId+1)).setValue(user);
 
-                Toast.makeText(SignUp.this, "SIGNED UP!", Toast.LENGTH_LONG).show()
-                ;
+
+                userData.setName(name);
+                userData.setEmail(email);
+                userData.setPassword(password);
+                userData.setUserId(user.getUid());
+                userData.setId(maxId+1);
+
+
+                Toast.makeText(SignUp.this, "SIGNED UP!", Toast.LENGTH_LONG).show();
 
                 if(!email.equals("")&&!password.equals("")&&!name.equals("")){
                     if(password.length() < 7){
@@ -92,9 +102,28 @@ public class SignUp extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if(task.isSuccessful()){
-                                  myReference.child(String.valueOf(maxId+1)).setValue(user);
 
-                                  userId = maxId;
+                                    //(String.valueOf(maxId+1)
+                                    //kahin user ka object bnaya hy usne
+                                    //wo usko whan sy get krk tou ab usme sy data n userID ley rha rhy
+                                    //user likh kr wo dhoondo k kesy
+                                    //
+                                    //myReference.child(user.getUid()).setValue(userData)
+
+                                    myReference.child(String.valueOf(maxId+1)).setValue(userData)
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+
+                                                    if (task.isSuccessful()) {
+                                                        Toast.makeText(SignUp.this, "record saved", Toast.LENGTH_SHORT).show();
+                                                    } else {
+                                                        Toast.makeText(SignUp.this, "database record not saved", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+
+                                            });
+
                                     Toast.makeText(getApplicationContext(),"User Created",Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(getApplicationContext(),Main.class));
 

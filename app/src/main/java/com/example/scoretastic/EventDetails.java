@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 public class EventDetails extends AppCompatActivity {
@@ -20,7 +19,7 @@ public class EventDetails extends AppCompatActivity {
         etSports = findViewById(R.id.etSports);
         etHost = findViewById(R.id.etHost);
         etLocation = findViewById(R.id.etLocation);
-        etTime = findViewById(R.id.etTime);
+        etTime = findViewById(R.id.tvMarkerTime);
         etTotalPlayers = findViewById(R.id.etTotalPlayers);
         etPosition = findViewById(R.id.etPosition);
         etConfirmation = findViewById(R.id.etConfirmation);

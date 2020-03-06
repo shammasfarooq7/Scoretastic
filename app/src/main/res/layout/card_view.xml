@@ -15,13 +15,13 @@
         app:cardUseCompatPadding="false" >
 
         <LinearLayout
-            android:id="@+id/linearlayout"
+            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvSports"
+                android:id="@+id/tvMarkerSports"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView"
@@ -29,21 +29,21 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvLocation"
+                android:id="@+id/tvMarkerLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView"
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/etTime"
+                android:id="@+id/tvMarkerTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/etDate"
+                android:id="@+id/tvMarkerDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"

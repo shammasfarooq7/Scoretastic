@@ -75,7 +75,7 @@
 
 
     <TextView
-        android:id="@+id/tvDate"
+        android:id="@+id/tvMarkerDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="select date"
@@ -141,7 +141,7 @@
 
 
     <TextView
-        android:id="@+id/tvTime"
+        android:id="@+id/tvMarkerTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="select time"

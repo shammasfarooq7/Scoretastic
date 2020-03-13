@@ -2,6 +2,7 @@ package com.example.scoretastic;
 
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -65,6 +66,8 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
     private final float defaultZoom = 15f;
     Double lat, lng;
     ArrayList<LatLng> arrayListLoc = new ArrayList<LatLng>();
+    ArrayList<DataSnapshot> eventArray = new ArrayList();
+    int key;
 
     public Home() {
         // Required empty public constructor
@@ -127,6 +130,15 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
             }
         });
 
+        btMarkerJoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), JoinEvent.class);
+                intent.putExtra("Event key", key);
+                startActivity(intent);
+            }
+        });
+
         return v;
 
     }
@@ -147,6 +159,8 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
             lat = (Double) ds.child("resultLat").getValue();
             lng = (Double) ds.child("resultLng").getValue();
             arrayListLoc.add(new LatLng(lat,lng));
+            eventArray.add(ds);
+
         }
 
     }
@@ -167,21 +181,20 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
             getDeviceLocation();
             mMap.setMyLocationEnabled(true);
             for(int i = 0; i<arrayListLoc.size();i++){
-                mMap.addMarker(new MarkerOptions().position(arrayListLoc.get(i)));
-
+                mMap.addMarker(new MarkerOptions().position(arrayListLoc.get(i)).title(""+i));
             }
             mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
                 public boolean onMarkerClick(Marker marker) {
-                    k.setVisibility(View.VISIBLE);
-                    for(int i = 0; i<arrayListLoc.size(); i++) {
-                        if(marker.getPosition().latitude == arrayListLoc.get(i).latitude){
-                            tvMarkerSports.setText(arrayList.get(i).sports);
-                            tvMarkerDate.setText(arrayList.get(i).date);
-                            tvMarkerLocation.setText(arrayList.get(i).location);
-                            tvMarkerTime.setText(arrayList.get(i).time);
+                  DataSnapshot ds =   eventArray.get(Integer.parseInt(marker.getTitle()));
+                        if(ds != null){
+                            tvMarkerSports.setText(ds.child("sports").getValue().toString());
+                            tvMarkerDate.setText(ds.child("date").child("date").getValue().toString() + "/" + ds.child("date").child("month").getValue().toString() + "/" + ds.child("date").child("year").getValue().toString() );
+                            tvMarkerLocation.setText(ds.child("resultLocation").getValue().toString());
+                            tvMarkerTime.setText(ds.child("timeHour").getValue().toString() +":" + ds.child("timeMinute").getValue().toString());
+                            key = Integer.parseInt(marker.getTitle());
                         }
-                    }
+                    k.setVisibility(View.VISIBLE);
                     return false;
                 }
             });

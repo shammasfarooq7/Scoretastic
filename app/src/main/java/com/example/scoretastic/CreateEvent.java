@@ -161,7 +161,7 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
         etBC3 = view.findViewById(R.id.etBC3);
         tvDate = view.findViewById(R.id.tvMarkerDate);
         tvTime = view.findViewById(R.id.tvMarkerTime);
-        et4 = view.findViewById(R.id.et4);
+        et4 = view.findViewById(R.id.tvSports);
         cl1 = view.findViewById(R.id.cl1);
         cl2 = view.findViewById(R.id.cl2);
         cl3 = view.findViewById(R.id.cl3);

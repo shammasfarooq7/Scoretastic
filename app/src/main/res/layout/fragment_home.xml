@@ -67,7 +67,7 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/mapMarker"
-        android:layout_width="395dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         map:layout_constraintBottom_toBottomOf="parent"
         map:layout_constraintEnd_toEndOf="parent"
@@ -75,85 +75,74 @@
         map:layout_constraintTop_toTopOf="parent"
         map:layout_constraintVertical_bias="0.89">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tvMarkerSports"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="197.5dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginEnd="311dp"
-                android:layout_marginRight="311dp"
-                android:text="TextView"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                map:layout_constraintBottom_toTopOf="@+id/tvMarkerLocation"
-                map:layout_constraintEnd_toEndOf="parent"
-                map:layout_constraintStart_toStartOf="parent"
-                map:layout_constraintTop_toTopOf="parent" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvMarkerLocation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="337dp"
-                android:layout_marginRight="337dp"
-                android:layout_marginBottom="1dp"
-                android:text="TextView"
-                android:textSize="12sp"
-                map:layout_constraintBottom_toTopOf="@+id/tvMarkerTime"
-                map:layout_constraintEnd_toEndOf="parent"
-                map:layout_constraintStart_toStartOf="@+id/tvMarkerSports"
-                map:layout_constraintTop_toBottomOf="@+id/tvMarkerSports" />
+                <TextView
+                    android:id="@+id/tvMarkerSports"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tvMarkerTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="241dp"
-                android:layout_marginRight="241dp"
-                android:layout_marginBottom="1dp"
-                android:ems="10"
-                android:textSize="12sp"
-                map:layout_constraintBottom_toTopOf="@+id/tvMarkerDate"
-                map:layout_constraintEnd_toEndOf="parent"
-                map:layout_constraintStart_toStartOf="@+id/tvMarkerLocation"
-                map:layout_constraintTop_toBottomOf="@+id/tvMarkerLocation" />
+                <TextView
+                    android:id="@+id/tvMarkerLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/tvMarkerDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
-                android:layout_marginEnd="241dp"
-                android:layout_marginRight="241dp"
-                android:ems="10"
-                android:textSize="12sp"
-                map:layout_constraintBottom_toBottomOf="parent"
-                map:layout_constraintEnd_toEndOf="parent"
-                map:layout_constraintStart_toStartOf="@+id/tvMarkerTime"
-                map:layout_constraintTop_toBottomOf="@+id/tvMarkerTime" />
+                <TextView
+                    android:id="@+id/tvMarkerTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    android:textSize="12sp" />
 
-            <Button
-                android:id="@+id/btMarkerJoin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="137dp"
-                android:layout_marginLeft="137dp"
-                android:layout_marginTop="14dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginBottom="15dp"
-                android:text="Join"
-                map:layout_constraintBottom_toBottomOf="parent"
-                map:layout_constraintEnd_toEndOf="parent"
-                map:layout_constraintStart_toEndOf="@+id/tvMarkerTime"
-                map:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/tvMarkerDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="197.5dp"
+                android:layout_height="73dp"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <Button
+                        android:id="@+id/btMarkerJoin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="93dp"
+                        android:layout_marginLeft="93dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="36dp"
+                        android:text="Join"
+                        map:layout_constraintBottom_toBottomOf="parent"
+                        map:layout_constraintEnd_toEndOf="parent"
+                        map:layout_constraintStart_toStartOf="parent"
+                        map:layout_constraintTop_toTopOf="parent"
+                        map:layout_constraintVertical_bias="0.19" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
 
 

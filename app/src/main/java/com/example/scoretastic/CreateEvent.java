@@ -259,7 +259,6 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
                 Calendar cal = Calendar.getInstance();
                 createEventData.setTimeHour(cal.get(Calendar.HOUR));
                 createEventData.setTimeMinute(cal.get(Calendar.MINUTE));
-
                 TimePickerDialog dialog = new TimePickerDialog(getContext(), mTimeSetListener, createEventData.getTimeHour(), createEventData.getTimeMinute(), false);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
                 dialog.show();

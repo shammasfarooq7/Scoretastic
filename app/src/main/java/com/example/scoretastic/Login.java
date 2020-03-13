@@ -2,7 +2,9 @@ package com.example.scoretastic;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.api.Backend;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,6 +25,10 @@ import com.google.firebase.auth.FirebaseUser;
 public class Login extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListner;
+
+    private SharedPreferences mPreferences;
+    private SharedPreferences.Editor mEditor;
+
     Button btLogin;
     EditText etEmail;
     EditText etPassword;
@@ -38,6 +45,19 @@ public class Login extends AppCompatActivity {
         etPassword   = findViewById(R.id.etPassword);
         signUp = findViewById(R.id.SignUp);
         mAuth = FirebaseAuth.getInstance();
+
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mEditor = mPreferences.edit();
+
+
+        //check here that login ki pehle sy userdata save hy yanhi
+        //agr hoga tou splash sy agy chla jaye ga
+        //wrna splash sy on login actuv
+
+
+        //checkSharedPreferences();
+
+
         mAuthListner = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -51,6 +71,21 @@ public class Login extends AppCompatActivity {
         };
 
 
+        /*
+
+        Firebase.setAndroidContext(this);
+        // other setup code
+        SharedPreferences mPrefs = getSharedPreferences("myAppPrefs", Context.MODE_PRIVATE);
+        if (mPrefs.getBoolean("is_logged_before",false)) {
+            Intent i = new Intent(this, Main.class);
+            startActivity(i);
+        } else {
+            // continue to login part
+        }
+
+
+
+         */
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,7 +96,9 @@ public class Login extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
+                                //Toast.makeText(mAuth,Toast.LENGTH_SHORT).show();
                                 Toast.makeText(getApplicationContext(),"Signed IN",Toast.LENGTH_SHORT).show();
+
                                 startActivity(new Intent(mContext, Main.class));
                             }
                             else{
@@ -83,7 +120,37 @@ public class Login extends AppCompatActivity {
             }
         });
 
+
+
+
+
+
     }
+
+
+    /*
+
+    private void checkSharedPreferences() {
+        String name = mPreferences.getString(getString(R.string.name),"");
+        String password = mPreferences.getString(getString(R.string.password),"");
+
+        nName.setName(name);
+        mPassword.setPassword(password);
+
+    //put
+
+    }
+
+
+     */
+
+    private void getUserData(){
+
+
+
+
+    }
+
     public void onStart(){
         super.onStart();
         mAuth.addAuthStateListener(mAuthListner);

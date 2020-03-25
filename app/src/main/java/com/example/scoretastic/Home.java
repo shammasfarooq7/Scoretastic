@@ -121,7 +121,7 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                showData(dataSnapshot);
+                //showData(dataSnapshot);
             }
 
             @Override
@@ -143,27 +143,27 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
 
     }
 
-    private void showData(DataSnapshot dataSnapshot) {
-        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-            String day = ds.child("date").child("date").getValue().toString();
-            String month = ds.child("date").child("month").getValue().toString();
-            String year = ds.child("date").child("year").getValue().toString();
-            String timeHour = ds.child("timeHour").getValue().toString();
-            String timeMinute = ds.child("timeMinute").getValue().toString();
-            object = new Recycler();
-            object.setLocation(ds.child("resultLocation").getValue().toString());
-            object.setSports(ds.child("sports").getValue().toString());
-            object.setDate(day + "/" + month + "/" + year);
-            object.setTime(timeHour + ":" + timeMinute);
-            arrayList.add(object);
-            lat = (Double) ds.child("resultLat").getValue();
-            lng = (Double) ds.child("resultLng").getValue();
-            arrayListLoc.add(new LatLng(lat,lng));
-            eventArray.add(ds);
-
-        }
-
-    }
+//    private void showData(DataSnapshot dataSnapshot) {
+//        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+//            String day = ds.child("date").child("date").getValue().toString();
+//            String month = ds.child("date").child("month").getValue().toString();
+//            String year = ds.child("date").child("year").getValue().toString();
+//            String timeHour = ds.child("timeHour").getValue().toString();
+//            String timeMinute = ds.child("timeMinute").getValue().toString();
+//            object = new Recycler();
+//            object.setLocation(ds.child("resultLocation").getValue().toString());
+//            object.setSports(ds.child("sports").getValue().toString());
+//            object.setDate(day + "/" + month + "/" + year);
+//            object.setTime(timeHour + ":" + timeMinute);
+//            arrayList.add(object);
+//            lat = (Double) ds.child("resultLat").getValue();
+//            lng = (Double) ds.child("resultLng").getValue();
+//            arrayListLoc.add(new LatLng(lat,lng));
+//            eventArray.add(ds);
+//
+//        }
+//
+//    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

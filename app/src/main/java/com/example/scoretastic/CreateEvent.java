@@ -53,6 +53,7 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
     ConstraintLayout cl1,cl2,cl3;
     Activity mActivity;
     long maxId = 0;
+    long Eventid =0;
     int year;
     int month;
     int day;
@@ -65,6 +66,11 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
     createEventFootball createEventFootball = new createEventFootball();
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myReference = database.getReference("CreateEvent");
+    SignUp signup = new SignUp();
+    UserData UserData = new UserData();
+    DatabaseReference myReference1 = database.getReference("UserEvent");
+
+
 
 
     public CreateEvent() {
@@ -76,6 +82,7 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_event, container, false);
+        Eventid = 0;
         initializeViews(view);
         tvloc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +95,8 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
                     @Override
                     public void onClick(View view) {
 
+                        //idhr kuch krna hy(ye ni pta k kia) k jesy he btce ho tou userEvent table mae entry add hojaye
+                        createEventData.setEventid(maxId+1);
                         createEventData.setDescription(et4.getText().toString());
                         createEventData.setDate(date);
                         if(createEventData.getSports().equals("Football")){
@@ -208,7 +217,27 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
             }
         });
 
+        myReference1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //userEvent ka data get krny k lye
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
+
+    private void userEvent(){
+
+        UserData.setId(maxId+1);
+        createEventData.setEventid(maxId+1);
+    }
+
 
     private void datePicker(View view) {
 

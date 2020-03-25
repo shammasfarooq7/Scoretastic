@@ -17,6 +17,9 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
     private ArrayList<Recycler> event;
     HomeRecyclerAdapter.ItemClicked activity;
 
+    public EventRecyclerAdapter(MyEvents myEvents, ArrayList<Recycler> arrayList) {
+    }
+
     public interface  ItemClicked{
         void onItemClicked(int index);
     }

@@ -7,7 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class EventDetails extends AppCompatActivity {
+public class
+EventDetails extends AppCompatActivity {
 
     TextView etSports,etHost,etLocation,etTime,etTotalPlayers,etPosition,etConfirmation;
     Button btBack,btLeave;

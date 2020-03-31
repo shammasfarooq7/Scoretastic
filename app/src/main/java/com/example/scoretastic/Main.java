@@ -11,6 +11,9 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class Main extends AppCompatActivity {
 
     Button home,createEvent,myEvents,profile;
@@ -20,12 +23,15 @@ public class Main extends AppCompatActivity {
     CreateEvent objectCreate = new CreateEvent();
     MyEvents objectEvent = new MyEvents();
     Profile objectProfile = new Profile();
+    String userId;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user!=null){
+            userId = user.getUid();
+        }
         initializeViews();
 
 

@@ -14,32 +14,21 @@ public class CreateEventData {
     int totalPlayers;
     int timeHour;
     int timeMinute;
-    long Eventid;
 
     public CreateEventData() {
     }
 
-    public CreateEventData(String resultLocation, double resultLng, double resultLat,long Eventid, String description, Date date, Time time, String sports, int totalPlayers, int timeHour, int timeMinute) {
+    public CreateEventData(String resultLocation, double resultLng, double resultLat, String description, Date date, Time time, String sports, int totalPlayers, int timeHour, int timeMinute) {
         this.resultLocation = resultLocation;
         this.resultLng = resultLng;
         this.resultLat = resultLat;
         this.description = description;
-        this.Eventid=Eventid;
         this.date = date;
         this.time = time;
         Sports = sports;
         this.totalPlayers = totalPlayers;
         this.timeHour = timeHour;
         this.timeMinute = timeMinute;
-    }
-
-
-    public long getEventid() {
-        return Eventid;
-    }
-
-    public void setEventid(long eventid) {
-        Eventid = eventid;
     }
 
     public String getResultLocation() {

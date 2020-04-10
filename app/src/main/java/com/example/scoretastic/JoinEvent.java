@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -33,6 +35,7 @@ public class JoinEvent extends AppCompatActivity implements AdapterView.OnItemSe
     ArrayList<DataSnapshot> eventArray = new ArrayList();
     String sportsSet;
     int key;
+    long maxId = 0;
     ArrayList<String> spinnerArray = new ArrayList<>();
     Button btJoin;
     JoinEventData object = new JoinEventData();
@@ -66,6 +69,7 @@ public class JoinEvent extends AppCompatActivity implements AdapterView.OnItemSe
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 showData(dataSnapshot);
                 spinnerData();
+                maxId=(dataSnapshot.getChildrenCount());
             }
 
             @Override
@@ -153,10 +157,22 @@ public class JoinEvent extends AppCompatActivity implements AdapterView.OnItemSe
                     databaseReference.child(keyString).child("totalPlayers").setValue(0);
                 }
 
-                myReference.setValue(object);
+                myReference.child(String.valueOf(maxId+1)).setValue(object)
+                       .addOnCompleteListener(new OnCompleteListener<Void>() {
+                           @Override
 
+                           public void onComplete(@NonNull Task<Void> task) {
+
+                               myReference.setValue(object);
+
+                           }
+
+                       });
             }
+
         });
+
+
 
     }
 

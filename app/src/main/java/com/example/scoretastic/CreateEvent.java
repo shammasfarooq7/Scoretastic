@@ -34,6 +34,8 @@ import java.util.List;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -65,6 +67,8 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
     createEventFootball createEventFootball = new createEventFootball();
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myReference = database.getReference("CreateEvent");
+    DatabaseReference userEventReference = database.getReference("UserEvent");
+    String uid;
 
 
     public CreateEvent() {
@@ -77,6 +81,11 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_event, container, false);
         initializeViews(view);
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            uid = user.getUid();
+        }
+
         tvloc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,6 +108,8 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
                         else{
                             dataSender();
                         }
+                        userEventReference.child("uid").setValue(uid);
+                        userEventReference.child("eventId").setValue(maxId+1);
 
                     }
 
@@ -108,6 +119,10 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
         });
         return view;
     }
+
+
+
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -206,20 +221,19 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
 
     }
 
-
     private void datePicker(View view) {
 
         mDisplayDate = view.findViewById(R.id.tvMarkerDate);
 
         Calendar cal = Calendar.getInstance();
-         int year = cal.get(Calendar.YEAR);
-         int month = cal.get(Calendar.MONTH);
-         int day = cal.get(Calendar.DAY_OF_MONTH);
-         Calendar cal1 = Calendar.getInstance();
-         cal1.set(Calendar.MONTH,month);
-         cal1.set(Calendar.YEAR,year);
-         cal1.set(Calendar.DATE,day);
-         date =  cal1.getTime();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        Calendar cal1 = Calendar.getInstance();
+        cal1.set(Calendar.MONTH,month);
+        cal1.set(Calendar.YEAR,year);
+        cal1.set(Calendar.DATE,day);
+        date =  cal1.getTime();
 
         final DatePickerDialog dialog = new DatePickerDialog(
                 getContext(),

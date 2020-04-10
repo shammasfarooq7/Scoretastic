@@ -11,9 +11,7 @@ public class ChangePassGetSet {
     public char getOldPassword() {
         return oldPassword;
     }
-
     autoo generated getter
-
     */
 
     public char getoldPassword() {
@@ -45,8 +43,3 @@ public class ChangePassGetSet {
         this.newPassword = newPassword;
     }
 }
-    
-
-
-
-

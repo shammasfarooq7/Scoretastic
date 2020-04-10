@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,11 +36,16 @@ public class JoinEvent extends AppCompatActivity implements AdapterView.OnItemSe
     ArrayList<String> spinnerArray = new ArrayList<>();
     Button btJoin;
     JoinEventData object = new JoinEventData();
+    String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_event);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            uid = user.getUid();
+        }
         databaseReference = firebaseDatabase.getInstance().getReference("CreateEvent");
         myReference = firebaseDatabase.getInstance().getReference("JoinEvent");
         tvDate = findViewById(R.id.tvDate);
@@ -70,42 +77,41 @@ public class JoinEvent extends AppCompatActivity implements AdapterView.OnItemSe
         btJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String keyString = String.valueOf(key);
                 object.setEventKey(key);
-                object.setUserId(12);
-                myReference.setValue(object);
-
+                object.setUserId(uid);
                 if(eventArray.get(key).child("sports").getValue().equals("Football")){
                     if(object.getPosition().equals("Attacker")){
                         int attacker = Integer.parseInt(eventArray.get(key).child("attacker").getValue().toString().trim());
                         attacker--;
                         int totalPlayers = Integer.parseInt(eventArray.get(key).child("totalPlayers").getValue().toString().trim());
                         totalPlayers--;
-                        databaseReference.child("CreateEvent").child("attacker").setValue(attacker);
-                        databaseReference.child("CreateEvent").child("totalPlayers").setValue(totalPlayers);
+                        databaseReference.child(keyString).child("attacker").setValue(attacker);
+                        databaseReference.child(keyString).child("totalPlayers").setValue(totalPlayers);
                     }
                     else if(object.getPosition().equals("Midfielder")){
                         int midfielder = Integer.parseInt(eventArray.get(key).child("midfielder").getValue().toString().trim());
                         midfielder--;
                         int totalPlayers = Integer.parseInt(eventArray.get(key).child("totalPlayers").getValue().toString().trim());
                         totalPlayers--;
-                        databaseReference.child("CreateEvent").child("midfielder").setValue(midfielder);
-                        databaseReference.child("CreateEvent").child("totalPlayers").setValue(totalPlayers);
+                        databaseReference.child(keyString).child("midfielder").setValue(midfielder);
+                        databaseReference.child(keyString).child("totalPlayers").setValue(totalPlayers);
                     }
                     else if(object.getPosition().equals("Goal Keeper")){
                         int keeper = Integer.parseInt(eventArray.get(key).child("keeper").getValue().toString().trim());
                         keeper--;
                         int totalPlayers = Integer.parseInt(eventArray.get(key).child("totalPlayers").getValue().toString().trim());
                         totalPlayers--;
-                        databaseReference.child("CreateEvent").child("keeper").setValue(keeper);
-                        databaseReference.child("CreateEvent").child("totalPlayers").setValue(totalPlayers);
+                        databaseReference.child(keyString).child("keeper").setValue(keeper);
+                        databaseReference.child(keyString).child("totalPlayers").setValue(totalPlayers);
                     }
                     else if(object.getPosition().equals("Defender")){
                         int defender = Integer.parseInt(eventArray.get(key).child("defender").getValue().toString().trim());
                         defender--;
                         int totalPlayers = Integer.parseInt(eventArray.get(key).child("totalPlayers").getValue().toString().trim());
                         totalPlayers--;
-                        databaseReference.child("CreateEvent").child("defender").setValue(defender);
-                        databaseReference.child("CreateEvent").child("totalPlayers").setValue(totalPlayers);
+                        databaseReference.child(keyString).child("defender").setValue(defender);
+                        databaseReference.child(keyString).child("totalPlayers").setValue(totalPlayers);
                     }
                 }
                 else if(eventArray.get(key).child("sports").getValue().equals("Cricket")){
@@ -115,37 +121,39 @@ public class JoinEvent extends AppCompatActivity implements AdapterView.OnItemSe
                         batsman--;
                         int totalPlayers = Integer.parseInt(eventArray.get(key).child("totalPlayers").getValue().toString().trim());
                         totalPlayers--;
-                        databaseReference.child("CreateEvent").child("batsman").setValue(batsman);
-                        databaseReference.child("CreateEvent").child("totalPlayers").setValue(totalPlayers);
+                        databaseReference.child(keyString).child("batsman").setValue(batsman);
+                        databaseReference.child(keyString).child("totalPlayers").setValue(totalPlayers);
                     }
                     else if(object.getPosition().equals("Bowler")){
                         int bowlers = Integer.parseInt(eventArray.get(key).child("bowlers").getValue().toString().trim());
                         bowlers--;
                         int totalPlayers = Integer.parseInt(eventArray.get(key).child("totalPlayers").getValue().toString().trim());
                         totalPlayers--;
-                        databaseReference.child("CreateEvent").child("bowlers").setValue(bowlers);
-                        databaseReference.child("CreateEvent").child("totalPlayers").setValue(totalPlayers);
+                        databaseReference.child(keyString).child("bowlers").setValue(bowlers);
+                        databaseReference.child(keyString).child("totalPlayers").setValue(totalPlayers);
                     }
                     else if(object.getPosition().equals("Wicket Keeper")){
                         int wicketKeeper = Integer.parseInt(eventArray.get(key).child("wicketKeeper").getValue().toString().trim());
                         wicketKeeper--;
                         int totalPlayers = Integer.parseInt(eventArray.get(key).child("totalPlayers").getValue().toString().trim());
                         totalPlayers--;
-                        databaseReference.child("CreateEvent").child("wicketKeeper").setValue(wicketKeeper);
-                        databaseReference.child("CreateEvent").child("totalPlayers").setValue(totalPlayers);
+                        databaseReference.child(keyString).child("wicketKeeper").setValue(wicketKeeper);
+                        databaseReference.child(keyString).child("totalPlayers").setValue(totalPlayers);
                     }
                     else if(object.getPosition().equals("All Rounder")){
                         int allRounder = Integer.parseInt(eventArray.get(key).child("allRounder").getValue().toString().trim()) ;
                         allRounder--;
                         int totalPlayers = Integer.parseInt(eventArray.get(key).child("totalPlayers").getValue().toString().trim());
                         totalPlayers--;
-                        databaseReference.child("CreateEvent").child("allRounder").setValue(allRounder);
-                        databaseReference.child("CreateEvent").child("totalPlayers").setValue(totalPlayers);
+                        databaseReference.child(keyString).child("allRounder").setValue(allRounder);
+                        databaseReference.child(keyString).child("totalPlayers").setValue(totalPlayers);
                     }
                 }
                 else{
-                    databaseReference.child("CreateEvent").child("totalPlayers").setValue(0);
+                    databaseReference.child(keyString).child("totalPlayers").setValue(0);
                 }
+
+                myReference.setValue(object);
 
             }
         });

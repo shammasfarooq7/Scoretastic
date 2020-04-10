@@ -28,7 +28,7 @@ public class Profile extends Fragment implements View.OnClickListener {
     Button btSettings ,btchgPassword,btFaqs,btAboutUs;
 
     ImageButton ivprofpic, ivchgpic;
-     ImageView       ivDemoPic;
+    ImageView       ivDemoPic;
     //TextView tvSettings, tvChgPass;
     //LinearLayout llbt;
 
@@ -124,7 +124,7 @@ public class Profile extends Fragment implements View.OnClickListener {
 
 
 
-     private void openSettings(){
+    private void openSettings(){
 
         Intent intent = new Intent(getActivity(),Settings.class);
         startActivity(intent);

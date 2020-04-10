@@ -121,7 +121,7 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //showData(dataSnapshot);
+                showData(dataSnapshot);
             }
 
             @Override
@@ -186,14 +186,14 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
             mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
                 public boolean onMarkerClick(Marker marker) {
-                  DataSnapshot ds =   eventArray.get(Integer.parseInt(marker.getTitle()));
-                        if(ds != null){
-                            tvMarkerSports.setText(ds.child("sports").getValue().toString());
-                            tvMarkerDate.setText(ds.child("date").child("date").getValue().toString() + "/" + ds.child("date").child("month").getValue().toString() + "/" + ds.child("date").child("year").getValue().toString() );
-                            tvMarkerLocation.setText(ds.child("resultLocation").getValue().toString());
-                            tvMarkerTime.setText(ds.child("timeHour").getValue().toString() +":" + ds.child("timeMinute").getValue().toString());
-                            key = Integer.parseInt(marker.getTitle());
-                        }
+                    DataSnapshot ds =   eventArray.get(Integer.parseInt(marker.getTitle().trim()));
+                    if(ds != null){
+                        tvMarkerSports.setText(ds.child("sports").getValue().toString());
+                        tvMarkerDate.setText(ds.child("date").child("date").getValue().toString() + "/" + ds.child("date").child("month").getValue().toString() + "/" + ds.child("date").child("year").getValue().toString() );
+                        tvMarkerLocation.setText(ds.child("resultLocation").getValue().toString());
+                        tvMarkerTime.setText(ds.child("timeHour").getValue().toString() +":" + ds.child("timeMinute").getValue().toString());
+                        key = Integer.parseInt(marker.getTitle().trim());
+                    }
                     k.setVisibility(View.VISIBLE);
                     return false;
                 }

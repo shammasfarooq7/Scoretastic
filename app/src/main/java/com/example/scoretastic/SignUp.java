@@ -27,9 +27,10 @@ public class SignUp extends AppCompatActivity {
 
     long maxId = 0;
     long id =0;
-    long userId = 1 ;
+    long userId = 0 ;
     EditText etName;
     EditText etEmail;
+    //String uid;
     EditText etPassword;
     Button btSignUp;
     FirebaseAuth fAuth;

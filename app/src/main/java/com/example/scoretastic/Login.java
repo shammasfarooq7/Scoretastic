@@ -72,7 +72,6 @@ public class Login extends AppCompatActivity {
 
 
         /*
-
         Firebase.setAndroidContext(this);
         // other setup code
         SharedPreferences mPrefs = getSharedPreferences("myAppPrefs", Context.MODE_PRIVATE);
@@ -82,9 +81,6 @@ public class Login extends AppCompatActivity {
         } else {
             // continue to login part
         }
-
-
-
          */
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,19 +125,13 @@ public class Login extends AppCompatActivity {
 
 
     /*
-
     private void checkSharedPreferences() {
         String name = mPreferences.getString(getString(R.string.name),"");
         String password = mPreferences.getString(getString(R.string.password),"");
-
         nName.setName(name);
         mPassword.setPassword(password);
-
     //put
-
     }
-
-
      */
 
     private void getUserData(){
@@ -164,4 +154,5 @@ public class Login extends AppCompatActivity {
 
 
 }
+
 

@@ -2,13 +2,13 @@ package com.example.scoretastic;
 
 public class JoinEventData {
     int eventKey;
-    int userId;
+    String userId;
     String position;
 
     public JoinEventData() {
     }
 
-    public JoinEventData(int eventKey, int userId, String position) {
+    public JoinEventData(int eventKey, String userId, String position) {
         this.eventKey = eventKey;
         this.userId = userId;
         this.position = position;
@@ -22,11 +22,11 @@ public class JoinEventData {
         this.eventKey = eventKey;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
@@ -37,6 +37,4 @@ public class JoinEventData {
     public void setPosition(String position) {
         this.position = position;
     }
-
-
 }

@@ -34,6 +34,8 @@ import java.util.List;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -55,6 +57,7 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
     ConstraintLayout cl1,cl2,cl3;
     Activity mActivity;
     long maxId = 0;
+    long uEventMId= 0;
     int year;
     int month;
     int day;
@@ -108,8 +111,20 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
                         else{
                             dataSender();
                         }
-                        userEventReference.child("uid").setValue(uid);
-                        userEventReference.child("eventId").setValue(maxId+1);
+
+                        userEventReference.child(String.valueOf(uEventMId
+                                +1)).setValue(uid,createEventData)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+
+                                        userEventReference.child("uid").setValue(uid);
+                                        userEventReference.child("eventId").setValue(maxId + 1);
+
+                                    }
+                                });
+
+
 
                     }
 
@@ -210,6 +225,20 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists())
                     maxId=(dataSnapshot.getChildrenCount());
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        userEventReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists())
+                    uEventMId=(dataSnapshot.getChildrenCount());
 
             }
 

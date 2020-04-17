@@ -3,6 +3,7 @@ package com.example.scoretastic;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -36,6 +38,7 @@ public class JoinEvent extends AppCompatActivity implements AdapterView.OnItemSe
     String sportsSet;
     int key;
     long maxId = 0;
+    long maxIdJ = 0;
     ArrayList<String> spinnerArray = new ArrayList<>();
     Button btJoin;
     JoinEventData object = new JoinEventData();
@@ -62,7 +65,7 @@ public class JoinEvent extends AppCompatActivity implements AdapterView.OnItemSe
         btJoin = findViewById(R.id.btJoin);
 
         key = getIntent().getIntExtra("Event key",-1);
-
+        key = key-1;
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -78,96 +81,183 @@ public class JoinEvent extends AppCompatActivity implements AdapterView.OnItemSe
             }
         });
 
+        myReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                showData(dataSnapshot);
+                spinnerData();
+                maxIdJ=(dataSnapshot.getChildrenCount());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         btJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String keyString = String.valueOf(key);
-                object.setEventKey(key);
+                String keyString = String.valueOf(key+1);
+                object.setEventKey(key+1);
                 object.setUserId(uid);
-                if(eventArray.get(key).child("sports").getValue().equals("Football")){
-                    if(object.getPosition().equals("Attacker")){
-                        int attacker = Integer.parseInt(eventArray.get(key).child("attacker").getValue().toString().trim());
-                        attacker--;
-                        int totalPlayers = Integer.parseInt(eventArray.get(key).child("totalPlayers").getValue().toString().trim());
-                        totalPlayers--;
-                        databaseReference.child(keyString).child("attacker").setValue(attacker);
-                        databaseReference.child(keyString).child("totalPlayers").setValue(totalPlayers);
-                    }
-                    else if(object.getPosition().equals("Midfielder")){
-                        int midfielder = Integer.parseInt(eventArray.get(key).child("midfielder").getValue().toString().trim());
-                        midfielder--;
-                        int totalPlayers = Integer.parseInt(eventArray.get(key).child("totalPlayers").getValue().toString().trim());
-                        totalPlayers--;
-                        databaseReference.child(keyString).child("midfielder").setValue(midfielder);
-                        databaseReference.child(keyString).child("totalPlayers").setValue(totalPlayers);
-                    }
-                    else if(object.getPosition().equals("Goal Keeper")){
-                        int keeper = Integer.parseInt(eventArray.get(key).child("keeper").getValue().toString().trim());
-                        keeper--;
-                        int totalPlayers = Integer.parseInt(eventArray.get(key).child("totalPlayers").getValue().toString().trim());
-                        totalPlayers--;
-                        databaseReference.child(keyString).child("keeper").setValue(keeper);
-                        databaseReference.child(keyString).child("totalPlayers").setValue(totalPlayers);
-                    }
-                    else if(object.getPosition().equals("Defender")){
-                        int defender = Integer.parseInt(eventArray.get(key).child("defender").getValue().toString().trim());
-                        defender--;
-                        int totalPlayers = Integer.parseInt(eventArray.get(key).child("totalPlayers").getValue().toString().trim());
-                        totalPlayers--;
-                        databaseReference.child(keyString).child("defender").setValue(defender);
-                        databaseReference.child(keyString).child("totalPlayers").setValue(totalPlayers);
-                    }
-                }
-                else if(eventArray.get(key).child("sports").getValue().equals("Cricket")){
 
-                    if(object.getPosition().equals("Batsman")){
-                        int batsman = Integer.parseInt(eventArray.get(key).child("batsman").getValue().toString().trim().trim());
-                        batsman--;
-                        int totalPlayers = Integer.parseInt(eventArray.get(key).child("totalPlayers").getValue().toString().trim());
-                        totalPlayers--;
-                        databaseReference.child(keyString).child("batsman").setValue(batsman);
-                        databaseReference.child(keyString).child("totalPlayers").setValue(totalPlayers);
-                    }
-                    else if(object.getPosition().equals("Bowler")){
-                        int bowlers = Integer.parseInt(eventArray.get(key).child("bowlers").getValue().toString().trim());
-                        bowlers--;
-                        int totalPlayers = Integer.parseInt(eventArray.get(key).child("totalPlayers").getValue().toString().trim());
-                        totalPlayers--;
-                        databaseReference.child(keyString).child("bowlers").setValue(bowlers);
-                        databaseReference.child(keyString).child("totalPlayers").setValue(totalPlayers);
-                    }
-                    else if(object.getPosition().equals("Wicket Keeper")){
-                        int wicketKeeper = Integer.parseInt(eventArray.get(key).child("wicketKeeper").getValue().toString().trim());
-                        wicketKeeper--;
-                        int totalPlayers = Integer.parseInt(eventArray.get(key).child("totalPlayers").getValue().toString().trim());
-                        totalPlayers--;
-                        databaseReference.child(keyString).child("wicketKeeper").setValue(wicketKeeper);
-                        databaseReference.child(keyString).child("totalPlayers").setValue(totalPlayers);
-                    }
-                    else if(object.getPosition().equals("All Rounder")){
-                        int allRounder = Integer.parseInt(eventArray.get(key).child("allRounder").getValue().toString().trim()) ;
-                        allRounder--;
-                        int totalPlayers = Integer.parseInt(eventArray.get(key).child("totalPlayers").getValue().toString().trim());
-                        totalPlayers--;
-                        databaseReference.child(keyString).child("allRounder").setValue(allRounder);
-                        databaseReference.child(keyString).child("totalPlayers").setValue(totalPlayers);
-                    }
+                int playerCheck = Integer.parseInt(eventArray.get(key).child("totalPlayers").getValue().toString().trim());
+                if(playerCheck == 0){
+                    Toast.makeText(getApplicationContext(),"All the spots are filled, SORRY!",Toast.LENGTH_LONG).show();
+                    finish();
                 }
                 else{
-                    databaseReference.child(keyString).child("totalPlayers").setValue(0);
+                    if(eventArray.get(key).child("sports").getValue().equals("Football")){
+                        if(object.getPosition().equals("Attacker")){
+                            int attacker = Integer.parseInt(eventArray.get(key).child("attacker").getValue().toString().trim());
+                            if(attacker == 0){
+                                Toast.makeText(getApplicationContext(),"You cannot join event for this position, Please select another one",Toast.LENGTH_LONG).show();
+                                finish();
+                            }
+                            else{
+                                attacker--;
+                                int totalPlayers = Integer.parseInt(eventArray.get(key).child("totalPlayers").getValue().toString().trim());
+                                totalPlayers--;
+                                databaseReference.child(keyString).child("attacker").setValue(attacker);
+                                databaseReference.child(keyString).child("totalPlayers").setValue(totalPlayers);
+                                myReference.child(String.valueOf(maxIdJ+1)).setValue(object);
+                                Toast.makeText(getApplicationContext(),"Event Joined",Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        }
+                        else if(object.getPosition().equals("Midfielder")){
+                            int midfielder = Integer.parseInt(eventArray.get(key).child("midfielder").getValue().toString().trim());
+                            if(midfielder == 0){
+                                Toast.makeText(getApplicationContext(),"You cannot join event for this position, Please select another one",Toast.LENGTH_LONG).show();
+                                finish();
+                            }
+                            else{
+                                midfielder--;
+                                int totalPlayers = Integer.parseInt(eventArray.get(key).child("totalPlayers").getValue().toString().trim());
+                                totalPlayers--;
+                                databaseReference.child(keyString).child("midfielder").setValue(midfielder);
+                                databaseReference.child(keyString).child("totalPlayers").setValue(totalPlayers);
+                                myReference.child(String.valueOf(maxIdJ+1)).setValue(object);
+                                Toast.makeText(getApplicationContext(),"Event Joined",Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        }
+                        else if(object.getPosition().equals("Goal Keeper")){
+                            int keeper = Integer.parseInt(eventArray.get(key).child("keeper").getValue().toString().trim());
+                            if(keeper == 0){
+                                Toast.makeText(getApplicationContext(),"You cannot join event for this position, Please select another one",Toast.LENGTH_LONG).show();
+                                finish();
+                            }
+                            else{
+                                keeper--;
+                                int totalPlayers = Integer.parseInt(eventArray.get(key).child("totalPlayers").getValue().toString().trim());
+                                totalPlayers--;
+                                databaseReference.child(keyString).child("keeper").setValue(keeper);
+                                databaseReference.child(keyString).child("totalPlayers").setValue(totalPlayers);
+                                myReference.child(String.valueOf(maxIdJ+1)).setValue(object);
+                                Toast.makeText(getApplicationContext(),"Event Joined",Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        }
+                        else if(object.getPosition().equals("Defender")){
+                            int defender = Integer.parseInt(eventArray.get(key).child("defender").getValue().toString().trim());
+                            if(defender == 0){
+                                Toast.makeText(getApplicationContext(),"You cannot join event for this position, Please select another one",Toast.LENGTH_LONG).show();
+                                finish();
+                            }
+                            else{
+                                defender--;
+                                int totalPlayers = Integer.parseInt(eventArray.get(key).child("totalPlayers").getValue().toString().trim());
+                                totalPlayers--;
+                                databaseReference.child(keyString).child("defender").setValue(defender);
+                                databaseReference.child(keyString).child("totalPlayers").setValue(totalPlayers);
+                                myReference.child(String.valueOf(maxIdJ+1)).setValue(object);
+                                Toast.makeText(getApplicationContext(),"Event Joined",Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+
+                        }
+                    }
+                    else if(eventArray.get(key).child("sports").getValue().equals("Cricket")){
+
+                        if(object.getPosition().equals("Batsman")){
+                            int batsman = Integer.parseInt(eventArray.get(key).child("batsman").getValue().toString().trim().trim());
+                            if(batsman == 0){
+                                Toast.makeText(getApplicationContext(),"You cannot join event for this position, Please select another one",Toast.LENGTH_LONG).show();
+                                finish();
+                            }
+                            else{
+                                batsman--;
+                                int totalPlayers = Integer.parseInt(eventArray.get(key).child("totalPlayers").getValue().toString().trim());
+                                totalPlayers--;
+                                databaseReference.child(keyString).child("batsman").setValue(batsman);
+                                databaseReference.child(keyString).child("totalPlayers").setValue(totalPlayers);
+                                myReference.child(String.valueOf(maxIdJ+1)).setValue(object);
+                                Toast.makeText(getApplicationContext(),"Event Joined",Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        }
+                        else if(object.getPosition().equals("Bowler")){
+                            int bowlers = Integer.parseInt(eventArray.get(key).child("bowlers").getValue().toString().trim());
+                            if(bowlers == 0){
+                                Toast.makeText(getApplicationContext(),"You cannot join event for this position, Please select another one",Toast.LENGTH_LONG).show();
+                                finish();
+                            }
+                            else{
+                                bowlers--;
+                                int totalPlayers = Integer.parseInt(eventArray.get(key).child("totalPlayers").getValue().toString().trim());
+                                totalPlayers--;
+                                databaseReference.child(keyString).child("bowlers").setValue(bowlers);
+                                databaseReference.child(keyString).child("totalPlayers").setValue(totalPlayers);
+                                myReference.child(String.valueOf(maxIdJ+1)).setValue(object);
+                                Toast.makeText(getApplicationContext(),"Event Joined",Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        }
+                        else if(object.getPosition().equals("Wicket Keeper")){
+                            int wicketKeeper = Integer.parseInt(eventArray.get(key).child("wicketKeeper").getValue().toString().trim());
+                            if(wicketKeeper == 0){
+                                Toast.makeText(getApplicationContext(),"You cannot join event for this position, Please select another one",Toast.LENGTH_LONG).show();
+                                finish();
+                            }
+                            else{
+                                wicketKeeper--;
+                                int totalPlayers = Integer.parseInt(eventArray.get(key).child("totalPlayers").getValue().toString().trim());
+                                totalPlayers--;
+                                databaseReference.child(keyString).child("wicketKeeper").setValue(wicketKeeper);
+                                databaseReference.child(keyString).child("totalPlayers").setValue(totalPlayers);
+                                myReference.child(String.valueOf(maxIdJ+1)).setValue(object);
+                                Toast.makeText(getApplicationContext(),"Event Joined",Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        }
+                        else if(object.getPosition().equals("All Rounder")){
+                            int allRounder = Integer.parseInt(eventArray.get(key).child("allRounder").getValue().toString().trim()) ;
+                            if(allRounder == 0){
+                                Toast.makeText(getApplicationContext(),"You cannot join event for this position, Please select another one",Toast.LENGTH_LONG).show();
+                                finish();
+                            }
+                            else{
+                                allRounder--;
+                                int totalPlayers = Integer.parseInt(eventArray.get(key).child("totalPlayers").getValue().toString().trim());
+                                totalPlayers--;
+                                databaseReference.child(keyString).child("allRounder").setValue(allRounder);
+                                databaseReference.child(keyString).child("totalPlayers").setValue(totalPlayers);
+                                myReference.child(String.valueOf(maxIdJ+1)).setValue(object);
+                                Toast.makeText(getApplicationContext(),"Event Joined",Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        }
+                    }
+                    else{
+                        databaseReference.child(keyString).child("totalPlayers").setValue(0);
+                        myReference.child(String.valueOf(maxIdJ+1)).setValue(object);
+                        Toast.makeText(getApplicationContext(),"Event Joined",Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
                 }
 
-                myReference.child(String.valueOf(maxId+1)).setValue(object)
-                       .addOnCompleteListener(new OnCompleteListener<Void>() {
-                           @Override
-
-                           public void onComplete(@NonNull Task<Void> task) {
-
-                               myReference.setValue(object);
-
-                           }
-
-                       });
             }
 
         });
@@ -189,7 +279,7 @@ public class JoinEvent extends AppCompatActivity implements AdapterView.OnItemSe
             tvLocation.setText(eventKey.child("resultLocation").getValue().toString());
             tvTime.setText(eventKey.child("timeHour").getValue().toString() +":" + eventKey.child("timeMinute").getValue().toString());
             tvDescription.setText(eventKey.child("description").getValue().toString());
-//            tvTotalPlayersJoined.setText(eventKey.child("totalPlayers").getValue().toString());
+ //           tvTotalPlayersJoined.setText(eventKey.child("totalPlayers").getValue().toString());
             tvSports.setText(eventKey.child("sports").getValue().toString());
             sportsSet = eventKey.child("sports").getValue().toString().trim();
         }

@@ -67,7 +67,7 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
     Double lat, lng;
     ArrayList<LatLng> arrayListLoc = new ArrayList<LatLng>();
     ArrayList<DataSnapshot> eventArray = new ArrayList();
-    int key;
+    int key = 0;
 
     public Home() {
         // Required empty public constructor
@@ -180,19 +180,19 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
         if(mLocationPermissionGranted){
             getDeviceLocation();
             mMap.setMyLocationEnabled(true);
-            for(int i = 0; i<arrayListLoc.size();i++){
-                mMap.addMarker(new MarkerOptions().position(arrayListLoc.get(i)).title(""+i));
-            }
+            setMarkers();
             mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
                 public boolean onMarkerClick(Marker marker) {
+
                     DataSnapshot ds =   eventArray.get(Integer.parseInt(marker.getTitle().trim()));
                     if(ds != null){
                         tvMarkerSports.setText(ds.child("sports").getValue().toString());
                         tvMarkerDate.setText(ds.child("date").child("date").getValue().toString() + "/" + ds.child("date").child("month").getValue().toString() + "/" + ds.child("date").child("year").getValue().toString() );
                         tvMarkerLocation.setText(ds.child("resultLocation").getValue().toString());
                         tvMarkerTime.setText(ds.child("timeHour").getValue().toString() +":" + ds.child("timeMinute").getValue().toString());
-                        key = Integer.parseInt(marker.getTitle().trim());
+                        String key1 = ds.child("id").getValue().toString();
+                        key = Integer.parseInt(key1);
                     }
                     k.setVisibility(View.VISIBLE);
                     return false;
@@ -269,6 +269,12 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
 
     public void onItemClicked(int index) {
 
+    }
+
+    public void setMarkers(){
+        for(int i = 0; i<arrayListLoc.size();i++){
+            mMap.addMarker(new MarkerOptions().position(arrayListLoc.get(i)).title(""+i).draggable(false));
+        }
     }
 
 }

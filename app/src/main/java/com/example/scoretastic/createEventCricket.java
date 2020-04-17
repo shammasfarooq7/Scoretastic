@@ -19,8 +19,8 @@ public class createEventCricket extends CreateEventData {
         this.wicketKeeper = wicketKeeper;
     }
 
-    public createEventCricket(String resultLocation, double resultLng, double resultLat, String description, Date date, Time time, String sports, int totalPlayers, int timeHour, int timeMinute, int batsman, int bowlers, int allRounder, int wicketKeeper) {
-        super(resultLocation, resultLng, resultLat, description, date, time, sports, totalPlayers, timeHour, timeMinute);
+    public createEventCricket(String resultLocation, double resultLng, double resultLat, String description, Date date, Time time, String sports, int totalPlayers, int timeHour, int timeMinute, long id, int batsman, int bowlers, int allRounder, int wicketKeeper) {
+        super(resultLocation, resultLng, resultLat, description, date, time, sports, totalPlayers, timeHour, timeMinute, id);
         this.batsman = batsman;
         this.bowlers = bowlers;
         this.allRounder = allRounder;

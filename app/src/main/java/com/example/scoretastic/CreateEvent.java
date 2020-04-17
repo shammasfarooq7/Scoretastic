@@ -102,6 +102,7 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
 
                         createEventData.setDescription(et4.getText().toString());
                         createEventData.setDate(date);
+                        createEventData.setId(maxId+1);
                         if(createEventData.getSports().equals("Football")){
                             dataSenderFootball();
                         }
@@ -111,20 +112,8 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
                         else{
                             dataSender();
                         }
-
-                        userEventReference.child(String.valueOf(uEventMId
-                                +1)).setValue(uid,createEventData)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-
-                                        userEventReference.child("uid").setValue(uid);
-                                        userEventReference.child("eventId").setValue(maxId + 1);
-
-                                    }
-                                });
-
-
+                        userEventReference.child(String.valueOf(uEventMId+1)).child("uid").setValue(uid);
+                        userEventReference.child(String.valueOf(uEventMId+1)).child("eventId").setValue(maxId+1);
 
                     }
 
@@ -422,6 +411,7 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
         createEventFootball.setTimeHour(createEventData.getTimeHour());
         createEventFootball.setTimeMinute(createEventData.getTimeMinute());
         createEventFootball.setSports(createEventData.getSports());
+        createEventFootball.setId(maxId+1);
         if(!etB.getText().toString().trim().equals("")){
             createEventFootball.setAttacker(Integer.valueOf(etB.getText().toString().trim()));
         }
@@ -452,6 +442,7 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
         createEventCricket.setTimeHour(createEventData.getTimeHour());
         createEventCricket.setTimeMinute(createEventData.getTimeMinute());
         createEventCricket.setSports(createEventData.getSports());
+        createEventCricket.setId(maxId+1);
         if(!etBC.getText().toString().trim().equals("")){
             createEventCricket.setBatsman(Integer.valueOf(etBC.getText().toString().trim()));
         }

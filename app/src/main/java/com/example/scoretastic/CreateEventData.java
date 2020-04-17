@@ -14,11 +14,12 @@ public class CreateEventData {
     int totalPlayers;
     int timeHour;
     int timeMinute;
+    long id;
 
     public CreateEventData() {
     }
 
-    public CreateEventData(String resultLocation, double resultLng, double resultLat, String description, Date date, Time time, String sports, int totalPlayers, int timeHour, int timeMinute) {
+    public CreateEventData(String resultLocation, double resultLng, double resultLat, String description, Date date, Time time, String sports, int totalPlayers, int timeHour, int timeMinute, long id) {
         this.resultLocation = resultLocation;
         this.resultLng = resultLng;
         this.resultLat = resultLat;
@@ -29,6 +30,7 @@ public class CreateEventData {
         this.totalPlayers = totalPlayers;
         this.timeHour = timeHour;
         this.timeMinute = timeMinute;
+        this.id = id;
     }
 
     public String getResultLocation() {
@@ -109,5 +111,13 @@ public class CreateEventData {
 
     public void setTimeMinute(int timeMinute) {
         this.timeMinute = timeMinute;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

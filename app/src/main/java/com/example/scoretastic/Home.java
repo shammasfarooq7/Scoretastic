@@ -44,7 +44,7 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAdapter.ItemClicked {
+public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAdapter.ItemClicked, HomeRecyclerAdapter.onItemClickListner{
 
     GoogleMap mMap;
     View j,k;
@@ -96,6 +96,20 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
         recyclerView.setHasFixedSize(true);
         myAdapter = new HomeRecyclerAdapter(this, arrayList);
         recyclerView.setAdapter(myAdapter);
+        myAdapter.setOnItemClickListner(new HomeRecyclerAdapter.onItemClickListner() {
+            @Override
+            public void onItemClick(int position) {
+                DataSnapshot ds = eventArray.get(position);
+                if(ds != null){
+                    String key1 = ds.child("id").getValue().toString();
+                    key = Integer.parseInt(key1);
+                    Intent intent = new Intent(getContext(), JoinEvent.class);
+                    intent.putExtra("Event key", key);
+                    startActivity(intent);
+
+                }
+            }
+        });
         k.setVisibility(View.GONE);
 
         btMap.setOnClickListener(new View.OnClickListener() {
@@ -277,4 +291,8 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
         }
     }
 
+    @Override
+    public void onItemClick(int position) {
+
+    }
 }

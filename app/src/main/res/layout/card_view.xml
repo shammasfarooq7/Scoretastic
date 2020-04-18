@@ -6,13 +6,14 @@
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/homeCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="7dp"
         app:cardBackgroundColor="#D3D3D3"
         app:cardCornerRadius="5dp"
         app:cardElevation="5dp"
-        app:cardUseCompatPadding="false" >
+        app:cardUseCompatPadding="false">
 
         <LinearLayout
             android:id="@+id/linearLayout"

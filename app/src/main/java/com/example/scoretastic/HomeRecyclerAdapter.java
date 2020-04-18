@@ -3,6 +3,7 @@ package com.example.scoretastic;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,14 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     private ArrayList<Recycler> event;
     ItemClicked activity;
     LinearLayoutManager mLinearLayoutManager;
+    private onItemClickListner mListner;
+
+    public interface onItemClickListner{
+        void onItemClick(int position);
+    }
+    public void setOnItemClickListner(onItemClickListner listner){
+        mListner = listner;
+    }
 
     public interface ItemClicked {
         void onItemClicked(int index);
@@ -33,7 +42,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         TextView etTime;
         TextView etDate;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, final onItemClickListner listner) {
             super(itemView);
             tvSports = itemView.findViewById(R.id.tvMarkerSports);
             tvLocation = itemView.findViewById(R.id.tvMarkerLocation);
@@ -43,7 +52,12 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    if(listner != null){
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION){
+                            listner.onItemClick(position);
+                        }
+                    }
                 }
             });
         }
@@ -56,7 +70,7 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view, parent, false);
         mLinearLayoutManager = new LinearLayoutManager(parent.getContext(), LinearLayoutManager.VERTICAL, false);
-        return new HomeRecyclerAdapter.ViewHolder(v);
+        return new HomeRecyclerAdapter.ViewHolder(v,mListner);
     }
 
     @Override

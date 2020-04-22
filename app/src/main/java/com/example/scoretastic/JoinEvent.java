@@ -60,7 +60,7 @@ public class JoinEvent extends AppCompatActivity implements AdapterView.OnItemSe
         tvLocation = findViewById(R.id.tvLocation);
         tvTime = findViewById(R.id.tvTime);
         tvDescription = findViewById(R.id.tvDescription);
-        tvTotalPlayersJoined = findViewById(R.id.tvTotalPlayer);
+        tvTotalPlayersJoined = findViewById(R.id.tvPlayersJoined);
         tvJoin = findViewById(R.id.tvJoin);
         btJoin = findViewById(R.id.btJoin);
 

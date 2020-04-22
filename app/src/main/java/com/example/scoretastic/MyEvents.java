@@ -47,10 +47,12 @@ public class MyEvents extends Fragment implements HostedRecyclerAdapter.ItemClic
     Recycler hostObject = new Recycler();
     ArrayList<Recycler> arrayListHost;
     ArrayList<Recycler> arrayListSub;
-    ArrayList<DataSnapshot> subArray = new ArrayList();
-    ArrayList<DataSnapshot> hostArray = new ArrayList();
-    ArrayList<DataSnapshot> createArray = new ArrayList();
+    ArrayList<DataSnapshot> subArray;
+    ArrayList<DataSnapshot> hostArray;
+    ArrayList<DataSnapshot> createArray;
     String uid;
+    int keySub = 0;
+    int keyHost = 0;
 
     public MyEvents() {
         // Required empty public constructor
@@ -73,11 +75,17 @@ public class MyEvents extends Fragment implements HostedRecyclerAdapter.ItemClic
         createDatabase = firebaseDatabase.getInstance().getReference("CreateEvent");
         arrayListSub = new ArrayList<>();
         arrayListHost = new ArrayList<>();
+        createArray = new ArrayList<>();
+        subArray = new ArrayList();
+        hostArray = new ArrayList();
+
         btHosted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 recyclerViewSub.setVisibility(View.GONE);
                 recyclerViewHost.setVisibility(View.VISIBLE);
+                layoutManagerHost = new LinearLayoutManager(getContext());
+                recyclerViewHost.setLayoutManager(layoutManagerHost);
 
             }
         });
@@ -87,6 +95,8 @@ public class MyEvents extends Fragment implements HostedRecyclerAdapter.ItemClic
             public void onClick(View view) {
                 recyclerViewHost.setVisibility(View.GONE);
                 recyclerViewSub.setVisibility(View.VISIBLE);
+                layoutManagerSub = new LinearLayoutManager(getContext());
+                recyclerViewSub.setLayoutManager(layoutManagerSub);
 
             }
         });
@@ -106,9 +116,9 @@ public class MyEvents extends Fragment implements HostedRecyclerAdapter.ItemClic
 
         recyclerViewSub = v.findViewById(R.id.rvSubscribed);
         recyclerViewSub.setHasFixedSize(true);
-        layoutManagerSub = new LinearLayoutManager(getContext());
-        recyclerViewSub.setLayoutManager(layoutManagerSub);
+
         subAdapter = new SubscribedRecyclerAdapter(this, arrayListSub);
+        recyclerViewSub.setAdapter(subAdapter);
         subAdapter.setOnItemClickListner(new SubscribedRecyclerAdapter.onItemClickListner() {
             @Override
             public void onItemClick(int position) {
@@ -129,9 +139,9 @@ public class MyEvents extends Fragment implements HostedRecyclerAdapter.ItemClic
 
         recyclerViewHost = v.findViewById(R.id.rvHosted);
         recyclerViewHost.setHasFixedSize(true);
-        layoutManagerHost = new LinearLayoutManager(getContext());
-        recyclerViewHost.setLayoutManager(layoutManagerHost);
+
         hostAdapter = new HostedRecyclerAdapter(this, arrayListHost);
+        recyclerViewHost.setAdapter(hostAdapter);
         hostAdapter.setOnItemClickListner(new HostedRecyclerAdapter.onItemClickListner() {
             @Override
             public void onItemClick(int position) {

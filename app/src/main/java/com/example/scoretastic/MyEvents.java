@@ -1,6 +1,7 @@
 package com.example.scoretastic;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -53,6 +54,7 @@ public class MyEvents extends Fragment implements HostedRecyclerAdapter.ItemClic
     String uid;
     int keySub = 0;
     int keyHost = 0;
+    String pos;
 
     public MyEvents() {
         // Required empty public constructor
@@ -122,7 +124,21 @@ public class MyEvents extends Fragment implements HostedRecyclerAdapter.ItemClic
         subAdapter.setOnItemClickListner(new SubscribedRecyclerAdapter.onItemClickListner() {
             @Override
             public void onItemClick(int position) {
-
+                DataSnapshot ds = subArray.get(position);
+                if(ds!=null){
+                    String key1 = ds.child("eventKey").getValue().toString();
+                    if(ds.hasChild("position")){
+                        pos = ds.child("position").getValue().toString();
+                    }
+                    else{
+                        pos = "Player";
+                    }
+                    keySub = Integer.parseInt(key1);
+                    Intent intent = new Intent(getContext(), SubDetails.class);
+                    intent.putExtra("Event key Sub", keySub);
+                    intent.putExtra("Position", pos);
+                    startActivity(intent);
+                }
             }
         });
         subDatabase.addValueEventListener(new ValueEventListener() {
@@ -145,7 +161,14 @@ public class MyEvents extends Fragment implements HostedRecyclerAdapter.ItemClic
         hostAdapter.setOnItemClickListner(new HostedRecyclerAdapter.onItemClickListner() {
             @Override
             public void onItemClick(int position) {
-
+                DataSnapshot ds = hostArray.get(position);
+                if(ds!=null){
+                    String key1 = ds.child("eventId").getValue().toString();
+                    keyHost = Integer.parseInt(key1);
+                    Intent intent = new Intent(getContext(), HostDetails.class);
+                    intent.putExtra("Event key Host", keyHost);
+                    startActivity(intent);
+                }
             }
         });
 

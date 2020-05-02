@@ -69,19 +69,6 @@ public class Login extends AppCompatActivity {
                 }
             }
         };
-
-
-        /*
-        Firebase.setAndroidContext(this);
-        // other setup code
-        SharedPreferences mPrefs = getSharedPreferences("myAppPrefs", Context.MODE_PRIVATE);
-        if (mPrefs.getBoolean("is_logged_before",false)) {
-            Intent i = new Intent(this, Main.class);
-            startActivity(i);
-        } else {
-            // continue to login part
-        }
-         */
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,10 +79,9 @@ public class Login extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
-                                //Toast.makeText(mAuth,Toast.LENGTH_SHORT).show();
                                 Toast.makeText(getApplicationContext(),"Signed IN",Toast.LENGTH_SHORT).show();
-
                                 startActivity(new Intent(mContext, Main.class));
+                                finish();
                             }
                             else{
                                 Toast.makeText(getApplicationContext(),"Error Signing In" +task.getException().getMessage() ,Toast.LENGTH_SHORT).show();

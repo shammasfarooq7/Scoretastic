@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,6 +27,8 @@ public class HostDetails extends AppCompatActivity {
     private DatabaseReference databaseReference;
     String uid;
     ArrayList<DataSnapshot> eventArray = new ArrayList();
+    ArrayList<DataSnapshot> hostArray = new ArrayList();
+    private DatabaseReference hostReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,7 @@ public class HostDetails extends AppCompatActivity {
         btDelete = findViewById(R.id.btDelete);
         key = getIntent().getIntExtra("Event key Host",-1);
         databaseReference = firebaseDatabase.getInstance().getReference("CreateEvent");
+        hostReference = firebaseDatabase.getInstance().getReference("UserEvent");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             uid = user.getUid();
@@ -56,10 +60,27 @@ public class HostDetails extends AppCompatActivity {
 
             }
         });
+
+        hostReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                hostShowData(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         btDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                hostReference.child(hostArray.get(0).getKey()).child("uid").setValue(0);
+                String keyEvent = hostArray.get(0).child("eventId").getValue().toString().trim();
+                databaseReference.child(keyEvent).child("totalPlayers").setValue(0);
+                Toast.makeText(getApplicationContext(),"Event Deleted",Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
     }
@@ -77,6 +98,16 @@ public class HostDetails extends AppCompatActivity {
             tvDescription.setText(eventKey.child("description").getValue().toString());
             //           tvTotalPlayersJoined.setText(eventKey.child("totalPlayers").getValue().toString());
             tvSports.setText(eventKey.child("sports").getValue().toString());
+        }
+    }
+
+    public void hostShowData(DataSnapshot dataSnapshot){
+        for(DataSnapshot ds : dataSnapshot.getChildren()){
+            String currentUser = ds.child("uid").getValue().toString().trim();
+            int key1 = Integer.parseInt(ds.child("eventId").getValue().toString().trim());
+            if(currentUser.trim().equals(uid.trim()) && (key1 == key)) {
+                hostArray.add(ds);
+            }
         }
     }
 }

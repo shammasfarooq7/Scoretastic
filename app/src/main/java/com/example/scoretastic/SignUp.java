@@ -45,16 +45,11 @@ public class SignUp extends AppCompatActivity {
         setContentView(R.layout.signup);
 
         etName = findViewById(R.id.etName);
-        userId=1;
         id = 0;
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         btSignUp = findViewById(R.id.signup);
         fAuth = FirebaseAuth.getInstance();
-        user = fAuth.getCurrentUser();
-
-
-
 
 
         myReference.addValueEventListener(new ValueEventListener() {
@@ -62,7 +57,6 @@ public class SignUp extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists())
                     maxId=(dataSnapshot.getChildrenCount());
-
             }
 
             @Override
@@ -82,17 +76,6 @@ public class SignUp extends AppCompatActivity {
                 final String name = etName.getText().toString().trim();
 
 
-
-
-                userData.setName(name);
-                userData.setEmail(email);
-                userData.setPassword(password);
-                userData.setUserId(user.getUid());
-                userData.setId(maxId+1);
-
-
-                Toast.makeText(SignUp.this, "SIGNED UP!", Toast.LENGTH_LONG).show();
-
                 if(!email.equals("")&&!password.equals("")&&!name.equals("")){
                     if(password.length() < 7){
                         Toast.makeText(getApplicationContext(),"Password must be equal or greater than 8 letters",Toast.LENGTH_SHORT).show();
@@ -102,28 +85,13 @@ public class SignUp extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if(task.isSuccessful()){
-
-                                    //(String.valueOf(maxId+1)
-                                    //kahin user ka object bnaya hy usne
-                                    //wo usko whan sy get krk tou ab usme sy data n userID ley rha rhy
-                                    //user likh kr wo dhoondo k kesy
-                                    //
-                                    //myReference.child(user.getUid()).setValue(userData)
-
-                                    myReference.child(String.valueOf(maxId+1)).setValue(userData)
-                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-
-                                                    if (task.isSuccessful()) {
-                                                        Toast.makeText(SignUp.this, "record saved", Toast.LENGTH_SHORT).show();
-                                                    } else {
-                                                        Toast.makeText(SignUp.this, "database record not saved", Toast.LENGTH_SHORT).show();
-                                                    }
-                                                }
-
-                                            });
-
+                                    FirebaseUser user = fAuth.getCurrentUser();
+                                    userData.setName(name);
+                                    userData.setEmail(email);
+                                    userData.setPassword(password);
+                                    userData.setUserId(user.getUid());
+                                    userData.setId(maxId+1);
+                                    myReference.child(String.valueOf(maxId+1)).setValue(userData);
                                     Toast.makeText(getApplicationContext(),"User Created",Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(getApplicationContext(),Main.class));
 

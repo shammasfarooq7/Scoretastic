@@ -79,9 +79,15 @@ public class Login extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
-                                Toast.makeText(getApplicationContext(),"Signed IN",Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(mContext, Main.class));
-                                finish();
+                                if(mAuth.getCurrentUser().isEmailVerified()){
+                                    Toast.makeText(getApplicationContext(),"Signed IN",Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(mContext, Main.class));
+                                    finish();
+                                }
+                                else{
+                                    Toast.makeText(getApplicationContext(),"Verify email and then Sign In",Toast.LENGTH_SHORT).show();
+                                }
+
                             }
                             else{
                                 Toast.makeText(getApplicationContext(),"Error Signing In" +task.getException().getMessage() ,Toast.LENGTH_SHORT).show();

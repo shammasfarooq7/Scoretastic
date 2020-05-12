@@ -51,7 +51,7 @@ import static com.firebase.ui.auth.AuthUI.getApplicationContext;
  */
 public class Profile extends Fragment{
 
-    TextView tvName,tvEmail,btChangePassword;
+    TextView tvName,tvEmail,btChangePassword,btTeam;
     EditText oldPass,newPass,newPassConfirm;
     Button btSave,btSignOut;
     ImageView profilePic,btPicChange;
@@ -78,6 +78,7 @@ public class Profile extends Fragment{
         btSignOut = view.findViewById(R.id.btSignOut);
         profilePic = view.findViewById(R.id.profilePic);
         btPicChange = view.findViewById(R.id.btPic);
+        btTeam = view.findViewById(R.id.btTeam);
         v = view.findViewById(R.id.passLayout);
         oldPass = v.findViewById(R.id.oldPass);
         newPass = v.findViewById(R.id.newPass);
@@ -90,6 +91,15 @@ public class Profile extends Fragment{
         if (user != null) {
             uid = user.getUid();
         }
+
+        btTeam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), Team.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override

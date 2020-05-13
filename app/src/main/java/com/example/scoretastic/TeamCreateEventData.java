@@ -11,16 +11,18 @@ public class TeamCreateEventData {
     String resultLocation;
     double resultLng;
     double resultLat;
-    Date date;
-    Time time;
     long id;
     int timeHour;
     int timeMinute;
+    String uid;
+    int day;
+    int month;
+    int year;
 
     public TeamCreateEventData() {
     }
 
-    public TeamCreateEventData(String sports, String variation, String venue, String description, String resultLocation, double resultLng, double resultLat, Date date, Time time, long id, int timeHour, int timeMinute) {
+    public TeamCreateEventData(String sports, String variation, String venue, String description, String resultLocation, double resultLng, double resultLat, long id, int timeHour, int timeMinute, String uid, int day, int month, int year) {
         this.sports = sports;
         this.variation = variation;
         this.venue = venue;
@@ -28,11 +30,13 @@ public class TeamCreateEventData {
         this.resultLocation = resultLocation;
         this.resultLng = resultLng;
         this.resultLat = resultLat;
-        this.date = date;
-        this.time = time;
         this.id = id;
         this.timeHour = timeHour;
         this.timeMinute = timeMinute;
+        this.uid = uid;
+        this.day = day;
+        this.month = month;
+        this.year = year;
     }
 
     public String getSports() {
@@ -91,22 +95,6 @@ public class TeamCreateEventData {
         this.resultLat = resultLat;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public Time getTime() {
-        return time;
-    }
-
-    public void setTime(Time time) {
-        this.time = time;
-    }
-
     public long getId() {
         return id;
     }
@@ -123,11 +111,43 @@ public class TeamCreateEventData {
         this.timeHour = timeHour;
     }
 
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
     public int getTimeMinute() {
         return timeMinute;
     }
 
     public void setTimeMinute(int timeMinute) {
         this.timeMinute = timeMinute;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
 }

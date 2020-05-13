@@ -34,6 +34,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -65,9 +67,10 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private final float defaultZoom = 15f;
     Double lat, lng;
-    ArrayList<LatLng> arrayListLoc = new ArrayList<LatLng>();
-    ArrayList<DataSnapshot> eventArray = new ArrayList();
+    ArrayList<LatLng> arrayListLoc;
+    ArrayList<DataSnapshot> eventArray;
     int key = 0;
+    String uid;
 
     public Home() {
         // Required empty public constructor
@@ -78,8 +81,14 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            uid = user.getUid();
+        }
 
         arrayList = new ArrayList<>();
+        eventArray = new ArrayList();
+        arrayListLoc = new ArrayList<LatLng>();
         final View v = inflater.inflate(R.layout.fragment_home, container, false);
         databaseReference = firebaseDatabase.getInstance().getReference("CreateEvent");
         Button btMap = v.findViewById(R.id.btMap);
@@ -159,22 +168,28 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
 
     private void showData(DataSnapshot dataSnapshot) {
         for (DataSnapshot ds : dataSnapshot.getChildren()) {
-            String day = ds.child("date").child("date").getValue().toString();
-            String month = ds.child("date").child("month").getValue().toString();
-            String year = ds.child("date").child("year").getValue().toString();
-            String timeHour = ds.child("timeHour").getValue().toString();
-            String timeMinute = ds.child("timeMinute").getValue().toString();
-            object = new Recycler();
-            object.setLocation(ds.child("resultLocation").getValue().toString());
-            object.setSports(ds.child("sports").getValue().toString());
-            object.setDate(day + "/" + month + "/" + year);
-            object.setTime(timeHour + ":" + timeMinute);
-            arrayList.add(object);
-            lat = (Double) ds.child("resultLat").getValue();
-            lng = (Double) ds.child("resultLng").getValue();
-            arrayListLoc.add(new LatLng(lat,lng));
-            eventArray.add(ds);
+            String status = ds.child("status").getValue().toString();
+            String userId = ds.child("uid").getValue().toString();
+            if(Integer.parseInt(status) == 0 || (userId.equals(uid))){
 
+            }
+            else{
+                String day = ds.child("day").getValue().toString();
+                String month = ds.child("month").getValue().toString();
+                String year = ds.child("year").getValue().toString();
+                String timeHour = ds.child("timeHour").getValue().toString();
+                String timeMinute = ds.child("timeMinute").getValue().toString();
+                object = new Recycler();
+                object.setLocation(ds.child("resultLocation").getValue().toString());
+                object.setSports(ds.child("sports").getValue().toString());
+                object.setDate(day + "/" + month + "/" + year);
+                object.setTime(timeHour + ":" + timeMinute);
+                lat = (Double) ds.child("resultLat").getValue();
+                lng = (Double) ds.child("resultLng").getValue();
+                arrayList.add(object);
+                arrayListLoc.add(new LatLng(lat,lng));
+                eventArray.add(ds);
+            }
         }
 
     }
@@ -202,7 +217,7 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
                     DataSnapshot ds =   eventArray.get(Integer.parseInt(marker.getTitle().trim()));
                     if(ds != null){
                         tvMarkerSports.setText(ds.child("sports").getValue().toString());
-                        tvMarkerDate.setText(ds.child("date").child("date").getValue().toString() + "/" + ds.child("date").child("month").getValue().toString() + "/" + ds.child("date").child("year").getValue().toString() );
+                        tvMarkerDate.setText(ds.child("day").getValue().toString() + "/" + ds.child("month").getValue().toString() + "/" + ds.child("year").getValue().toString() );
                         tvMarkerLocation.setText(ds.child("resultLocation").getValue().toString());
                         tvMarkerTime.setText(ds.child("timeHour").getValue().toString() +":" + ds.child("timeMinute").getValue().toString());
                         String key1 = ds.child("id").getValue().toString();

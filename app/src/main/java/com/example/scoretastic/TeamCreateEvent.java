@@ -2,6 +2,7 @@ package com.example.scoretastic;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -10,6 +11,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -42,16 +44,19 @@ public class TeamCreateEvent extends AppCompatActivity {
     EditText etVariation, etVenue, etDescription;
     TextView mDisplayDate,mDisplayTime,btLocation;
     Button btCreateMatch;
+    private static final String TAG = "Create Team Event";
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private TimePickerDialog.OnTimeSetListener mTimeSetListener;
     String uid;
-    Date date;
     TeamCreateEventData teamCreateEventData = new TeamCreateEventData();
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myReference = database.getReference("TeamCreateEvent");
+    DatabaseReference teamUserEvent = database.getReference("TeamUserEvent");
     long maxId = 0;
+    long maxIdU = 0;
+    TimePickerDialog dialogTime;
+    DatePickerDialog dialogDate;
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team_create_event);
@@ -74,6 +79,19 @@ public class TeamCreateEvent extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
                     maxId=(dataSnapshot.getChildrenCount());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        teamUserEvent.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    maxIdU=(dataSnapshot.getChildrenCount());
                 }
             }
 
@@ -141,57 +159,46 @@ public class TeamCreateEvent extends AppCompatActivity {
         });
 
         mDisplayDate = findViewById(R.id.tvMarkerDateT);
-        Calendar cal = Calendar.getInstance();
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
-        int day = cal.get(Calendar.DAY_OF_MONTH);
-        Calendar cal1 = Calendar.getInstance();
-        cal1.set(Calendar.MONTH,month);
-        cal1.set(Calendar.YEAR,year);
-        cal1.set(Calendar.DATE,day);
-        date =  cal1.getTime();
-        final DatePickerDialog dialog = new DatePickerDialog(this,
-                android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                mDateSetListener,
-                year,month,day);
-        dialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         mDisplayDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialog.show();
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                dialogDate = new DatePickerDialog(TeamCreateEvent.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                        String date = month+1 + "/" + day + "/" + year;
+                        mDisplayDate.setText(date);
+                        teamCreateEventData.setDay(day);
+                        teamCreateEventData.setYear(year);
+                        teamCreateEventData.setMonth(month+1);
+
+                    }
+                },year,month,day);
+                dialogDate.show();
             }
         });
-        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month = month + 1;
-                String date = month + "/" + day + "/" + year;
-                mDisplayDate.setText(date);
-            }
-        };
 
-
-        /*mDisplayTime = findViewById(R.id.tvMarkerTimeT);
+        mDisplayTime = findViewById(R.id.tvMarkerTimeT);
         mDisplayTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Calendar cal = Calendar.getInstance();
-                teamCreateEventData.setTimeHour(cal.get(Calendar.HOUR));
-                teamCreateEventData.setTimeMinute(cal.get(Calendar.MINUTE));
-                TimePickerDialog dialog = new TimePickerDialog(getApplicationContext(), mTimeSetListener, teamCreateEventData.getTimeHour(), teamCreateEventData.getTimeMinute(), false);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-                dialog.show();
+                final Calendar calendar = Calendar.getInstance();
+                teamCreateEventData.setTimeHour(calendar.get(Calendar.HOUR));
+                teamCreateEventData.setTimeMinute(calendar.get(Calendar.MINUTE));
+                dialogTime = new TimePickerDialog(TeamCreateEvent.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                        teamCreateEventData.setTimeHour(i);
+                        teamCreateEventData.setTimeMinute(i1);
+                        mDisplayTime.setText(i +" : "+i1);
+                    }
+                },teamCreateEventData.getTimeHour(),teamCreateEventData.getTimeMinute(),false);
+                dialogTime.show();
             }
         });
-
-        mTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker timePicker, int hour, int minute) {
-                String time = hour + ":" + minute;
-                mDisplayTime.setText(time);
-            }
-        };*/
 
     }
 
@@ -220,13 +227,24 @@ public class TeamCreateEvent extends AppCompatActivity {
         else if(etVenue.getText().toString().isEmpty()){
             etVenue.setError("Please enter Venue");
         }
+        else if(mDisplayDate.getText().toString().isEmpty()){
+            mDisplayDate.setError("Please Enter date");
+        }
+        else if(mDisplayTime.getText().toString().isEmpty()){
+            mDisplayTime.setError("Please Enter Time");
+        }
+        else if(btLocation.getText().toString().isEmpty()){
+            btLocation.setError("Please Select Location");
+        }
         else{
-            teamCreateEventData.setId(maxId);
+            teamCreateEventData.setId(maxId+1);
             teamCreateEventData.setDescription(etDescription.getText().toString().trim());
-            teamCreateEventData.setDate(date);
             teamCreateEventData.setVariation(etVariation.getText().toString().trim());
             teamCreateEventData.setVenue(etVenue.getText().toString().trim());
-            myReference.child(uid).setValue(teamCreateEventData);
+            teamCreateEventData.setUid(uid);
+            myReference.child(String.valueOf(maxId+1)).setValue(teamCreateEventData);
+            teamUserEvent.child(String.valueOf(maxIdU+1)).child("uid").setValue(uid);
+            teamUserEvent.child(String.valueOf(maxIdU+1)).child("eventId").setValue(maxId+1);
             Toast.makeText(this,"Event Created",Toast.LENGTH_SHORT).show();
             finish();
         }

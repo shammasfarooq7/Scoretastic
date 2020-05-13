@@ -275,11 +275,11 @@ public class JoinEvent extends AppCompatActivity implements AdapterView.OnItemSe
         if (eventKey != null){
 
             tvHost.setText(eventKey.getKey());
-            tvDate.setText(eventKey.child("date").child("date").getValue().toString() + "/" + eventKey.child("date").child("month").getValue().toString() + "/" + eventKey.child("date").child("year").getValue().toString());
+            tvDate.setText(eventKey.child("day").getValue().toString() + "/" + eventKey.child("month").getValue().toString() + "/" + eventKey.child("year").getValue().toString());
             tvLocation.setText(eventKey.child("resultLocation").getValue().toString());
             tvTime.setText(eventKey.child("timeHour").getValue().toString() +":" + eventKey.child("timeMinute").getValue().toString());
             tvDescription.setText(eventKey.child("description").getValue().toString());
- //           tvTotalPlayersJoined.setText(eventKey.child("totalPlayers").getValue().toString());
+            tvTotalPlayersJoined.setText(eventKey.child("totalPlayers").getValue().toString());
             tvSports.setText(eventKey.child("sports").getValue().toString());
             sportsSet = eventKey.child("sports").getValue().toString().trim();
         }

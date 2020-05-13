@@ -7,10 +7,12 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
@@ -46,7 +48,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 
-public class CreateEvent extends Fragment implements OnItemSelectedListener,DatePickerDialog.OnDateSetListener {
+public class CreateEvent extends Fragment implements OnItemSelectedListener{
 
 
     TextView tvCrtTitle,tvT1,tvT2,tvT3,tvT4,tvcategory,tvRb,tvRb1,tvRb2,tvRb3,tvRbC,tvRbC1,tvRbC2,tvRbC3,tvDate,tvTime,tvloc;
@@ -63,8 +65,6 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
     int day;
     Date date;
     private static final String TAG = "Create Event";
-    private DatePickerDialog.OnDateSetListener mDateSetListener;
-    private TimePickerDialog.OnTimeSetListener mTimeSetListener;
     CreateEventData createEventData = new CreateEventData();
     createEventCricket createEventCricket = new createEventCricket();
     createEventFootball createEventFootball = new createEventFootball();
@@ -72,15 +72,16 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
     DatabaseReference myReference = database.getReference("CreateEvent");
     DatabaseReference userEventReference = database.getReference("UserEvent");
     String uid;
+    TimePickerDialog dialogTime;
+    DatePickerDialog dialogDate;
 
 
     public CreateEvent() {
         // Required empty public constructor
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_event, container, false);
         initializeViews(view);
@@ -95,31 +96,30 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
                 Intent intent =  new Intent(getActivity(),CreateEventMap.class);
                 startActivityForResult(intent,1);
 
+            }
+        });
+        btce.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-                btce.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        createEventData.setDescription(et4.getText().toString());
-                        createEventData.setDate(date);
-                        createEventData.setId(maxId+1);
-                        if(createEventData.getSports().equals("Football")){
-                            dataSenderFootball();
-                        }
-                        else if(createEventData.getSports().equals("Cricket")){
-                            dataSenderCricket();
-                        }
-                        else{
-                            dataSender();
-                        }
-                        userEventReference.child(String.valueOf(uEventMId+1)).child("uid").setValue(uid);
-                        userEventReference.child(String.valueOf(uEventMId+1)).child("eventId").setValue(maxId+1);
-
-                    }
-
-                });
+                createEventData.setDescription(et4.getText().toString());
+                createEventData.setId(maxId+1);
+                createEventData.setUid(uid);
+                createEventData.setStatus(1);
+                if(createEventData.getSports().equals("Football")){
+                    dataSenderFootball();
+                }
+                else if(createEventData.getSports().equals("Cricket")){
+                    dataSenderCricket();
+                }
+                else{
+                    dataSender();
+                }
+                userEventReference.child(String.valueOf(uEventMId+1)).child("uid").setValue(uid);
+                userEventReference.child(String.valueOf(uEventMId+1)).child("eventId").setValue(maxId+1);
 
             }
+
         });
         return view;
     }
@@ -242,67 +242,48 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
     private void datePicker(View view) {
 
         mDisplayDate = view.findViewById(R.id.tvMarkerDate);
-
-        Calendar cal = Calendar.getInstance();
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
-        int day = cal.get(Calendar.DAY_OF_MONTH);
-        Calendar cal1 = Calendar.getInstance();
-        cal1.set(Calendar.MONTH,month);
-        cal1.set(Calendar.YEAR,year);
-        cal1.set(Calendar.DATE,day);
-        date =  cal1.getTime();
-
-        final DatePickerDialog dialog = new DatePickerDialog(
-                getContext(),
-                android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                mDateSetListener,
-                year,month,day);
-
-        dialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         mDisplayDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialog.show();
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                dialogDate = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                        String date = month+1 + "/" + day + "/" + year;
+                        mDisplayDate.setText(date);
+                        createEventData.setDay(day);
+                        createEventData.setYear(year);
+                        createEventData.setMonth(month+1);
+
+                    }
+                },year,month,day);
+                dialogDate.show();
             }
         });
-
-        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month = month + 1;
-                Log.d(TAG, "onDateSet: mm/dd/yyy: " + month + "/" + day + "/" + year);
-                String date = month + "/" + day + "/" + year;
-                mDisplayDate.setText(date);
-            }
-        };
     }
 
     private void timePicker(View view) {
         mDisplayTime = view.findViewById(R.id.tvMarkerTime);
-
         mDisplayTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Calendar cal = Calendar.getInstance();
-                createEventData.setTimeHour(cal.get(Calendar.HOUR));
-                createEventData.setTimeMinute(cal.get(Calendar.MINUTE));
-                TimePickerDialog dialog = new TimePickerDialog(getContext(), mTimeSetListener, createEventData.getTimeHour(), createEventData.getTimeMinute(), false);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-                dialog.show();
+                final Calendar calendar = Calendar.getInstance();
+                createEventData.setTimeHour(calendar.get(Calendar.HOUR));
+                createEventData.setTimeMinute(calendar.get(Calendar.MINUTE));
+                dialogTime = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                        createEventData.setTimeHour(i);
+                        createEventData.setTimeMinute(i1);
+                        mDisplayTime.setText(i +" : "+i1);
+                    }
+                },createEventData.getTimeHour(),createEventData.getTimeMinute(),false);
+                dialogTime.show();
             }
         });
-
-        mTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker timePicker, int hour, int minute) {
-
-                Log.d(TAG, "onTimeSet: hr/min: " + hour + "/" + minute);
-                String time = hour + ":" + minute;
-                mDisplayTime.setText(time);
-            }
-        };
 
     }
 
@@ -384,26 +365,17 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
 
 
     }
-    @Override
-    public void onDateSet(DatePicker view, int Year, int Month, int Day) {
-        month = month + 1;
-        Log.d(TAG, "onDateSet: mm/dd/yyy: " + month + "/" + day + "/" + year);
-        String date = month + "/" + day + "/" + year;
-        mDisplayDate.setText(date);
-    }
 
-    //THIS IS THE METHOD WHERE YOU HAVE TO SEND DATA TO FIREBASE. CALL THIS METHOD IN ONCREATEVIEW.
     private void dataSender(){
-
-
         myReference.child(String.valueOf(maxId+1)).setValue(createEventData);
-        //myReference.setValue(createEventData);
         Toast.makeText(getContext(),"Data Saved",Toast.LENGTH_SHORT).show();
     }
 
     private void dataSenderFootball(){
 
-        createEventFootball.setDate(createEventData.getDate());
+        createEventFootball.setDay(createEventData.getDay());
+        createEventFootball.setYear(createEventData.getYear());
+        createEventFootball.setMonth(createEventData.getMonth());
         createEventFootball.setDescription(createEventData.getDescription());
         createEventFootball.setResultLat(createEventData.getResultLat());
         createEventFootball.setResultLng(createEventData.resultLng);
@@ -412,6 +384,8 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
         createEventFootball.setTimeMinute(createEventData.getTimeMinute());
         createEventFootball.setSports(createEventData.getSports());
         createEventFootball.setId(maxId+1);
+        createEventFootball.setUid(uid);
+        createEventCricket.setStatus(1);
         if(!etB.getText().toString().trim().equals("")){
             createEventFootball.setAttacker(Integer.valueOf(etB.getText().toString().trim()));
         }
@@ -425,16 +399,15 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
             createEventFootball.setKeeper(Integer.valueOf(etB3.getText().toString().trim()));
         }
         createEventFootball.setTotalPlayers(createEventFootball.getAttacker() + createEventFootball.getDefender() + createEventFootball.getMidfielder() + createEventFootball.getKeeper());
-
-        //myReference.setValue(createEventFootball);
-
         myReference.child(String.valueOf(maxId+1)).setValue(createEventFootball);
         Toast.makeText(getContext(),"Data Saved",Toast.LENGTH_SHORT).show();
     }
 
     private void dataSenderCricket(){
 
-        createEventCricket.setDate(createEventData.getDate());
+        createEventCricket.setDay(createEventData.getDay());
+        createEventCricket.setYear(createEventData.getYear());
+        createEventCricket.setMonth(createEventData.getMonth());
         createEventCricket.setDescription(createEventData.getDescription());
         createEventCricket.setResultLat(createEventData.getResultLat());
         createEventCricket.setResultLng(createEventData.resultLng);
@@ -443,6 +416,8 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
         createEventCricket.setTimeMinute(createEventData.getTimeMinute());
         createEventCricket.setSports(createEventData.getSports());
         createEventCricket.setId(maxId+1);
+        createEventCricket.setUid(uid);
+        createEventCricket.setStatus(1);
         if(!etBC.getText().toString().trim().equals("")){
             createEventCricket.setBatsman(Integer.valueOf(etBC.getText().toString().trim()));
         }
@@ -459,8 +434,6 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener,Date
             createEventCricket.setWicketKeeper(Integer.valueOf(etBC3.getText().toString().trim()));
         }
         createEventCricket.setTotalPlayers(createEventCricket.getBatsman() + createEventCricket.getBowlers() + createEventCricket.getAllRounder() + createEventCricket.getWicketKeeper());
-
-        //myReference.setValue(createEventCricket);
 
         myReference.child(String.valueOf(maxId+1)).setValue(createEventCricket);
         Toast.makeText(getContext(),"Data Saved",Toast.LENGTH_SHORT).show();

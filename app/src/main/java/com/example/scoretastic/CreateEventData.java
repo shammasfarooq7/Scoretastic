@@ -8,29 +8,35 @@ public class CreateEventData {
     double resultLng;
     double resultLat;
     String description;
-    Date date;
-    Time time;
+    int day;
+    int month;
+    int year;
     String Sports;
     int totalPlayers;
     int timeHour;
     int timeMinute;
     long id;
+    int status;
+    String uid;
 
     public CreateEventData() {
     }
 
-    public CreateEventData(String resultLocation, double resultLng, double resultLat, String description, Date date, Time time, String sports, int totalPlayers, int timeHour, int timeMinute, long id) {
+    public CreateEventData(String resultLocation, double resultLng, double resultLat, String description, int day, int month, int year, String sports, int totalPlayers, int timeHour, int timeMinute, long id, int status, String uid) {
         this.resultLocation = resultLocation;
         this.resultLng = resultLng;
         this.resultLat = resultLat;
         this.description = description;
-        this.date = date;
-        this.time = time;
+        this.day = day;
+        this.month = month;
+        this.year = year;
         Sports = sports;
         this.totalPlayers = totalPlayers;
         this.timeHour = timeHour;
         this.timeMinute = timeMinute;
         this.id = id;
+        this.status = status;
+        this.uid = uid;
     }
 
     public String getResultLocation() {
@@ -65,20 +71,28 @@ public class CreateEventData {
         this.description = description;
     }
 
-    public Date getDate() {
-        return date;
+    public int getDay() {
+        return day;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDay(int day) {
+        this.day = day;
     }
 
-    public Time getTime() {
-        return time;
+    public int getMonth() {
+        return month;
     }
 
-    public void setTime(Time time) {
-        this.time = time;
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
 
     public String getSports() {
@@ -119,5 +133,21 @@ public class CreateEventData {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 }

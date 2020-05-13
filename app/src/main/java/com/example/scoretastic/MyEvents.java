@@ -197,9 +197,9 @@ public class MyEvents extends Fragment implements HostedRecyclerAdapter.ItemClic
         for(int i = 0; i<subArray.size(); i++){
             for(int j = 0; j<createArray.size(); j++){
                 if(subArray.get(i).child("eventKey").getValue().toString().trim().equals(createArray.get(j).child("id").getValue().toString().trim()) ){
-                    String day = createArray.get(j).child("date").child("date").getValue().toString();
-                    String month = createArray.get(j).child("date").child("month").getValue().toString();
-                    String year = createArray.get(j).child("date").child("year").getValue().toString();
+                    String day = createArray.get(j).child("day").getValue().toString();
+                    String month = createArray.get(j).child("month").getValue().toString();
+                    String year = createArray.get(j).child("year").getValue().toString();
                     String timeHour = createArray.get(j).child("timeHour").getValue().toString();
                     String timeMinute = createArray.get(j).child("timeMinute").getValue().toString();
                     subObject = new Recycler();
@@ -223,9 +223,9 @@ public class MyEvents extends Fragment implements HostedRecyclerAdapter.ItemClic
         for(int i = 0; i<hostArray.size(); i++){
             for(int j = 0; j<createArray.size(); j++){
                 if(hostArray.get(i).child("eventId").getValue().toString().trim().equals(createArray.get(j).child("id").getValue().toString().trim()) ){
-                    String day = createArray.get(j).child("date").child("date").getValue().toString();
-                    String month = createArray.get(j).child("date").child("month").getValue().toString();
-                    String year = createArray.get(j).child("date").child("year").getValue().toString();
+                    String day = createArray.get(j).child("day").getValue().toString();
+                    String month = createArray.get(j).child("month").getValue().toString();
+                    String year = createArray.get(j).child("year").getValue().toString();
                     String timeHour = createArray.get(j).child("timeHour").getValue().toString();
                     String timeMinute = createArray.get(j).child("timeMinute").getValue().toString();
                     hostObject = new Recycler();

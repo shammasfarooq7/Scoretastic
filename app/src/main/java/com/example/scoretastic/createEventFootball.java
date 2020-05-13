@@ -19,8 +19,8 @@ public class createEventFootball extends CreateEventData {
         this.midfielder = midfielder;
     }
 
-    public createEventFootball(String resultLocation, double resultLng, double resultLat, String description, Date date, Time time, String sports, int totalPlayers, int timeHour, int timeMinute, long id, int keeper, int defender, int attacker, int midfielder) {
-        super(resultLocation, resultLng, resultLat, description, date, time, sports, totalPlayers, timeHour, timeMinute, id);
+    public createEventFootball(String resultLocation, double resultLng, double resultLat, String description, int day, int month, int year, String sports, int totalPlayers, int timeHour, int timeMinute, long id, int status, String uid, int keeper, int defender, int attacker, int midfielder) {
+        super(resultLocation, resultLng, resultLat, description, day, month, year, sports, totalPlayers, timeHour, timeMinute, id, status, uid);
         this.keeper = keeper;
         this.defender = defender;
         this.attacker = attacker;

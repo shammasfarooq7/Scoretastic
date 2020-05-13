@@ -197,17 +197,20 @@ public class MyEvents extends Fragment implements HostedRecyclerAdapter.ItemClic
         for(int i = 0; i<subArray.size(); i++){
             for(int j = 0; j<createArray.size(); j++){
                 if(subArray.get(i).child("eventKey").getValue().toString().trim().equals(createArray.get(j).child("id").getValue().toString().trim()) ){
-                    String day = createArray.get(j).child("day").getValue().toString();
-                    String month = createArray.get(j).child("month").getValue().toString();
-                    String year = createArray.get(j).child("year").getValue().toString();
-                    String timeHour = createArray.get(j).child("timeHour").getValue().toString();
-                    String timeMinute = createArray.get(j).child("timeMinute").getValue().toString();
-                    subObject = new Recycler();
-                    subObject.setLocation(createArray.get(j).child("resultLocation").getValue().toString());
-                    subObject.setSports(createArray.get(j).child("sports").getValue().toString());
-                    subObject.setDate(day + "/" + month + "/" + year);
-                    subObject.setTime(timeHour + ":" + timeMinute);
-                    arrayListSub.add(subObject);
+                    String status = createArray.get(j).child("status").getValue().toString();
+                    if(Integer.parseInt(status) == 1){
+                        String day = createArray.get(j).child("day").getValue().toString();
+                        String month = createArray.get(j).child("month").getValue().toString();
+                        String year = createArray.get(j).child("year").getValue().toString();
+                        String timeHour = createArray.get(j).child("timeHour").getValue().toString();
+                        String timeMinute = createArray.get(j).child("timeMinute").getValue().toString();
+                        subObject = new Recycler();
+                        subObject.setLocation(createArray.get(j).child("resultLocation").getValue().toString());
+                        subObject.setSports(createArray.get(j).child("sports").getValue().toString());
+                        subObject.setDate(day + "/" + month + "/" + year);
+                        subObject.setTime(timeHour + ":" + timeMinute);
+                        arrayListSub.add(subObject);
+                    }
                 }
             }
         }

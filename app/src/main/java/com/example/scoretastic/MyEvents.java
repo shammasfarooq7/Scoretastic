@@ -121,6 +121,7 @@ public class MyEvents extends Fragment implements HostedRecyclerAdapter.ItemClic
 
         subAdapter = new SubscribedRecyclerAdapter(this, arrayListSub);
         recyclerViewSub.setAdapter(subAdapter);
+        subAdapter.notifyDataSetChanged();
         subAdapter.setOnItemClickListner(new SubscribedRecyclerAdapter.onItemClickListner() {
             @Override
             public void onItemClick(int position) {
@@ -158,6 +159,7 @@ public class MyEvents extends Fragment implements HostedRecyclerAdapter.ItemClic
 
         hostAdapter = new HostedRecyclerAdapter(this, arrayListHost);
         recyclerViewHost.setAdapter(hostAdapter);
+        hostAdapter.notifyDataSetChanged();
         hostAdapter.setOnItemClickListner(new HostedRecyclerAdapter.onItemClickListner() {
             @Override
             public void onItemClick(int position) {

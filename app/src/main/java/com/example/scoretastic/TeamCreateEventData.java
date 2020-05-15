@@ -18,6 +18,7 @@ public class TeamCreateEventData {
     int day;
     int month;
     int year;
+    int status;
 
     public TeamCreateEventData() {
     }
@@ -149,5 +150,13 @@ public class TeamCreateEventData {
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

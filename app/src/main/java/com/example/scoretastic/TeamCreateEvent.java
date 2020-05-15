@@ -242,6 +242,7 @@ public class TeamCreateEvent extends AppCompatActivity {
             teamCreateEventData.setVariation(etVariation.getText().toString().trim());
             teamCreateEventData.setVenue(etVenue.getText().toString().trim());
             teamCreateEventData.setUid(uid);
+            teamCreateEventData.setStatus(1);
             myReference.child(String.valueOf(maxId+1)).setValue(teamCreateEventData);
             teamUserEvent.child(String.valueOf(maxIdU+1)).child("uid").setValue(uid);
             teamUserEvent.child(String.valueOf(maxIdU+1)).child("eventId").setValue(maxId+1);

@@ -105,6 +105,7 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
         recyclerView.setHasFixedSize(true);
         myAdapter = new HomeRecyclerAdapter(this, arrayList);
         recyclerView.setAdapter(myAdapter);
+        myAdapter.notifyDataSetChanged();
         myAdapter.setOnItemClickListner(new HomeRecyclerAdapter.onItemClickListner() {
             @Override
             public void onItemClick(int position) {

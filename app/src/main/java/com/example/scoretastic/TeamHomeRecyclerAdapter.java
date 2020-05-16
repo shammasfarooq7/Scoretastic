@@ -1,5 +1,6 @@
 package com.example.scoretastic;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,7 @@ public class TeamHomeRecyclerAdapter extends RecyclerView.Adapter<TeamHomeRecycl
         void onItemClicked(int index);
     }
 
-    public TeamHomeRecyclerAdapter(TeamHome context, ArrayList<Recycler> list){
+    public TeamHomeRecyclerAdapter(Context context, ArrayList<Recycler> list){
         event = list;
     }
 

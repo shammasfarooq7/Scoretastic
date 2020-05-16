@@ -1,5 +1,6 @@
 package com.example.scoretastic;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,9 +28,8 @@ public class TeamMatchesRecyclerAdapter extends RecyclerView.Adapter<TeamMatches
         void onItemClicked(int index);
     }
 
-    public TeamMatchesRecyclerAdapter(TeamMatches context, ArrayList<Recycler> list){
+    public TeamMatchesRecyclerAdapter(Context context, ArrayList<Recycler> list){
         event = list;
-        activity = (ItemClicked) context;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

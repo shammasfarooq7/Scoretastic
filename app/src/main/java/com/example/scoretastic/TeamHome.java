@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -43,15 +44,22 @@ public class TeamHome extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             uid = user.getUid();
         }
+        View view = inflater.inflate(R.layout.fragment_team_home, container, false);
+        // Inflate the layout for this fragment
+        btBack = view.findViewById(R.id.btBackTeam);
+        btCreate = view.findViewById(R.id.btCreate);
+        recyclerViewTeamHome = (RecyclerView)view.findViewById(R.id.recyclerTeamHome);
         myReference = firebaseDatabase.getInstance().getReference("TeamCreateEvent");
         list = new ArrayList<>();
-        View view = inflater.inflate(R.layout.fragment_team_home, container, false);
-        btCreate = view.findViewById(R.id.btCreate);
+        recyclerViewTeamHome.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(getActivity().getBaseContext());
+        recyclerViewTeamHome.setLayoutManager(layoutManager);
+        recyclerViewTeamHome.setVisibility(View.VISIBLE);
+
         btCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,7 +67,7 @@ public class TeamHome extends Fragment {
                 startActivity(intent);
             }
         });
-        btBack = view.findViewById(R.id.btBackTeam);
+
         btBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,27 +77,22 @@ public class TeamHome extends Fragment {
             }
         });
 
-        recyclerViewTeamHome = (RecyclerView)view.findViewById(R.id.recyclerTeamHome);
-        recyclerViewTeamHome.setHasFixedSize(true);
-        adapter = new TeamHomeRecyclerAdapter(this,list);
-        recyclerViewTeamHome.setAdapter(adapter);
-        layoutManager = new LinearLayoutManager(getActivity().getBaseContext());
-        recyclerViewTeamHome.setLayoutManager(layoutManager);
-        recyclerViewTeamHome.setVisibility(View.VISIBLE);
-        adapter.notifyDataSetChanged();
-        adapter.setOnItemClickListner(new TeamHomeRecyclerAdapter.onItemClickListner() {
-            @Override
-            public void onItemClick(int position) {
-
-            }
-        });
 
         myReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 showData(dataSnapshot);
-            }
+                adapter = new TeamHomeRecyclerAdapter(getContext(),list);
+                recyclerViewTeamHome.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+                adapter.setOnItemClickListner(new TeamHomeRecyclerAdapter.onItemClickListner() {
+                    @Override
+                    public void onItemClick(int position) {
 
+                    }
+                });
+
+            }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -103,18 +106,7 @@ public class TeamHome extends Fragment {
        for(DataSnapshot ds : dataSnapshot.getChildren()){
            String userId = ds.child("uid").getValue().toString().trim();
            String status = ds.child("status").getValue().toString().trim();
-           String day = ds.child("day").getValue().toString();
-           String month = ds.child("month").getValue().toString();
-           String year = ds.child("year").getValue().toString();
-           String timeHour = ds.child("timeHour").getValue().toString();
-           String timeMinute = ds.child("timeMinute").getValue().toString();
-           recyclerObject = new Recycler();
-           recyclerObject.setLocation(ds.child("resultLocation").getValue().toString());
-           recyclerObject.setSports(ds.child("sports").getValue().toString());
-           recyclerObject.setDate(day + "/" + month + "/" + year);
-           recyclerObject.setTime(timeHour + ":" + timeMinute);
-           list.add(recyclerObject);
-           /*if(userId.equals(uid) || Integer.parseInt(status) == 0){
+           if(userId.equals(uid) || Integer.parseInt(status) == 0){
 
            }
            else{
@@ -129,7 +121,7 @@ public class TeamHome extends Fragment {
                recyclerObject.setDate(day + "/" + month + "/" + year);
                recyclerObject.setTime(timeHour + ":" + timeMinute);
                list.add(recyclerObject);
-           }*/
+           }
        }
     }
 

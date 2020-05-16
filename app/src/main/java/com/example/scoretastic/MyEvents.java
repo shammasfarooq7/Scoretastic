@@ -157,7 +157,7 @@ public class MyEvents extends Fragment implements HostedRecyclerAdapter.ItemClic
         recyclerViewHost = v.findViewById(R.id.rvHosted);
         recyclerViewHost.setHasFixedSize(true);
 
-        hostAdapter = new HostedRecyclerAdapter(this, arrayListHost);
+        hostAdapter = new HostedRecyclerAdapter(getContext(), arrayListHost);
         recyclerViewHost.setAdapter(hostAdapter);
         hostAdapter.notifyDataSetChanged();
         hostAdapter.setOnItemClickListner(new HostedRecyclerAdapter.onItemClickListner() {

@@ -64,6 +64,7 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener{
     int month;
     int day;
     Date date;
+    UserEventData userEventData = new UserEventData();
     private static final String TAG = "Create Event";
     CreateEventData createEventData = new CreateEventData();
     createEventCricket createEventCricket = new createEventCricket();
@@ -115,8 +116,9 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener{
                 else{
                     dataSender();
                 }
-                userEventReference.child(String.valueOf(uEventMId+1)).child("uid").setValue(uid);
-                userEventReference.child(String.valueOf(uEventMId+1)).child("eventId").setValue(maxId+1);
+                userEventData.setUid(uid);
+                userEventData.setEventId(maxId+1);
+                userEventReference.child(String.valueOf(uEventMId+1)).setValue(userEventData);
 
             }
 

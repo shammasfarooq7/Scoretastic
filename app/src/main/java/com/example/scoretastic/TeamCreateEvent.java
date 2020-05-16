@@ -56,6 +56,7 @@ public class TeamCreateEvent extends AppCompatActivity {
     long maxIdU = 0;
     TimePickerDialog dialogTime;
     DatePickerDialog dialogDate;
+    TeamUserEventData teamUserEventData = new TeamUserEventData();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -243,9 +244,10 @@ public class TeamCreateEvent extends AppCompatActivity {
             teamCreateEventData.setVenue(etVenue.getText().toString().trim());
             teamCreateEventData.setUid(uid);
             teamCreateEventData.setStatus(1);
+            teamUserEventData.setUid(uid);
+            teamUserEventData.setEventId(maxId+1);
             myReference.child(String.valueOf(maxId+1)).setValue(teamCreateEventData);
-            teamUserEvent.child(String.valueOf(maxIdU+1)).child("uid").setValue(uid);
-            teamUserEvent.child(String.valueOf(maxIdU+1)).child("eventId").setValue(maxId+1);
+            teamUserEvent.child(String.valueOf(maxIdU+1)).setValue(teamUserEventData);
             Toast.makeText(this,"Event Created",Toast.LENGTH_SHORT).show();
             finish();
         }

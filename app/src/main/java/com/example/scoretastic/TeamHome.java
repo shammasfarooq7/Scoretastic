@@ -42,17 +42,8 @@ public class TeamHome extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            uid = user.getUid();
-        }
-        View view = inflater.inflate(R.layout.fragment_team_home, container, false);
-        // Inflate the layout for this fragment
-        btBack = view.findViewById(R.id.btBackTeam);
-        btCreate = view.findViewById(R.id.btCreate);
-        recyclerViewTeamHome = (RecyclerView)view.findViewById(R.id.recyclerTeamHome);
+    public void onResume() {
+        super.onResume();
         myReference = firebaseDatabase.getInstance().getReference("TeamCreateEvent");
         list = new ArrayList<>();
         recyclerViewTeamHome.setHasFixedSize(true);
@@ -98,6 +89,20 @@ public class TeamHome extends Fragment {
 
             }
         });
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            uid = user.getUid();
+        }
+        View view = inflater.inflate(R.layout.fragment_team_home, container, false);
+        // Inflate the layout for this fragment
+        btBack = view.findViewById(R.id.btBackTeam);
+        btCreate = view.findViewById(R.id.btCreate);
+        recyclerViewTeamHome = (RecyclerView)view.findViewById(R.id.recyclerTeamHome);
 
         return view;
     }

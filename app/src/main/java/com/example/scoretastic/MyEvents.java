@@ -60,18 +60,10 @@ public class MyEvents extends Fragment implements HostedRecyclerAdapter.ItemClic
         // Required empty public constructor
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            uid = user.getUid();
-        }
-        final View v = inflater.inflate(R.layout.fragment_my_events, container, false);
-        btHosted = v.findViewById(R.id.btHosted);
-        btSubscribed = v.findViewById(R.id.btSubscribed);
+    public void onResume() {
+        super.onResume();
+
         subDatabase = firebaseDatabase.getInstance().getReference("JoinEvent");
         hostDatabase = firebaseDatabase.getInstance().getReference("UserEvent");
         createDatabase = firebaseDatabase.getInstance().getReference("CreateEvent");
@@ -116,7 +108,7 @@ public class MyEvents extends Fragment implements HostedRecyclerAdapter.ItemClic
 
 
 
-        recyclerViewSub = v.findViewById(R.id.rvSubscribed);
+
         recyclerViewSub.setHasFixedSize(true);
 
         subAdapter = new SubscribedRecyclerAdapter(this, arrayListSub);
@@ -154,30 +146,34 @@ public class MyEvents extends Fragment implements HostedRecyclerAdapter.ItemClic
             }
         });
 
-        recyclerViewHost = v.findViewById(R.id.rvHosted);
-        recyclerViewHost.setHasFixedSize(true);
 
-        hostAdapter = new HostedRecyclerAdapter(getContext(), arrayListHost);
-        recyclerViewHost.setAdapter(hostAdapter);
-        hostAdapter.notifyDataSetChanged();
-        hostAdapter.setOnItemClickListner(new HostedRecyclerAdapter.onItemClickListner() {
-            @Override
-            public void onItemClick(int position) {
-                DataSnapshot ds = hostArray.get(position);
-                if(ds!=null){
-                    String key1 = ds.child("eventId").getValue().toString();
-                    keyHost = Integer.parseInt(key1);
-                    Intent intent = new Intent(getContext(), HostDetails.class);
-                    intent.putExtra("Event key Host", keyHost);
-                    startActivity(intent);
-                }
-            }
-        });
+        recyclerViewHost.setHasFixedSize(true);
 
         hostDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 hostShowData(dataSnapshot);
+                recyclerViewHost.setVisibility(View.VISIBLE);
+                layoutManagerHost = new LinearLayoutManager(getContext());
+                recyclerViewHost.setLayoutManager(layoutManagerHost);
+                hostAdapter = new HostedRecyclerAdapter(getContext(), arrayListHost);
+                recyclerViewHost.setAdapter(hostAdapter);
+                hostAdapter.notifyDataSetChanged();
+                hostAdapter.setOnItemClickListner(new HostedRecyclerAdapter.onItemClickListner() {
+                    @Override
+                    public void onItemClick(int position) {
+                        DataSnapshot ds = hostArray.get(position);
+                        if(ds!=null){
+                            String key1 = ds.child("eventId").getValue().toString();
+                            keyHost = Integer.parseInt(key1);
+                            Intent intent = new Intent(getContext(), HostDetails.class);
+                            intent.putExtra("Event key Host", keyHost);
+                            startActivity(intent);
+                        }
+                    }
+                });
+
+
             }
 
             @Override
@@ -185,6 +181,21 @@ public class MyEvents extends Fragment implements HostedRecyclerAdapter.ItemClic
 
             }
         });
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            uid = user.getUid();
+        }
+        final View v = inflater.inflate(R.layout.fragment_my_events, container, false);
+        btHosted = v.findViewById(R.id.btHosted);
+        btSubscribed = v.findViewById(R.id.btSubscribed);
+        recyclerViewSub = v.findViewById(R.id.rvSubscribed);
+        recyclerViewHost = v.findViewById(R.id.rvHosted);
 
         return v;
     }

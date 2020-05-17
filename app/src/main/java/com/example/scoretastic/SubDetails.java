@@ -3,6 +3,7 @@ package com.example.scoretastic;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -94,7 +95,8 @@ public class SubDetails extends AppCompatActivity {
                         databaseReference.child(keyEvent).child("totalPlayers").setValue(totalPlayers);
                         databaseReference.child(keyEvent).child("attacker").setValue(position);
                         Toast.makeText(getApplicationContext(),"Event Unsubscribed",Toast.LENGTH_SHORT).show();
-                        finish();
+                        Intent intent = new Intent(getApplicationContext(), Main.class);
+                        startActivity(intent);
                     }
                     else if(subArray.get(0).child("position").getValue().toString().trim().equals("Midfielder")){
                         String keyEvent = subArray.get(0).child("eventKey").getValue().toString().trim();
@@ -106,7 +108,8 @@ public class SubDetails extends AppCompatActivity {
                         databaseReference.child(keyEvent).child("totalPlayers").setValue(totalPlayers);
                         databaseReference.child(keyEvent).child("midfielder").setValue(position);
                         Toast.makeText(getApplicationContext(),"Event Unsubscribed",Toast.LENGTH_SHORT).show();
-                        finish();
+                        Intent intent = new Intent(getApplicationContext(), Main.class);
+                        startActivity(intent);
                     }
                     else if(subArray.get(0).child("position").getValue().toString().trim().equals("Goal Keeper")){
                         String keyEvent = subArray.get(0).child("eventKey").getValue().toString().trim();
@@ -118,7 +121,8 @@ public class SubDetails extends AppCompatActivity {
                         databaseReference.child(keyEvent).child("totalPlayers").setValue(totalPlayers);
                         databaseReference.child(keyEvent).child("keeper").setValue(position);
                         Toast.makeText(getApplicationContext(),"Event Unsubscribed",Toast.LENGTH_SHORT).show();
-                        finish();
+                        Intent intent = new Intent(getApplicationContext(), Main.class);
+                        startActivity(intent);
                     }
                     else if(subArray.get(0).child("position").getValue().toString().trim().equals("Defender")){
                         String keyEvent = subArray.get(0).child("eventKey").getValue().toString().trim();
@@ -130,7 +134,8 @@ public class SubDetails extends AppCompatActivity {
                         databaseReference.child(keyEvent).child("totalPlayers").setValue(totalPlayers);
                         databaseReference.child(keyEvent).child("defender").setValue(position);
                         Toast.makeText(getApplicationContext(),"Event Unsubscribed",Toast.LENGTH_SHORT).show();
-                        finish();
+                        Intent intent = new Intent(getApplicationContext(), Main.class);
+                        startActivity(intent);
 
                     }
                     else if(subArray.get(0).child("position").getValue().toString().trim().equals("Batsman")){
@@ -143,7 +148,8 @@ public class SubDetails extends AppCompatActivity {
                         databaseReference.child(keyEvent).child("totalPlayers").setValue(totalPlayers);
                         databaseReference.child(keyEvent).child("batsman").setValue(position);
                         Toast.makeText(getApplicationContext(),"Event Unsubscribed",Toast.LENGTH_SHORT).show();
-                        finish();
+                        Intent intent = new Intent(getApplicationContext(), Main.class);
+                        startActivity(intent);
                     }
                     else if(subArray.get(0).child("position").getValue().toString().trim().equals("Bowler")){
                         String keyEvent = subArray.get(0).child("eventKey").getValue().toString().trim();
@@ -155,7 +161,8 @@ public class SubDetails extends AppCompatActivity {
                         databaseReference.child(keyEvent).child("totalPlayers").setValue(totalPlayers);
                         databaseReference.child(keyEvent).child("bowlers").setValue(position);
                         Toast.makeText(getApplicationContext(),"Event Unsubscribed",Toast.LENGTH_SHORT).show();
-                        finish();
+                        Intent intent = new Intent(getApplicationContext(), Main.class);
+                        startActivity(intent);
 
                     }
                     else if(subArray.get(0).child("position").getValue().toString().trim().equals("Wicket Keeper")){
@@ -168,7 +175,8 @@ public class SubDetails extends AppCompatActivity {
                         databaseReference.child(keyEvent).child("totalPlayers").setValue(totalPlayers);
                         databaseReference.child(keyEvent).child("wicketKeeper").setValue(position);
                         Toast.makeText(getApplicationContext(),"Event Unsubscribed",Toast.LENGTH_SHORT).show();
-                        finish();
+                        Intent intent = new Intent(getApplicationContext(), Main.class);
+                        startActivity(intent);
 
                     }
                     else if(subArray.get(0).child("position").getValue().toString().trim().equals("All Rounder")){
@@ -181,7 +189,8 @@ public class SubDetails extends AppCompatActivity {
                         databaseReference.child(keyEvent).child("totalPlayers").setValue(totalPlayers);
                         databaseReference.child(keyEvent).child("allRounder").setValue(position);
                         Toast.makeText(getApplicationContext(),"Event Unsubscribed",Toast.LENGTH_SHORT).show();
-                        finish();
+                        Intent intent = new Intent(getApplicationContext(), Main.class);
+                        startActivity(intent);
 
                     }
 
@@ -191,6 +200,8 @@ public class SubDetails extends AppCompatActivity {
                     databaseReference.child(keyEvent).child("totalPlayers").setValue(1);
                     Toast.makeText(getApplicationContext(),"Event Unsubscribed",Toast.LENGTH_SHORT).show();
                     finish();
+                    /*Intent intent = new Intent(getApplicationContext(), Main.class);
+                    startActivity(intent);*/
                 }
             }
         });

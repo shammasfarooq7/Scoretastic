@@ -3,6 +3,7 @@ package com.example.scoretastic;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +30,7 @@ public class HostDetails extends AppCompatActivity {
     ArrayList<DataSnapshot> eventArray = new ArrayList();
     ArrayList<DataSnapshot> hostArray = new ArrayList();
     private DatabaseReference hostReference;
+    MyEvents objectEvent = new MyEvents();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +84,9 @@ public class HostDetails extends AppCompatActivity {
                 databaseReference.child(keyEvent).child("status").setValue(0);
                 Toast.makeText(getApplicationContext(),"Event Deleted",Toast.LENGTH_SHORT).show();
                 finish();
+                /*Intent intent = new Intent(getApplicationContext(), Main.class);
+                startActivity(intent);*/
+
             }
         });
     }

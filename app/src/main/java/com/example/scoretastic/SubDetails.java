@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -30,6 +31,8 @@ public class SubDetails extends AppCompatActivity {
     String uid;
     ArrayList<DataSnapshot> eventArray = new ArrayList();
     ArrayList<DataSnapshot> subArray = new ArrayList();
+    TextView btGoogleMap;
+    String location;
 
     String position;
     private DatabaseReference joinReference;
@@ -38,6 +41,7 @@ public class SubDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sub_details);
+        btGoogleMap = findViewById(R.id.btGoogleMap);
         tvDate = findViewById(R.id.tvDate);
         tvHost = findViewById(R.id.tvHost);
         tvSports = findViewById(R.id.tvSports);
@@ -75,6 +79,17 @@ public class SubDetails extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+        btGoogleMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri gmmIntentUri = Uri.parse(location);
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                if (mapIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(mapIntent);
+                }
             }
         });
 
@@ -222,6 +237,9 @@ public class SubDetails extends AppCompatActivity {
             tvTotalPlayersJoined.setText(eventKey.child("totalPlayers").getValue().toString());
             tvSports.setText(eventKey.child("sports").getValue().toString());
             tvYourPosition.setText(position);
+            String lat = eventKey.child("resultLat").getValue().toString().trim();
+            String lng = eventKey.child("resultLng").getValue().toString().trim();
+            location = "google.navigation:q=" + lat + ","  + lng;
         }
     }
 

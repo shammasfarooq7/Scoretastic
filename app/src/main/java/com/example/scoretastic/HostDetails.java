@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class HostDetails extends AppCompatActivity {
-    TextView tvHost, tvSports, tvLocation, tvDate, tvTime, tvDescription, tvTotalPlayersJoined;
+    TextView tvHost, tvSports, tvLocation, tvDate, tvTime, tvDescription, tvTotalPlayersJoined,btGoogleMap;
     Button btDelete;
     int key;
     private FirebaseDatabase firebaseDatabase;
@@ -31,11 +32,13 @@ public class HostDetails extends AppCompatActivity {
     ArrayList<DataSnapshot> hostArray = new ArrayList();
     private DatabaseReference hostReference;
     MyEvents objectEvent = new MyEvents();
+    String location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_host_details);
+        btGoogleMap = findViewById(R.id.btGoogleMapHost);
         tvDate = findViewById(R.id.tvDate);
         tvHost = findViewById(R.id.tvHost);
         tvSports = findViewById(R.id.tvSports);
@@ -89,6 +92,17 @@ public class HostDetails extends AppCompatActivity {
 
             }
         });
+        btGoogleMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri gmmIntentUri = Uri.parse(location);
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                if (mapIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(mapIntent);
+                }
+            }
+        });
     }
 
     public void showData(DataSnapshot dataSnapshot){
@@ -104,6 +118,9 @@ public class HostDetails extends AppCompatActivity {
             tvDescription.setText(eventKey.child("description").getValue().toString());
             tvTotalPlayersJoined.setText(eventKey.child("totalPlayers").getValue().toString());
             tvSports.setText(eventKey.child("sports").getValue().toString());
+            String lat = eventKey.child("resultLat").getValue().toString().trim();
+            String lng = eventKey.child("resultLng").getValue().toString().trim();
+            location = "google.navigation:q=" + lat + ","  + lng;
         }
     }
 

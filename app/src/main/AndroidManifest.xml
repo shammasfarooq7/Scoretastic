@@ -18,7 +18,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TeamCreateEvent"></activity>
+        <activity android:name=".ChangePassword"></activity>
+        <activity android:name=".EditProfile" />
+        <activity android:name=".TeamCreateEvent" />
         <activity android:name=".Team" />
         <activity android:name=".SubDetails" />
         <activity android:name=".HostDetails" />

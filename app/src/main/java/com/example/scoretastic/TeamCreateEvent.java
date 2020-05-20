@@ -57,6 +57,8 @@ public class TeamCreateEvent extends AppCompatActivity {
     TimePickerDialog dialogTime;
     DatePickerDialog dialogDate;
     TeamUserEventData teamUserEventData = new TeamUserEventData();
+    ArrayList<DataSnapshot> userInfo;
+    DatabaseReference userData = database.getReference("UserData");
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +67,7 @@ public class TeamCreateEvent extends AppCompatActivity {
         if (user != null) {
             uid = user.getUid();
         }
+        userInfo = new ArrayList<>();
 
         initializeView();
 
@@ -80,6 +83,23 @@ public class TeamCreateEvent extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
                     maxId=(dataSnapshot.getChildrenCount());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        userData.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                userInfo.clear();
+                for(DataSnapshot ds : dataSnapshot.getChildren()){
+                    String currentUser = ds.child("userId").getValue().toString().trim();
+                    if(currentUser.equals(uid.trim())){
+                        userInfo.add(ds);
+                    }
                 }
             }
 
@@ -105,6 +125,9 @@ public class TeamCreateEvent extends AppCompatActivity {
         btCreateMatch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int host = Integer.parseInt(userInfo.get(0).child("hosted").getValue().toString().trim());
+                host++;
+                userData.child(userInfo.get(0).child("id").getValue().toString().trim()).child("hosted").setValue(host);
                 dataSender();
             }
         });

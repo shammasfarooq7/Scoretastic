@@ -258,5 +258,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.758" />
 
+    <TextView
+        android:id="@+id/btSeePlayers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="See who have Joined"
+        android:textColor="#3F51B5"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.68" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,38 +6,17 @@ public class UserData {
     String name;
     String email;
     String password;
-    ImageView profilePic;
     int Radius;
     long id;
     String userId;
+    int hosted;
+    int subscribed;
+    String fSports;
+    String pos;
 
-    public UserData(String name, String email, String password, String userId,long id,ImageView profilePic, int radius ) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.userId = userId;
-        this.id=id;
-        this.profilePic = profilePic;
-        Radius = radius;
-    }
+
 
     public UserData() {
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public String getName() {
@@ -64,19 +43,59 @@ public class UserData {
         this.password = password;
     }
 
-    public ImageView getProfilePic() {
-        return profilePic;
-    }
-
-    public void setProfilePic(ImageView profilePic) {
-        this.profilePic = profilePic;
-    }
-
     public int getRadius() {
         return Radius;
     }
 
     public void setRadius(int radius) {
         Radius = radius;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public int getHosted() {
+        return hosted;
+    }
+
+    public void setHosted(int hosted) {
+        this.hosted = hosted;
+    }
+
+    public int getSubscribed() {
+        return subscribed;
+    }
+
+    public void setSubscribed(int subscribed) {
+        this.subscribed = subscribed;
+    }
+
+    public String getfSports() {
+        return fSports;
+    }
+
+    public void setfSports(String fSports) {
+        this.fSports = fSports;
+    }
+
+    public String getPos() {
+        return pos;
+    }
+
+    public void setPos(String pos) {
+        this.pos = pos;
     }
 }

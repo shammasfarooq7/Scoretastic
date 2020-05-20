@@ -33,6 +33,8 @@ public class HostDetails extends AppCompatActivity {
     private DatabaseReference hostReference;
     MyEvents objectEvent = new MyEvents();
     String location;
+    DatabaseReference userData;
+    ArrayList<DataSnapshot> userInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +47,13 @@ public class HostDetails extends AppCompatActivity {
         tvLocation = findViewById(R.id.tvLocation);
         tvTime = findViewById(R.id.tvTime);
         tvDescription = findViewById(R.id.tvDescription);
+        userInfo = new ArrayList<>();
         tvTotalPlayersJoined = findViewById(R.id.tvPlayersJoined);
         btDelete = findViewById(R.id.btDelete);
         key = getIntent().getIntExtra("Event key Host",-1);
         databaseReference = firebaseDatabase.getInstance().getReference("CreateEvent");
         hostReference = firebaseDatabase.getInstance().getReference("UserEvent");
+        userData = firebaseDatabase.getInstance().getReference("UserData");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             uid = user.getUid();
@@ -77,10 +81,31 @@ public class HostDetails extends AppCompatActivity {
 
             }
         });
+        userData.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                userInfo.clear();
+                for(DataSnapshot ds : dataSnapshot.getChildren()){
+                    String currentUser = ds.child("userId").getValue().toString().trim();
+                    if(currentUser.equals(uid.trim())){
+                        userInfo.add(ds);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         btDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int host = Integer.parseInt(userInfo.get(0).child("hosted").getValue().toString().trim());
+                host--;
+                userData.child(userInfo.get(0).child("id").getValue().toString().trim()).child("hosted").setValue(host);
+
                 hostReference.child(hostArray.get(0).getKey()).child("uid").setValue(0);
                 String keyEvent = hostArray.get(0).child("eventId").getValue().toString().trim();
                 databaseReference.child(keyEvent).child("totalPlayers").setValue(0);

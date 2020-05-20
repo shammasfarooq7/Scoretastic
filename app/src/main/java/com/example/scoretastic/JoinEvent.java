@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
@@ -29,7 +30,7 @@ import java.util.ArrayList;
 
 public class JoinEvent extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    TextView tvHost, tvSports, tvLocation, tvDate, tvTime, tvDescription, tvTotalPlayersJoined,tvJoin;
+    TextView tvHost, tvSports, tvLocation, tvDate, tvTime, tvDescription, tvTotalPlayersJoined,tvJoin,btSeePlayers;
     Spinner dropDownSports;
     private DatabaseReference databaseReference;
     private FirebaseDatabase firebaseDatabase;
@@ -43,17 +44,21 @@ public class JoinEvent extends AppCompatActivity implements AdapterView.OnItemSe
     Button btJoin;
     JoinEventData object = new JoinEventData();
     String uid;
+    DatabaseReference userData;
+    ArrayList<DataSnapshot> userInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_event);
+        userInfo = new ArrayList<>();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             uid = user.getUid();
         }
         databaseReference = firebaseDatabase.getInstance().getReference("CreateEvent");
         myReference = firebaseDatabase.getInstance().getReference("JoinEvent");
+        userData = firebaseDatabase.getInstance().getReference("UserData");
         tvDate = findViewById(R.id.tvDate);
         tvHost = findViewById(R.id.tvHost);
         tvSports = findViewById(R.id.tvSports);
@@ -63,6 +68,7 @@ public class JoinEvent extends AppCompatActivity implements AdapterView.OnItemSe
         tvTotalPlayersJoined = findViewById(R.id.tvPlayersJoined);
         tvJoin = findViewById(R.id.tvJoin);
         btJoin = findViewById(R.id.btJoin);
+        btSeePlayers = findViewById(R.id.btSeePlayers);
 
         key = getIntent().getIntExtra("Event key",-1);
         key = key-1;
@@ -95,12 +101,42 @@ public class JoinEvent extends AppCompatActivity implements AdapterView.OnItemSe
             }
         });
 
+        userData.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                userInfo.clear();
+                for(DataSnapshot ds : dataSnapshot.getChildren()){
+                    String currentUser = ds.child("userId").getValue().toString().trim();
+                    if(currentUser.equals(uid.trim())){
+                        userInfo.add(ds);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        btSeePlayers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),JoinedPlayersInfoRecycler.class);
+                intent.putExtra("Event key", key+1);
+                startActivity(intent);
+            }
+        });
+
+
         btJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String keyString = String.valueOf(key+1);
                 object.setEventKey(key+1);
                 object.setUserId(uid);
+                int subscribe = Integer.parseInt(userInfo.get(0).child("subscribed").getValue().toString().trim());
+                subscribe++;
+                userData.child(userInfo.get(0).child("id").getValue().toString().trim()).child("subscribed").setValue(subscribe);
 
                 int playerCheck = Integer.parseInt(eventArray.get(key).child("totalPlayers").getValue().toString().trim());
                 if(playerCheck == 0){

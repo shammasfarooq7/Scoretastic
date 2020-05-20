@@ -34,6 +34,8 @@ public class SubDetails extends AppCompatActivity {
     TextView btGoogleMap;
     String location;
 
+    DatabaseReference userData;
+    ArrayList<DataSnapshot> userInfo;
     String position;
     private DatabaseReference joinReference;
 
@@ -41,6 +43,8 @@ public class SubDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sub_details);
+        userData = firebaseDatabase.getInstance().getReference("UserData");
+        userInfo = new ArrayList<>();
         btGoogleMap = findViewById(R.id.btGoogleMap);
         tvDate = findViewById(R.id.tvDate);
         tvHost = findViewById(R.id.tvHost);
@@ -81,6 +85,25 @@ public class SubDetails extends AppCompatActivity {
 
             }
         });
+
+        userData.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                userInfo.clear();
+                for(DataSnapshot ds : dataSnapshot.getChildren()){
+                    String currentUser = ds.child("userId").getValue().toString().trim();
+                    if(currentUser.equals(uid.trim())){
+                        userInfo.add(ds);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         btGoogleMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,6 +121,10 @@ public class SubDetails extends AppCompatActivity {
         btLeave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int subscribe = Integer.parseInt(userInfo.get(0).child("subscribed").getValue().toString().trim());
+                subscribe--;
+                userData.child(userInfo.get(0).child("id").getValue().toString().trim()).child("subscribed").setValue(subscribe);
+
                 joinReference.child(subArray.get(0).getKey()).child("userId").setValue(0);
                 if(subArray.get(0).hasChild("position")){
                     if(subArray.get(0).child("position").getValue().toString().trim().equals("Attacker")){

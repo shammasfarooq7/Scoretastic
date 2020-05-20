@@ -66,6 +66,7 @@ public class TeamMatches extends Fragment {
         list = new ArrayList<>();
         userList = new ArrayList<>();
         eventList = new ArrayList<>();
+
         recyclerViewTeamMatches.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity().getBaseContext());
         recyclerViewTeamMatches.setLayoutManager(layoutManager);

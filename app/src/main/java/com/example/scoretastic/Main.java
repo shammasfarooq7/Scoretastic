@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class Main extends AppCompatActivity {
 
-    Button home,createEvent,myEvents,profile;
+    Button home,createEvent,myEvents,profile,team;
     FrameLayout frameLayout;
     LinearLayout linearLayout;
     Home objectHome = new Home();
@@ -48,6 +49,7 @@ public class Main extends AppCompatActivity {
         profile = findViewById(R.id.profile);
         frameLayout = findViewById(R.id.frameLayout);
         linearLayout = findViewById(R.id.toolbar);
+        team = findViewById(R.id.btTeam);
 
 
         home.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +82,14 @@ public class Main extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, objectHome).commit();
 
+        team.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Team.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
 
     }

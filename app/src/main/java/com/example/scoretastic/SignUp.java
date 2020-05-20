@@ -99,6 +99,8 @@ public class SignUp extends AppCompatActivity {
                                                         userData.setPassword(password);
                                                         userData.setUserId(user.getUid());
                                                         userData.setId(maxId+1);
+                                                        userData.setfSports("Not Selected");
+                                                        userData.setPos("Not Selected");
                                                         myReference.child(String.valueOf(maxId+1)).setValue(userData);
                                                         Toast.makeText(getApplicationContext(),"User created please check your email for verification",Toast.LENGTH_LONG).show();
                                                         finish();

@@ -13,9 +13,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </FrameLayout>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <LinearLayout
         android:id="@+id/toolbar"
@@ -50,11 +48,19 @@
             android:text="My" />
 
         <Button
+            android:id="@+id/btTeam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Team" />
+
+        <Button
             android:id="@+id/profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Profile" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

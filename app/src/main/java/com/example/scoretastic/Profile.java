@@ -4,6 +4,7 @@ package com.example.scoretastic;
 import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -51,11 +52,10 @@ import static com.firebase.ui.auth.AuthUI.getApplicationContext;
  */
 public class Profile extends Fragment{
 
-    TextView tvName,tvEmail,btChangePassword,btTeam;
-    EditText oldPass,newPass,newPassConfirm;
-    Button btSave,btSignOut;
+    TextView tvName,tvEmail,tvSubscribe,tvHosted,tvTotalMatch,tvFSports,tvPos,btChangePassword;
+    Button btEditProfile;
+    Button btSignOut;
     ImageView profilePic,btPicChange;
-    View v;
     String uid;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
@@ -68,23 +68,10 @@ public class Profile extends Fragment{
         // Required empty public constructor
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_profile, container, false);
-        tvName = view.findViewById(R.id.tvName);
-        tvEmail = view.findViewById(R.id.tvEmail);
-        btChangePassword = view.findViewById(R.id.btChangePassword);
-        btSignOut = view.findViewById(R.id.btSignOut);
-        profilePic = view.findViewById(R.id.profilePic);
-        btPicChange = view.findViewById(R.id.btPic);
-        btTeam = view.findViewById(R.id.btTeam);
-        v = view.findViewById(R.id.passLayout);
-        oldPass = v.findViewById(R.id.oldPass);
-        newPass = v.findViewById(R.id.newPass);
-        newPassConfirm = v.findViewById(R.id.newPassConfirm);
-        btSave = v.findViewById(R.id.btSave);
-        v.setVisibility(View.GONE);
+    public void onResume() {
+        super.onResume();
+
         databaseReference = firebaseDatabase.getInstance().getReference("UserData");
         storageReferencege = FirebaseStorage.getInstance().getReference("uploads");
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -92,18 +79,11 @@ public class Profile extends Fragment{
             uid = user.getUid();
         }
 
-        btTeam.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), Team.class);
-                startActivity(intent);
-                getActivity().finish();
-            }
-        });
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                userInfo.clear();
                 for(DataSnapshot ds : dataSnapshot.getChildren()){
                     String currentUser = ds.child("userId").getValue().toString().trim();
                     if(currentUser.equals(uid.trim())){
@@ -112,6 +92,15 @@ public class Profile extends Fragment{
                 }
                 tvEmail.setText(userInfo.get(0).child("email").getValue().toString().trim());
                 tvName.setText(userInfo.get(0).child("name").getValue().toString().trim());
+                tvFSports.setText(userInfo.get(0).child("fSports").getValue().toString().trim());
+                tvHosted.setText(userInfo.get(0).child("hosted").getValue().toString().trim());
+                tvSubscribe.setText(userInfo.get(0).child("subscribed").getValue().toString().trim());
+                tvPos.setText(userInfo.get(0).child("pos").getValue().toString().trim());
+                int host = Integer.parseInt(userInfo.get(0).child("hosted").getValue().toString().trim());
+                int sub = Integer.parseInt(userInfo.get(0).child("subscribed").getValue().toString().trim());
+                int total = host+sub;
+                tvTotalMatch.setText(String.valueOf(total));
+
                 if(userInfo.get(0).hasChild("profilePic")){
                     String i = dataSnapshot.child(userInfo.get(0).child("id").getValue().toString().trim()).child("profilePic").getValue().toString().trim();
                     Picasso.get().load(i).into(profilePic);
@@ -139,40 +128,19 @@ public class Profile extends Fragment{
         btChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                v.setVisibility(View.VISIBLE);
+                Intent intent = new Intent(getContext(),ChangePassword.class);
+                startActivity(intent);
             }
         });
-        btSave.setOnClickListener(new View.OnClickListener() {
+
+        btEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                v.setVisibility(View.GONE);
-                String old = oldPass.getText().toString().trim();
-                final String newP = newPass.getText().toString().trim();
-                String newPA = newPassConfirm.getText().toString().trim();
-
-                if(old.equals(userInfo.get(0).child("password").getValue().toString().trim())){
-                    if(newP.equals(newPA) && (newP.length()>7)){
-                        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        user.updatePassword(newP)
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful()) {
-                                            databaseReference.child(userInfo.get(0).child("id").getValue().toString().trim()).child("password").setValue(newP);
-                                            Toast.makeText(getContext(),"Password Successfully Changed",Toast.LENGTH_LONG).show();
-                                        }
-                                    }
-                                });
-                    }
-                    else{
-                        Toast.makeText(getContext(),"Your Password doesn't match or length is too short",Toast.LENGTH_LONG).show();
-                    }
-                }
-                else{
-                    Toast.makeText(getContext(),"Your Old Password doesn't Match, Try Again",Toast.LENGTH_LONG).show();
-                }
+                Intent intent = new Intent(getContext(),EditProfile.class);
+                startActivity(intent);
             }
         });
+
         btPicChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -182,6 +150,24 @@ public class Profile extends Fragment{
                 startActivityForResult(intent,PICK_IMAGE_REQUEST);
             }
         });
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        tvName = view.findViewById(R.id.tvName);
+        tvEmail = view.findViewById(R.id.tvEmail);
+        btEditProfile = view.findViewById(R.id.btSettings);
+        tvFSports = view.findViewById(R.id.tvFSports);
+        tvPos = view.findViewById(R.id.tvPos);
+        tvHosted = view.findViewById(R.id.tvHosted);
+        tvSubscribe = view.findViewById(R.id.tvSubscribe);
+        tvTotalMatch = view.findViewById(R.id.tvTotalMatch);
+        btChangePassword = view.findViewById(R.id.btChangePassword);
+        btSignOut = view.findViewById(R.id.btSignOut);
+        profilePic = view.findViewById(R.id.profilePic);
+        btPicChange = view.findViewById(R.id.btPic);
 
         return view;
 

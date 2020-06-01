@@ -94,12 +94,17 @@ public class JoinedPlayersInfoRecycler extends AppCompatActivity {
                 if(joinList.get(i).child("userId").getValue().toString().trim().equals(userList.get(j).child("userId").getValue().toString().trim())){
                     object = new ProfileRecycler();
                     object.setName(userList.get(j).child("name").getValue().toString().trim());
-                    object.setPos(userList.get(j).child("pos").getValue().toString().trim());
                     object.setFavSports(userList.get(j).child("fSports").getValue().toString().trim());
                     int host = Integer.parseInt(userList.get(j).child("hosted").getValue().toString().trim());
                     int sub = Integer.parseInt(userList.get(j).child("subscribed").getValue().toString().trim());
                     int total = host+sub;
                     object.setTotalMatch(String.valueOf(total));
+                    if(joinList.get(i).hasChild("position")){
+                        object.setPos(joinList.get(i).child("position").getValue().toString().trim());
+                    }
+                    else{
+                        object.setPos("Player");
+                    }
                     list.add(object);
                 }
             }

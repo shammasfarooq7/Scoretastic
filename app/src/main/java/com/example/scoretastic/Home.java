@@ -76,19 +76,63 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
         // Required empty public constructor
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            uid = user.getUid();
+        }
+        arrayList = new ArrayList<>();
+        eventArray = new ArrayList();
+        arrayListLoc = new ArrayList<LatLng>();
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                arrayList.clear();
+                arrayListLoc.clear();
+                eventArray.clear();
+                showData(dataSnapshot);
+                myAdapter = new HomeRecyclerAdapter(getContext(), arrayList);
+                recyclerView.setAdapter(myAdapter);
+                myAdapter.notifyDataSetChanged();
+                myAdapter.setOnItemClickListner(new HomeRecyclerAdapter.onItemClickListner() {
+                    @Override
+                    public void onItemClick(int position) {
+                        DataSnapshot ds = eventArray.get(position);
+                        if(ds != null){
+                            String key1 = ds.child("id").getValue().toString();
+                            key = Integer.parseInt(key1);
+                            Intent intent = new Intent(getContext(), JoinEvent.class);
+                            intent.putExtra("Event key", key);
+                            startActivity(intent);
+
+                        }
+                    }
+                });
+                setMarkers();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        btMarkerJoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), JoinEvent.class);
+                intent.putExtra("Event key", key);
+                startActivity(intent);
+            }
+        });
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            uid = user.getUid();
-        }
-
-        arrayList = new ArrayList<>();
-        eventArray = new ArrayList();
-        arrayListLoc = new ArrayList<LatLng>();
         final View v = inflater.inflate(R.layout.fragment_home, container, false);
         databaseReference = firebaseDatabase.getInstance().getReference("CreateEvent");
         Button btMap = v.findViewById(R.id.btMap);
@@ -103,23 +147,6 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
         getLocationPermission();
         recyclerView = v.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
-        myAdapter = new HomeRecyclerAdapter(this, arrayList);
-        recyclerView.setAdapter(myAdapter);
-        myAdapter.notifyDataSetChanged();
-        myAdapter.setOnItemClickListner(new HomeRecyclerAdapter.onItemClickListner() {
-            @Override
-            public void onItemClick(int position) {
-                DataSnapshot ds = eventArray.get(position);
-                if(ds != null){
-                    String key1 = ds.child("id").getValue().toString();
-                    key = Integer.parseInt(key1);
-                    Intent intent = new Intent(getContext(), JoinEvent.class);
-                    intent.putExtra("Event key", key);
-                    startActivity(intent);
-
-                }
-            }
-        });
         k.setVisibility(View.GONE);
 
         btMap.setOnClickListener(new View.OnClickListener() {
@@ -140,26 +167,6 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
                 k.setVisibility(View.GONE);
                 layoutManager = new LinearLayoutManager(getContext());
                 recyclerView.setLayoutManager(layoutManager);
-            }
-        });
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                showData(dataSnapshot);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        btMarkerJoin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), JoinEvent.class);
-                intent.putExtra("Event key", key);
-                startActivity(intent);
             }
         });
 
@@ -210,7 +217,7 @@ public class Home extends Fragment implements OnMapReadyCallback, HomeRecyclerAd
         if(mLocationPermissionGranted){
             getDeviceLocation();
             mMap.setMyLocationEnabled(true);
-            setMarkers();
+            //setMarkers();
             mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
                 public boolean onMarkerClick(Marker marker) {

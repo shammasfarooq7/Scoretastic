@@ -10,7 +10,7 @@
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="395dp"
+        android:layout_width="match_parent"
         android:layout_height="642dp"
         android:layout_marginTop="8dp"
         map:layout_constraintBottom_toBottomOf="parent"
@@ -21,37 +21,33 @@
         map:layout_constraintVertical_bias="0.90999997" />
 
 
-
-
-
     <LinearLayout
         android:layout_width="250dp"
         android:layout_height="59dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginLeft="80dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="80dp"
-        android:layout_marginRight="80dp"
-        android:layout_marginBottom="6dp"
         android:orientation="horizontal"
-        map:layout_constraintBottom_toTopOf="@+id/map"
+        map:layout_constraintBottom_toBottomOf="parent"
         map:layout_constraintEnd_toEndOf="parent"
         map:layout_constraintStart_toStartOf="parent"
-        map:layout_constraintTop_toTopOf="parent">
+        map:layout_constraintTop_toTopOf="parent"
+        map:layout_constraintVertical_bias="0.00999999">
 
         <Button
             android:id="@+id/btMap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="MAP" />
+            android:text="MAP"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="#F9F9F9"/>
 
         <Button
             android:id="@+id/btList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="LIST" />
+            android:text="LIST"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="#F9F9F9"/>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -78,12 +74,14 @@
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark">
 
             <LinearLayout
                 android:layout_width="197.5dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="@color/colorPrimaryDark">
 
                 <TextView
                     android:id="@+id/tvMarkerSports"
@@ -91,28 +89,32 @@
                     android:layout_height="wrap_content"
                     android:text="TextView"
                     android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:textColor="#F9F9F9"/>
 
                 <TextView
                     android:id="@+id/tvMarkerLocation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="TextView"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:textColor="#F9F9F9"/>
 
                 <TextView
                     android:id="@+id/tvMarkerTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="TextView"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:textColor="#F9F9F9"/>
 
                 <TextView
                     android:id="@+id/tvMarkerDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="TextView"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:textColor="#F9F9F9"/>
             </LinearLayout>
 
             <LinearLayout
@@ -135,6 +137,8 @@
                         android:layout_marginRight="16dp"
                         android:layout_marginBottom="36dp"
                         android:text="Join"
+                        android:background="@drawable/button_drawable"
+                        android:textColor="#F9F9F9"
                         map:layout_constraintBottom_toBottomOf="parent"
                         map:layout_constraintEnd_toEndOf="parent"
                         map:layout_constraintStart_toStartOf="parent"

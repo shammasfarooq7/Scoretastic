@@ -51,12 +51,12 @@ import java.util.Calendar;
 public class CreateEvent extends Fragment implements OnItemSelectedListener{
 
 
-    TextView tvCrtTitle,tvT1,tvT2,tvT3,tvT4,tvcategory,tvRb,tvRb1,tvRb2,tvRb3,tvRbC,tvRbC1,tvRbC2,tvRbC3,tvDate,tvTime,tvloc;
+    TextView tvCrtTitle,tvT1,tvT2,tvT3,tvT4,tvcategory,tvDate,tvTime,tvloc;
     private TextView mDisplayDate,mDisplayTime;
     EditText et4,etB,etB1,etB2,etB3,etBC,etBC1,etBC2,etBC3;
     Spinner spinner;
     private Button btce;
-    ConstraintLayout cl1,cl2,cl3;
+    ConstraintLayout cl1,cl2;
     Activity mActivity;
     long maxId = 0;
     long uEventMId= 0;
@@ -107,7 +107,6 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener{
                 createEventData.setDescription(et4.getText().toString());
                 createEventData.setId(maxId+1);
                 createEventData.setUid(uid);
-                createEventData.setStatus(1);
                 if(createEventData.getSports().equals("Football")){
                     dataSenderFootball();
                 }
@@ -217,14 +216,6 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener{
         tvT3 = view.findViewById(R.id.tvT3);
         tvT4 = view.findViewById(R.id.tvT4);
         tvcategory = view.findViewById(R.id.tvcategory);
-        tvRb = view.findViewById(R.id.tvRb);
-        tvRb1 = view.findViewById(R.id.tvRb1);
-        tvRb2 = view.findViewById(R.id.tvRb2);
-        tvRb3 = view.findViewById(R.id.tvRb3);
-        tvRbC = view.findViewById(R.id.tvRbC);
-        tvRbC1 = view.findViewById(R.id.tvRbC1);
-        tvRbC2 = view.findViewById(R.id.tvRbC2);
-        tvRbC3 = view.findViewById(R.id.tvRbC3);
         etB = view.findViewById(R.id.etB);
         etB1 = view.findViewById(R.id.etB1);
         etB2 = view.findViewById(R.id.etB2);
@@ -238,7 +229,6 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener{
         et4 = view.findViewById(R.id.tvSports);
         cl1 = view.findViewById(R.id.cl1);
         cl2 = view.findViewById(R.id.cl2);
-        cl3 = view.findViewById(R.id.cl3);
         spinner = view.findViewById(R.id.spinner);
         spinner.setOnItemSelectedListener(this);
         List<String> categories = new ArrayList<String>();
@@ -326,14 +316,12 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener{
         if (item.equalsIgnoreCase("Please Select")) {
             cl1.setVisibility(View.GONE);
             cl2.setVisibility(View.GONE);
-            cl3.setVisibility(View.GONE);
 
         } else if (item.equalsIgnoreCase("Football")) {
             createEventData.setSports("Football");
 
             cl1.setVisibility(View.VISIBLE);
             cl2.setVisibility(View.GONE);
-            cl3.setVisibility(View.GONE);
 
 
         } else if (item.equalsIgnoreCase("Cricket")) {
@@ -341,14 +329,12 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener{
             createEventData.setSports("Cricket");
             cl1.setVisibility(View.GONE);
             cl2.setVisibility(View.VISIBLE);
-            cl3.setVisibility(View.GONE);
 
 
         } else if (item.equalsIgnoreCase("Tennis")) {
 
             cl1.setVisibility(View.GONE);
             cl2.setVisibility(View.GONE);
-            cl3.setVisibility(View.VISIBLE);
             createEventData.setTotalPlayers(1);
             createEventData.setSports("Tennis");
 
@@ -356,7 +342,6 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener{
 
             cl1.setVisibility(View.GONE);
             cl2.setVisibility(View.GONE);
-            cl3.setVisibility(View.VISIBLE);
             createEventData.setTotalPlayers(1);
             createEventData.setSports("Badminton");
 
@@ -364,7 +349,6 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener{
 
             cl1.setVisibility(View.GONE);
             cl2.setVisibility(View.GONE);
-            cl3.setVisibility(View.VISIBLE);
             createEventData.setTotalPlayers(1);
             createEventData.setSports("Squash");
         }
@@ -398,6 +382,7 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener{
     }
 
     private void dataSender(){
+        createEventData.setStatus(1);
         myReference.child(String.valueOf(maxId+1)).setValue(createEventData);
         Toast.makeText(getContext(),"Data Saved",Toast.LENGTH_SHORT).show();
     }

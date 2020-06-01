@@ -1,5 +1,6 @@
 package com.example.scoretastic;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,9 +31,8 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
         void onItemClicked(int index);
     }
 
-    public HomeRecyclerAdapter(Home context, ArrayList<Recycler> list) {
+    public HomeRecyclerAdapter(Context context, ArrayList<Recycler> list) {
         event = list;
-        activity = (ItemClicked) context;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

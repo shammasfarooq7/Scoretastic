@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/amita</item>
+        <item>@font/bilbo</item>
+        <item>@font/caudex</item>
+        <item>@font/clicker_script</item>
+        <item>@font/damion</item>
+        <item>@font/volkhov</item>
+    </array>
+</resources>

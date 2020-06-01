@@ -45,13 +45,16 @@ public class JoinEvent extends AppCompatActivity implements AdapterView.OnItemSe
     JoinEventData object = new JoinEventData();
     String uid;
     DatabaseReference userData;
+    DatabaseReference userDataAll;
     ArrayList<DataSnapshot> userInfo;
+    ArrayList<DataSnapshot> allUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_event);
         userInfo = new ArrayList<>();
+        allUser = new ArrayList<>();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             uid = user.getUid();
@@ -59,6 +62,7 @@ public class JoinEvent extends AppCompatActivity implements AdapterView.OnItemSe
         databaseReference = firebaseDatabase.getInstance().getReference("CreateEvent");
         myReference = firebaseDatabase.getInstance().getReference("JoinEvent");
         userData = firebaseDatabase.getInstance().getReference("UserData");
+        userDataAll = firebaseDatabase.getInstance().getReference("UserData");
         tvDate = findViewById(R.id.tvDate);
         tvHost = findViewById(R.id.tvHost);
         tvSports = findViewById(R.id.tvSports);
@@ -72,6 +76,20 @@ public class JoinEvent extends AppCompatActivity implements AdapterView.OnItemSe
 
         key = getIntent().getIntExtra("Event key",-1);
         key = key-1;
+
+        userDataAll.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.getChildren()){
+                    allUser.add(ds);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -118,6 +136,8 @@ public class JoinEvent extends AppCompatActivity implements AdapterView.OnItemSe
 
             }
         });
+
+
         btSeePlayers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -310,7 +330,6 @@ public class JoinEvent extends AppCompatActivity implements AdapterView.OnItemSe
 
         if (eventKey != null){
 
-            tvHost.setText(eventKey.getKey());
             tvDate.setText(eventKey.child("day").getValue().toString() + "/" + eventKey.child("month").getValue().toString() + "/" + eventKey.child("year").getValue().toString());
             tvLocation.setText(eventKey.child("resultLocation").getValue().toString());
             tvTime.setText(eventKey.child("timeHour").getValue().toString() +":" + eventKey.child("timeMinute").getValue().toString());
@@ -318,6 +337,11 @@ public class JoinEvent extends AppCompatActivity implements AdapterView.OnItemSe
             tvTotalPlayersJoined.setText(eventKey.child("totalPlayers").getValue().toString());
             tvSports.setText(eventKey.child("sports").getValue().toString());
             sportsSet = eventKey.child("sports").getValue().toString().trim();
+            for(int i = 0; i<allUser.size();i++){
+                if(allUser.get(i).child("userId").getValue().toString().trim().equals(eventKey.child("uid").getValue().toString().trim())){
+                    tvHost.setText(allUser.get(i).child("name").getValue().toString().trim());
+                }
+            }
         }
     }
 

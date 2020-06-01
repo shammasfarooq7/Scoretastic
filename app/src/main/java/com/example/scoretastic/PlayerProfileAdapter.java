@@ -55,7 +55,7 @@ public class PlayerProfileAdapter extends RecyclerView.Adapter<PlayerProfileAdap
 
     @Override
     public int getItemCount() {
-        return 0;
+        return event.size();
     }
 
 }

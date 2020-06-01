@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     tools:context=".Main">
 
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="@+id/toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,8 +19,9 @@
 
     <LinearLayout
         android:id="@+id/toolbar"
-        android:layout_width="405dp"
+        android:layout_width="match_parent"
         android:layout_height="54dp"
+        android:background="@color/colorPrimary"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,35 +34,45 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Home" />
+            android:background="@color/colorPrimary"
+            android:text="Home"
+            android:textColor="#F9F9F9" />
 
         <Button
             android:id="@+id/create"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Create" />
+            android:background="@color/colorPrimary"
+            android:text="Create"
+            android:textColor="#F9F9F9" />
 
         <Button
             android:id="@+id/myevents"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="My" />
+            android:background="@color/colorPrimary"
+            android:text="My"
+            android:textColor="#F9F9F9" />
 
         <Button
             android:id="@+id/btTeam"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Team" />
+            android:background="@color/colorPrimary"
+            android:text="Team"
+            android:textColor="#F9F9F9" />
 
         <Button
             android:id="@+id/profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Profile" />
+            android:background="@color/colorPrimary"
+            android:text="Profile"
+            android:textColor="#F9F9F9" />
 
     </LinearLayout>
 

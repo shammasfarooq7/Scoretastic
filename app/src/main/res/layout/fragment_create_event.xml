@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     tools:context=".JoinEvent">
 
 
@@ -13,65 +13,62 @@
         android:id="@+id/tvCrtTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/Create_title"
-        android:layout_marginTop="30dp"
-        android:textSize="25sp"
-        android:textStyle="bold"
         android:paddingLeft="50dp"
         android:paddingRight="50dp"
+        android:text="@string/Create_title"
+        android:textColor="#F9F9F9"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintVertical_bias="0.10" />
 
     <TextView
         android:id="@+id/tvT1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Location"
-        android:layout_marginTop="130dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="250dp"
+        android:textColor="#F9F9F9"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.20"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.25" />
 
     <TextView
         android:id="@+id/tvloc"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="200dp"
-        android:layout_marginTop="130dp"
-        android:layout_marginRight="40dp"
         android:ems="10"
+        android:gravity="center_horizontal"
+        android:textColor="#F9F9F9"
         android:hint="Enter location"
         android:inputType="none"
+        android:maxLines="3"
         android:text="Location"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.75"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-
-        />
+        app:layout_constraintVertical_bias="0.25" />
 
     <TextView
         android:id="@+id/tvT2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Date"
-        android:layout_marginTop="180dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="270dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.20"
+        android:textColor="#F9F9F9"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.32" />
 
 
     <TextView
@@ -80,20 +77,14 @@
         android:layout_height="wrap_content"
         android:hint="select date"
         android:textSize="20sp"
-        android:layout_marginLeft="170dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginTop="180dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="#F9F9F9"
+        android:textColorHint="#F9F9F9"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.70"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-
-
-
-
-        />
-
+        app:layout_constraintVertical_bias="0.32" />
 
 
     <!--
@@ -120,24 +111,18 @@
         -->
 
 
-
-
-
-
-
     <TextView
         android:id="@+id/tvT3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Time"
-        android:layout_marginTop="230dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="270dp"
+        android:textColor="#F9F9F9"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.20"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.37" />
 
 
     <TextView
@@ -146,423 +131,250 @@
         android:layout_height="wrap_content"
         android:hint="select time"
         android:inputType="time"
+        android:textColor="#F9F9F9"
         android:textSize="20sp"
-        android:layout_marginTop="230dp"
-        android:layout_marginLeft="170dp"
-        android:layout_marginRight="40dp"
+        android:textColorHint="#f9f9f9"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.70"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        />
+        app:layout_constraintVertical_bias="0.37" />
 
     <TextView
         android:id="@+id/tvT4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Description"
-        android:layout_marginTop="280dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="250dp"
+        android:textColor="#F9F9F9"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.20"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.42" />
 
     <EditText
         android:id="@+id/tvSports"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="200dp"
-        android:layout_marginTop="260dp"
-        android:layout_marginRight="40dp"
         android:ems="10"
+        android:gravity="center_horizontal"
         android:hint="event description"
+        android:textColor="#F9F9F9"
+        android:textColorHint="#f9f9f9"
         android:inputType="textMultiLine"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.75"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.42" />
 
 
     <TextView
         android:id="@+id/tvcategory"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="30dp"
-        android:layout_marginTop="340dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginLeft="50dp"
         android:text="Sports:"
-        android:textStyle="bold"
         android:textSize="20dp"
+        android:textStyle="bold"
+        android:textColor="#F9F9F9"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.48" />
 
     <Spinner
         android:id="@+id/spinner"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:background="#424242"
         android:prompt="@string/spinner_title"
         android:spinnerMode="dropdown"
-        android:layout_marginTop="370dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
+        android:textColor="#F9F9F9"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-
-
-
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.52" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl1"
         android:layout_width="match_parent"
-        android:visibility="gone"
-        android:layout_height="160dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="390dp"
-        android:layout_marginRight="10dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-
-        <TextView
-            android:id="@+id/tvRb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="220dp"
-            android:layout_marginBottom="80dp"
-            android:text="Attacker"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
-
-
-        <TextView
-
-            android:id="@+id/tvRb1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="160dp"
-            android:layout_marginBottom="30dp"
-            android:text="Defender"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.28"
-            app:layout_constraintStart_toStartOf="parent"
-
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.481" />
-
-        <TextView
-
-            android:id="@+id/tvRb2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
-            android:layout_marginRight="250dp"
-            android:layout_marginBottom="10dp"
-            android:text="Mid"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-             />
-
-
-        <TextView
-
-            android:id="@+id/tvRb3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="110dp"
-            android:layout_marginRight="230dp"
-            android:text="Keeper"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-             />
-
+        android:layout_height="200dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.77">
 
 
         <EditText
             android:id="@+id/etB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="3"
+            android:ems="8"
+            android:hint="No of Attacker"
+            android:textColor="#F9F9F9"
+            android:textColorHint="#F9F9F9"
+            android:gravity="center_horizontal"
             android:inputType="number"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="110dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="230dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            />
-
-
-
-
-
-
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
 
         <EditText
             android:id="@+id/etB1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="3"
+            android:ems="8"
+            android:hint="No of Defender"
             android:inputType="number"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="50dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="230dp"
+            android:textColor="#F9F9F9"
+            android:textColorHint="#F9F9F9"
+            android:gravity="center_horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            />
-
-
-
-
-
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.3" />
 
 
         <EditText
             android:id="@+id/etB2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="230dp"
-            android:layout_marginTop="70dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="50dp"
-            android:ems="3"
+            android:ems="8"
+            android:hint="No of Midfielder"
             android:inputType="number"
+            android:textColor="#F9F9F9"
+            android:textColorHint="#F9F9F9"
+            android:gravity="center_horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-             />
-
-
-
-
-
+            app:layout_constraintVertical_bias="0.6" />
 
 
         <EditText
             android:id="@+id/etB3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="3"
+            android:ems="8"
+            android:hint="No of Keepers"
             android:inputType="number"
-            android:layout_marginLeft="230dp"
-            android:layout_marginTop="110dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
+            android:textColor="#F9F9F9"
+            android:textColorHint="#F9F9F9"
+            android:gravity="center_horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-             />
+            app:layout_constraintVertical_bias="0.9" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl2"
-        android:visibility="visible"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="390dp"
-        android:layout_marginRight="10dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-
-        <TextView
-            android:id="@+id/tvRbC"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="160dp"
-            android:layout_marginBottom="90dp"
-            android:text="Batsman"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.307"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.45" />
-
-
-        <TextView
-
-            android:id="@+id/tvRbC1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="160dp"
-            android:layout_marginBottom="50dp"
-            android:text="Bowler"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.28"
-            app:layout_constraintStart_toStartOf="parent"
-
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.481" />
-
-        <TextView
-
-            android:id="@+id/tvRbC2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:layout_marginRight="160dp"
-            android:layout_marginBottom="10dp"
-            android:text="AllRounder"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.312"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-             />
-
-
-        <TextView
-
-            android:id="@+id/tvRbC3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="110dp"
-            android:layout_marginRight="220dp"
-            android:text="W.keeper"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-             />
-
+        android:layout_height="200dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.77">
 
 
         <EditText
             android:id="@+id/etBC"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="3"
+            android:ems="8"
+            android:hint="No of Batsman"
             android:inputType="number"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="110dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="230dp"
+            android:textColor="#F9F9F9"
+            android:textColorHint="#F9F9F9"
+            android:gravity="center_horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
         <EditText
             android:id="@+id/etBC1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="3"
+            android:ems="8"
+            android:hint="No of Bowlers"
             android:inputType="number"
-            android:layout_marginTop="1dp"
-            android:layout_marginBottom="50dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="230dp"
+            android:textColor="#F9F9F9"
+            android:textColorHint="#F9F9F9"
+            android:gravity="center_horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.3" />
 
         <EditText
             android:id="@+id/etBC2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="230dp"
-            android:layout_marginTop="60dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="50dp"
-            android:ems="3"
+            android:ems="8"
+            android:hint="No of All Rounders"
             android:inputType="number"
+            android:textColor="#F9F9F9"
+            android:textColorHint="#F9F9F9"
+            android:gravity="center_horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintVertical_bias="0.6" />
+
         <EditText
             android:id="@+id/etBC3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="3"
+            android:ems="8"
+            android:hint="No of Wicket Keepers"
             android:inputType="number"
-            android:layout_marginLeft="230dp"
-            android:layout_marginTop="110dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
+            android:textColor="#F9F9F9"
+            android:gravity="center_horizontal"
+            android:textColorHint="#F9F9F9"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintVertical_bias="0.9" />
 
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl3"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="390dp"
-        android:layout_marginRight="10dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <Button
         android:id="@+id/btce"
-        android:layout_width="200dp"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/button_drawable"
         android:text="Create Event"
+        android:textColor="#F9F9F9"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.887" />
+        app:layout_constraintVertical_bias="0.9" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

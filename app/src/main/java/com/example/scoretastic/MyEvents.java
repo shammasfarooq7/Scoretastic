@@ -108,9 +108,19 @@ public class MyEvents extends Fragment implements HostedRecyclerAdapter.ItemClic
 
 
 
+        subDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                arrayListSub.clear();
+                subShowData(dataSnapshot);
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         recyclerViewSub.setHasFixedSize(true);
-
         subAdapter = new SubscribedRecyclerAdapter(this, arrayListSub);
         recyclerViewSub.setAdapter(subAdapter);
         subAdapter.notifyDataSetChanged();
@@ -134,26 +144,15 @@ public class MyEvents extends Fragment implements HostedRecyclerAdapter.ItemClic
                 }
             }
         });
-        subDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                subShowData(dataSnapshot);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
 
 
-        recyclerViewHost.setHasFixedSize(true);
 
         hostDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                arrayListHost.clear();
                 hostShowData(dataSnapshot);
-                recyclerViewHost.setVisibility(View.VISIBLE);
+                recyclerViewHost.hasFixedSize();
                 layoutManagerHost = new LinearLayoutManager(getContext());
                 recyclerViewHost.setLayoutManager(layoutManagerHost);
                 hostAdapter = new HostedRecyclerAdapter(getContext(), arrayListHost);
@@ -172,10 +171,7 @@ public class MyEvents extends Fragment implements HostedRecyclerAdapter.ItemClic
                         }
                     }
                 });
-
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 

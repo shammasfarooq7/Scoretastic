@@ -126,8 +126,8 @@
 
     <TextView
         android:id="@+id/tvHost"
-        android:layout_width="130dp"
-        android:layout_height="18dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="130dp"
@@ -142,8 +142,8 @@
 
     <TextView
         android:id="@+id/tvSports"
-        android:layout_width="130dp"
-        android:layout_height="18dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="11dp"
@@ -158,8 +158,8 @@
 
     <TextView
         android:id="@+id/tvLocation"
-        android:layout_width="130dp"
-        android:layout_height="18dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="11dp"
@@ -174,8 +174,8 @@
 
     <TextView
         android:id="@+id/tvDate"
-        android:layout_width="130dp"
-        android:layout_height="18dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="11dp"
@@ -190,8 +190,8 @@
 
     <TextView
         android:id="@+id/tvTime"
-        android:layout_width="130dp"
-        android:layout_height="18dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="11dp"
@@ -206,8 +206,8 @@
 
     <TextView
         android:id="@+id/tvDescription"
-        android:layout_width="130dp"
-        android:layout_height="18dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="11dp"
@@ -222,8 +222,8 @@
 
     <TextView
         android:id="@+id/tvPlayersJoined"
-        android:layout_width="130dp"
-        android:layout_height="18dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="11dp"

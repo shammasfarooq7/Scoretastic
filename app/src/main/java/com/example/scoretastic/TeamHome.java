@@ -36,7 +36,9 @@ public class TeamHome extends Fragment {
     private DatabaseReference myReference;
     Recycler recyclerObject;
     String uid;
+    int eventId;
     ArrayList<Recycler> list;
+    ArrayList<DataSnapshot> eventList;
    public TeamHome() {
         // Required empty public constructor
     }
@@ -46,6 +48,7 @@ public class TeamHome extends Fragment {
         super.onResume();
         myReference = firebaseDatabase.getInstance().getReference("TeamCreateEvent");
         list = new ArrayList<>();
+        eventList = new ArrayList<>();
         recyclerViewTeamHome.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity().getBaseContext());
         recyclerViewTeamHome.setLayoutManager(layoutManager);
@@ -79,7 +82,14 @@ public class TeamHome extends Fragment {
                 adapter.setOnItemClickListner(new TeamHomeRecyclerAdapter.onItemClickListner() {
                     @Override
                     public void onItemClick(int position) {
-
+                        DataSnapshot ds = eventList.get(position);
+                        if(ds != null){
+                            String key = ds.child("id").getValue().toString().trim();
+                            eventId = Integer.parseInt(key);
+                            Intent intent = new Intent(getContext(),TeamMatchDetails.class);
+                            intent.putExtra("Event key Host", eventId);
+                            startActivity(intent);
+                        }
                     }
                 });
 
@@ -126,6 +136,7 @@ public class TeamHome extends Fragment {
                recyclerObject.setDate(day + "/" + month + "/" + year);
                recyclerObject.setTime(timeHour + ":" + timeMinute);
                list.add(recyclerObject);
+               eventList.add(ds);
            }
        }
     }

@@ -87,7 +87,7 @@ public class TeamHome extends Fragment {
                             String key = ds.child("id").getValue().toString().trim();
                             eventId = Integer.parseInt(key);
                             Intent intent = new Intent(getContext(),TeamMatchDetails.class);
-                            intent.putExtra("Event key Host", eventId);
+                            intent.putExtra("Event key", eventId);
                             startActivity(intent);
                         }
                     }

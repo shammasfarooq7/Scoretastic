@@ -11,6 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 public class PlayerProfileAdapter extends RecyclerView.Adapter<PlayerProfileAdapter.ViewHolder> {
@@ -49,7 +52,9 @@ public class PlayerProfileAdapter extends RecyclerView.Adapter<PlayerProfileAdap
         holder.tvMatchP.setText(event.get(position).getTotalMatch());
         holder.tvPosition.setText(event.get(position).getPos());
         holder.tvNameP.setText(event.get(position).getName());
-        //holder.ivProfilePic.setImageResource(event.get(position).getImage());
+        if(!event.get(position).getImage().equals("default")){
+            Picasso.get().load(event.get(position).getImage()).into(holder.ivProfilePic);
+        }
 
     }
 

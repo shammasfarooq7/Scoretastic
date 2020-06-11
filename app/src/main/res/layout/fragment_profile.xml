@@ -111,12 +111,10 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.55" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profilePic"
         android:layout_width="197dp"
         android:layout_height="183dp"
-        android:adjustViewBounds="false"
-        android:cropToPadding="false"
         android:src="@drawable/account"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

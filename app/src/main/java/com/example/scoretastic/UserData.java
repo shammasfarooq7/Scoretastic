@@ -15,7 +15,6 @@ public class UserData {
     String pos;
 
 
-
     public UserData() {
     }
 

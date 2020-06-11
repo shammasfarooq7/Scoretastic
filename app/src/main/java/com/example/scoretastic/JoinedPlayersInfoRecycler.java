@@ -95,6 +95,13 @@ public class JoinedPlayersInfoRecycler extends AppCompatActivity {
                     object = new ProfileRecycler();
                     object.setName(userList.get(j).child("name").getValue().toString().trim());
                     object.setFavSports(userList.get(j).child("fSports").getValue().toString().trim());
+                    if(userList.get(j).child("profilePic").exists()){
+                        object.setImage(userList.get(j).child("profilePic").getValue().toString().trim());
+                    }
+                    else{
+                        object.setImage("default");
+                    }
+
                     int host = Integer.parseInt(userList.get(j).child("hosted").getValue().toString().trim());
                     int sub = Integer.parseInt(userList.get(j).child("subscribed").getValue().toString().trim());
                     int total = host+sub;

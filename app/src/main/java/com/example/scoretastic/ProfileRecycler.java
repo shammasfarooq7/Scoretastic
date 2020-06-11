@@ -7,7 +7,7 @@ public class ProfileRecycler {
     String totalMatch;
     String pos;
     String favSports;
-    ImageView image;
+    String image;
 
     public String getName() {
         return name;
@@ -41,11 +41,11 @@ public class ProfileRecycler {
         this.favSports = favSports;
     }
 
-    public ImageView getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(ImageView image) {
+    public void setImage(String image) {
         this.image = image;
     }
 }

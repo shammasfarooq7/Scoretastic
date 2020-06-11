@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     tools:context=".Team">
 
     <LinearLayout
         android:id="@+id/toolbar"
-        android:layout_width="405dp"
+        android:layout_width="match_parent"
         android:layout_height="54dp"
         android:orientation="horizontal"
+        android:background="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,8 +21,10 @@
 
         <Button
             android:id="@+id/btHome"
-            android:layout_width="wrap_content"
+            android:background="@color/colorPrimary"
+            android:textColor="#f9f9f9"
             android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:layout_weight="1"
             android:text="Home" />
 
@@ -28,6 +32,8 @@
             android:id="@+id/btMatches"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:textColor="#f9f9f9"
             android:layout_weight="1"
             android:text="Matches" />
 
@@ -36,6 +42,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:textColor="#f9f9f9"
             android:text="Messages" />
 
     </LinearLayout>

@@ -9,34 +9,27 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-
-public class TeamMatchDetails extends AppCompatActivity {
+public class TeamHostMatchDetails extends AppCompatActivity {
     TextView tvHost,tvSports,tvVariation,tvVenue,tvLocation,tvDate,tvTime,tvDescription,btGoogleMap;
-    Button btMessage;
+    Button btDelete;
     int key;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
-    private DatabaseReference userReference;
-    String uid,hostId,hostName;
+    private DatabaseReference userEventReference;
     String location;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_team_match_details);
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            uid = user.getUid();
-        }
+        setContentView(R.layout.activity_team_host_match_details);
         tvHost = findViewById(R.id.tvHost);
         tvSports = findViewById(R.id.tvSports);
         tvVariation = findViewById(R.id.tvVariation);
@@ -46,26 +39,15 @@ public class TeamMatchDetails extends AppCompatActivity {
         tvTime = findViewById(R.id.tvTime);
         tvDescription = findViewById(R.id.tvDescription);
         btGoogleMap = findViewById(R.id.btGoogleMap);
-        btMessage = findViewById(R.id.btMessage);
-        key = getIntent().getIntExtra("Event key",-1);
+        btDelete = findViewById(R.id.btDelete);
+        key = getIntent().getIntExtra("Key",-1);
         databaseReference = firebaseDatabase.getInstance().getReference("TeamCreateEvent");
-        userReference = firebaseDatabase.getInstance().getReference("UserData");
+        userEventReference = firebaseDatabase.getInstance().getReference("TeamUserEvent");
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 showData(dataSnapshot);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-        userReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                userShowData(dataSnapshot);
             }
 
             @Override
@@ -84,18 +66,18 @@ public class TeamMatchDetails extends AppCompatActivity {
                 }
             }
         });
-        btMessage.setOnClickListener(new View.OnClickListener() {
+        btDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),Messenger.class);
-                intent.putExtra("Host Id", hostId);
-                intent.putExtra("Host Name", hostName);
-                intent.putExtra("User Id", uid);
-                startActivity(intent);
+                databaseReference.child(String.valueOf(key)).child("status").setValue(0);
+
+
+                Toast.makeText(getApplicationContext(),"Event Deleted",Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
-    }
 
+    }
     public void showData(DataSnapshot dataSnapshot){
         for(DataSnapshot ds : dataSnapshot.getChildren()){
             int id = Integer.parseInt(ds.child("id").getValue().toString().trim());
@@ -110,19 +92,8 @@ public class TeamMatchDetails extends AppCompatActivity {
                 String lat = ds.child("resultLat").getValue().toString().trim();
                 String lng = ds.child("resultLng").getValue().toString().trim();
                 location = "google.navigation:q=" + lat + ","  + lng;
-                hostId = ds.child("uid").getValue().toString().trim();
-
+                tvHost.setText("You");
             }
         }
     }
-    public void userShowData(DataSnapshot dataSnapshot){
-        for(DataSnapshot ds : dataSnapshot.getChildren()){
-            String id = ds.child("userId").getValue().toString().trim();
-            if(id.equals(hostId)){
-                tvHost.setText(ds.child("name").getValue().toString().trim());
-                hostName = ds.child("name").getValue().toString().trim();
-            }
-        }
-    }
-
 }

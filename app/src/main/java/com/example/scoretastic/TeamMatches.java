@@ -1,6 +1,7 @@
 package com.example.scoretastic;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -93,7 +94,13 @@ public class TeamMatches extends Fragment {
                 adapter.setOnItemClickListner(new TeamMatchesRecyclerAdapter.onItemClickListner() {
                     @Override
                     public void onItemClick(int position) {
-
+                        DataSnapshot ds = eventList.get(position);
+                        if(ds!=null){
+                            int key =Integer.parseInt(ds.child("id").getValue().toString().trim());
+                            Intent intent = new Intent(getContext(),TeamHostMatchDetails.class);
+                            intent.putExtra("Key",key);
+                            startActivity(intent);
+                        }
                     }
                 });
             }

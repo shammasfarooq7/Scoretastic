@@ -22,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class HostDetails extends AppCompatActivity {
-    TextView tvHost, tvSports, tvLocation, tvDate, tvTime, tvDescription, tvTotalPlayersJoined,btGoogleMap;
+    TextView tvHost, tvSports, tvLocation, tvDate, tvTime, tvDescription, tvTotalPlayersJoined,btGoogleMap,btSeePlayers;
     Button btDelete;
     int key;
     private FirebaseDatabase firebaseDatabase;
@@ -50,6 +50,7 @@ public class HostDetails extends AppCompatActivity {
         userInfo = new ArrayList<>();
         tvTotalPlayersJoined = findViewById(R.id.tvPlayersJoined);
         btDelete = findViewById(R.id.btDelete);
+        btSeePlayers = findViewById(R.id.btSeePlayers2);
         key = getIntent().getIntExtra("Event key Host",-1);
         databaseReference = firebaseDatabase.getInstance().getReference("CreateEvent");
         hostReference = firebaseDatabase.getInstance().getReference("UserEvent");
@@ -126,6 +127,14 @@ public class HostDetails extends AppCompatActivity {
                 if (mapIntent.resolveActivity(getPackageManager()) != null) {
                     startActivity(mapIntent);
                 }
+            }
+        });
+        btSeePlayers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),JoinedPlayersInfoRecycler.class);
+                intent.putExtra("Event key", key);
+                startActivity(intent);
             }
         });
     }

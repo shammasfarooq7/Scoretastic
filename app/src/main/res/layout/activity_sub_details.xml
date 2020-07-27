@@ -9,6 +9,19 @@
     tools:context=".JoinEvent">
 
     <TextView
+        android:id="@+id/btSeePlayers3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="See who have Joined"
+        android:textColor="#0E68CE"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.74" />
+
+    <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

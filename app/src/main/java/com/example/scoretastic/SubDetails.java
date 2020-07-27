@@ -23,7 +23,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class SubDetails extends AppCompatActivity {
-    TextView tvHost, tvSports, tvLocation, tvDate, tvTime, tvDescription, tvTotalPlayersJoined,tvYourPosition;
+    TextView tvHost, tvSports, tvLocation, tvDate, tvTime, tvDescription, tvTotalPlayersJoined,tvYourPosition,btSeePlayers;
     Button btLeave;
     int key;
     private FirebaseDatabase firebaseDatabase;
@@ -55,6 +55,7 @@ public class SubDetails extends AppCompatActivity {
         tvTotalPlayersJoined = findViewById(R.id.tvPlayersJoined);
         tvYourPosition = findViewById(R.id.tvYourPosition);
         btLeave = findViewById(R.id.btLeave);
+        btSeePlayers = findViewById(R.id.btSeePlayers3);
         key = getIntent().getIntExtra("Event key Sub",-1);
         position = getIntent().getStringExtra("Position");
         databaseReference = firebaseDatabase.getInstance().getReference("CreateEvent");
@@ -113,6 +114,14 @@ public class SubDetails extends AppCompatActivity {
                 if (mapIntent.resolveActivity(getPackageManager()) != null) {
                     startActivity(mapIntent);
                 }
+            }
+        });
+        btSeePlayers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),JoinedPlayersInfoRecycler.class);
+                intent.putExtra("Event key", key);
+                startActivity(intent);
             }
         });
 

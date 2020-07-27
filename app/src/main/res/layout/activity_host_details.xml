@@ -9,6 +9,19 @@
     tools:context=".JoinEvent">
 
     <TextView
+        android:id="@+id/btSeePlayers2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="See who have Joined"
+        android:textColor="#0E68CE"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.74" />
+
+    <TextView
         android:id="@+id/btGoogleMapHost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -258,15 +271,15 @@
         android:id="@+id/btDelete"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/button_drawable"
         android:text="Delete Event"
         android:textColor="#f9f9f9"
-        android:background="@drawable/button_drawable"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.758" />
+        app:layout_constraintVertical_bias="0.83" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -93,4 +93,11 @@ public class Main extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(),Main.class);
+        startActivity(intent);
+        super.onBackPressed();
+    }
 }

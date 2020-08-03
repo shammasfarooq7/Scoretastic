@@ -126,6 +126,7 @@
         android:layout_width="258dp"
         android:layout_height="27dp"
         android:textColor="#f9f9f9"
+        android:background="#7f7f7f"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.85"

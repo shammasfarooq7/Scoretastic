@@ -70,8 +70,7 @@ public class TeamHostMatchDetails extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 databaseReference.child(String.valueOf(key)).child("status").setValue(0);
-
-
+                userEventReference.child(String.valueOf(key)).child("uid").setValue(0);
                 Toast.makeText(getApplicationContext(),"Event Deleted",Toast.LENGTH_SHORT).show();
                 finish();
             }

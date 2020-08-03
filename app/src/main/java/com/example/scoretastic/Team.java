@@ -2,6 +2,7 @@ package com.example.scoretastic;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -50,5 +51,12 @@ public class Team extends AppCompatActivity {
         });
 
         getSupportFragmentManager().beginTransaction().replace(R.id.frameLayoutT, teamHome).commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(),Main.class);
+        startActivity(intent);
+        super.onBackPressed();
     }
 }

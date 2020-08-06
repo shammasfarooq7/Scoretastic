@@ -104,7 +104,7 @@
         android:id="@+id/tv7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Total Spots Remaining"
+        android:text="Total Positions Remaining"
         android:textColor="#f9f9f9"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -223,8 +223,8 @@
 
     <Spinner
         android:id="@+id/dropDownSports"
-        android:layout_width="10dp"
-        android:layout_height="10dp"
+        android:layout_width="100dp"
+        android:layout_height="20dp"
         android:background="#f9f9f9"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

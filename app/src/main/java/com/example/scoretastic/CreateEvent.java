@@ -103,7 +103,7 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener{
         btce.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                validationScene();
                 createEventData.setDescription(et4.getText().toString());
                 createEventData.setId(maxId+1);
                 createEventData.setUid(uid);
@@ -248,16 +248,6 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener{
 
         // attaching data adapter to spinner
         spinner.setAdapter(dataAdapter);
-
-        btce.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                validationScene();
-
-
-            }
-        });
-
     }
 
     private void datePicker(View view) {

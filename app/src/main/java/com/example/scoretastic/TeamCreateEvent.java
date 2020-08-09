@@ -125,10 +125,21 @@ public class TeamCreateEvent extends AppCompatActivity {
         btCreateMatch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int host = Integer.parseInt(userInfo.get(0).child("hosted").getValue().toString().trim());
-                host++;
-                userData.child(userInfo.get(0).child("id").getValue().toString().trim()).child("hosted").setValue(host);
-                dataSender();
+                if(mDisplayDate.getText().toString().equals("Select Date")){
+                    mDisplayDate.setError("Please Enter date");
+                }
+                else if(mDisplayTime.getText().toString().equals("Select Time")){
+                    mDisplayTime.setError("Please Enter Time");
+                }
+                else if(sportsSpinner.getSelectedItem().toString().trim().equals("Please Select")){
+                    Toast.makeText(getApplicationContext(),"Please select sports",Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    int host = Integer.parseInt(userInfo.get(0).child("hosted").getValue().toString().trim());
+                    host++;
+                    userData.child(userInfo.get(0).child("id").getValue().toString().trim()).child("hosted").setValue(host);
+                    dataSender();
+                }
             }
         });
     }
@@ -251,13 +262,7 @@ public class TeamCreateEvent extends AppCompatActivity {
         else if(etVenue.getText().toString().isEmpty()){
             etVenue.setError("Please enter Venue");
         }
-        else if(mDisplayDate.getText().toString().isEmpty()){
-            mDisplayDate.setError("Please Enter date");
-        }
-        else if(mDisplayTime.getText().toString().isEmpty()){
-            mDisplayTime.setError("Please Enter Time");
-        }
-        else if(btLocation.getText().toString().isEmpty()){
+        else if(btLocation.getText().toString().trim().equals("Location") || btLocation.getText().toString().trim().equals("Get Location")){
             btLocation.setError("Please Select Location");
         }
         else{

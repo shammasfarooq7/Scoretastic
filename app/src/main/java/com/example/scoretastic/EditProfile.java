@@ -43,10 +43,19 @@ public class EditProfile extends AppCompatActivity {
         btSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String id = userInfo.get(0).child("id").getValue().toString().trim();
-                databaseReference.child(id).child("pos").setValue(etPosition.getText().toString().trim());
-                databaseReference.child(id).child("fSports").setValue(etFavoriteSports.getText().toString().trim());
-                finish();
+                if(etPosition.getText().toString().isEmpty()){
+                    etPosition.setError("Enter Favorite position");
+                }
+                else if(etFavoriteSports.getText().toString().isEmpty()){
+                    etFavoriteSports.setError("Enter Favorite Sports");
+                }
+                else{
+                    String id = userInfo.get(0).child("id").getValue().toString().trim();
+                    databaseReference.child(id).child("pos").setValue(etPosition.getText().toString().trim());
+                    databaseReference.child(id).child("fSports").setValue(etFavoriteSports.getText().toString().trim());
+                    finish();
+                }
+
             }
         });
 

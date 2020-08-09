@@ -103,25 +103,69 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener{
         btce.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                validationScene();
-                createEventData.setDescription(et4.getText().toString());
-                createEventData.setId(maxId+1);
-                createEventData.setUid(uid);
-                if(createEventData.getSports().equals("Football")){
-                    dataSenderFootball();
+
+                if(tvloc.getText().toString().trim().equals("Location") || tvloc.getText().toString().trim().equals("Get Location")){
+                    tvloc.setError("Please select the location");
                 }
-                else if(createEventData.getSports().equals("Cricket")){
-                    dataSenderCricket();
+                else if (tvDate.getText().toString().isEmpty()) {
+                    tvDate.setError("Please select date");
+                } else if (tvTime.getText().toString().isEmpty()) {
+                    tvTime.setError("Please select time");
+                } else if (et4.getText().toString().isEmpty()) {
+                    et4.setError("Please write the description");
+                }
+                else if(spinner.getSelectedItem().toString().trim().equals("Please Select")){
+                    Toast.makeText(getContext(),"Please select sports",Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    dataSender();
+                    createEventData.setDescription(et4.getText().toString());
+                    createEventData.setId(maxId+1);
+                    createEventData.setUid(uid);
+                    if(createEventData.getSports().equals("Football")){
+                        if(etB.getText().toString().isEmpty()){
+                            etB.setError("Please enter values");
+                        }
+                        else if(etB1.getText().toString().isEmpty()){
+                            etB1.setError("Please enter values");
+                        }
+                        else if(etB2.getText().toString().isEmpty()){
+                            etB2.setError("Please enter values");
+                        }
+                        else if(etB3.getText().toString().isEmpty()){
+                            etB3.setError("Please enter values");
+                        }
+                        else{
+                            dataSenderFootball();
+                            userEventRef();
+                            getActivity().onBackPressed();
+                        }
+                    }
+                    else if(createEventData.getSports().equals("Cricket")){
+                        if(etBC.getText().toString().isEmpty()){
+                            etBC.setError("Please enter values");
+                        }
+                        else if(etBC1.getText().toString().isEmpty()){
+                            etBC1.setError("Please enter values");
+                        }
+                        else if(etBC2.getText().toString().isEmpty()){
+                            etBC2.setError("Please enter values");
+                        }
+                        else if(etBC3.getText().toString().isEmpty()){
+                            etBC3.setError("Please enter values");
+                        }
+                        else{
+                            dataSenderCricket();
+                            userEventRef();
+                            getActivity().onBackPressed();
+                        }
+                    }
+                    else{
+                        dataSender();
+                        userEventRef();
+                        getActivity().onBackPressed();
+                    }
                 }
-                int host = Integer.parseInt(userInfo.get(0).child("hosted").getValue().toString().trim());
-                host++;
-                userData.child(userInfo.get(0).child("id").getValue().toString().trim()).child("hosted").setValue(host);
-                userEventData.setUid(uid);
-                userEventData.setEventId(maxId+1);
-                userEventReference.child(String.valueOf(uEventMId+1)).setValue(userEventData);
+
 
             }
 
@@ -348,28 +392,7 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener{
     public void onNothingSelected(AdapterView<?> parent) {
     }
 
-    public void validationScene() {
 
-        if (tvloc.getText().toString().isEmpty()) {
-            tvloc.setError("Please enter the location!");
-        } else if (tvDate.getText().toString().isEmpty()) {
-            tvDate.setError("Please enter the date");
-        } else if (tvTime.getText().toString().isEmpty()) {
-            tvTime.setError("Please enter the time!!!");
-        } else if (et4.getText().toString().isEmpty()) {
-            et4.setError("enter the description");
-        } else if (etB.getText().toString().isEmpty()) {
-            etB.setError("Please enter");
-        } else if (etB1.getText().toString().isEmpty()) {
-            etB1.setError("Please enter");
-        } else if (etB2.getText().toString().isEmpty()) {
-            etB2.setError("Please enter");
-        } else if (etB3.getText().toString().isEmpty()) {
-            etB3.setError("Please enter");
-        }
-
-
-    }
 
     private void dataSender(){
         createEventData.setStatus(1);
@@ -444,5 +467,14 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener{
         myReference.child(String.valueOf(maxId+1)).setValue(createEventCricket);
         Toast.makeText(getContext(),"Data Saved",Toast.LENGTH_SHORT).show();
 
+    }
+    public void userEventRef(){
+
+        int host = Integer.parseInt(userInfo.get(0).child("hosted").getValue().toString().trim());
+        host++;
+        userData.child(userInfo.get(0).child("id").getValue().toString().trim()).child("hosted").setValue(host);
+        userEventData.setUid(uid);
+        userEventData.setEventId(maxId+1);
+        userEventReference.child(String.valueOf(uEventMId+1)).setValue(userEventData);
     }
 }

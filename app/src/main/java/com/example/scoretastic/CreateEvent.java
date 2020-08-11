@@ -64,6 +64,7 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener{
     int month;
     int day;
     Date date;
+    final int status = 1;
     UserEventData userEventData = new UserEventData();
     private static final String TAG = "Create Event";
     CreateEventData createEventData = new CreateEventData();
@@ -395,7 +396,7 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener{
 
 
     private void dataSender(){
-        createEventData.setStatus(1);
+        createEventData.setStatus(status);
         myReference.child(String.valueOf(maxId+1)).setValue(createEventData);
         Toast.makeText(getContext(),"Data Saved",Toast.LENGTH_SHORT).show();
     }
@@ -414,7 +415,7 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener{
         createEventFootball.setSports(createEventData.getSports());
         createEventFootball.setId(maxId+1);
         createEventFootball.setUid(uid);
-        createEventCricket.setStatus(1);
+        createEventCricket.setStatus(status);
         if(!etB.getText().toString().trim().equals("")){
             createEventFootball.setAttacker(Integer.valueOf(etB.getText().toString().trim()));
         }
@@ -446,7 +447,7 @@ public class CreateEvent extends Fragment implements OnItemSelectedListener{
         createEventCricket.setSports(createEventData.getSports());
         createEventCricket.setId(maxId+1);
         createEventCricket.setUid(uid);
-        createEventCricket.setStatus(1);
+        createEventCricket.setStatus(status);
         if(!etBC.getText().toString().trim().equals("")){
             createEventCricket.setBatsman(Integer.valueOf(etBC.getText().toString().trim()));
         }
